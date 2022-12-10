@@ -49,5 +49,16 @@ keymap.set('n', '<leader>v', '<cmd>CHADopen<cr>')
 keymap.set('n', '<leader>ll', '<cmd>call setqflist([])<cr>')
 
 -- Esc in neovim terminal
-keymap.set('t', '<Esc>', '<C-\\><C-n>:q<CR>', {noremap = true})
+keymap.set('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
+keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', {noremap = true})
 
+-- map Alt key
+-- keymap.set('t', '∆', '<A-J>')
+-- keymap.set('t', '˚', '<A-K>')
+
+-- Allow clipboard copy paste in neovide
+vim.g.neovide_input_use_logo = 1
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
