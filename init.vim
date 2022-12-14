@@ -130,7 +130,7 @@ lua require('keys')
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <C-t> :Files<CR>
 nnoremap <silent> <C-g> :GFiles<CR>
-noremap <silent> <Leader>f :Rg<CR>
+noremap <silent> <Leader>rg :Rg<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
 nnoremap <silent> <Leader>' :Marks<CR>
 nnoremap <silent> <Leader>g :Commits<CR>
@@ -139,9 +139,6 @@ nnoremap <silent> <Leader>H :Helptags<CR>
 nnoremap <silent> <Leader>hh :History<CR>
 nnoremap <silent> <Leader>h: :History:<CR>
 nnoremap <silent> <Leader>h/ :History/<CR>
-command! -bang -nargs=* Rg2
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".<q-args>, 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
-
 
 " vim-test
 nmap <silent> ,tt :TestNearest<CR>
@@ -172,3 +169,9 @@ command IO execute "silent !open 'obsidian://open?vault=myNotes&file=" . expand(
 nnoremap <leader>io :IO<CR>
 " markdown-preview
 nnoremap <leader>pv :MarkdownPreview<CR>
+
+command! -bang -nargs=* ProjectRg
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
+
+nnoremap <leader>f :ProjectRg<CR>
+
