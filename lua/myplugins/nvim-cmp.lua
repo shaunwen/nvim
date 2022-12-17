@@ -82,3 +82,7 @@ cmp.setup.cmdline(':', {
 
 vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.cmd [[highlight! default link CmpItemKind CmpItemMenuDefault]]
+
+-- Auto pairs
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
