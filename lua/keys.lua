@@ -10,11 +10,17 @@ keymap.set('n', 'L', '$')
 keymap.set('n', 'x', '"_x')
 keymap.set('x', '<Leader>p', "\"_dP")
 
-keymap.set('n', '<Leader>d', "\"_d")
-keymap.set('v', '<Leader>d', "\"_d")
+keymap.set('n', '<Leader><Leader>d', "\"_d")
+keymap.set('v', '<Leader><Leader>d', "\"_d")
+
+keymap.set({"n", "v"}, "<leader>y", [["+y]])
+keymap.set("n", "<leader>Y", [["+Y]])
 
 keymap.set('v', 'gj', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'gk', ":m '<-2<CR>gv=gv")
+
+keymap.set('v', '<', '<gv')
+keymap.set('v', '>', '>gv')
 
 keymap.set('n', 'n', 'nzzzv')
 keymap.set('n', 'N', 'Nzzzv')
@@ -33,7 +39,7 @@ keymap.set('n', 'dW', 'vb"_d')
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
--- New tab
+-- List/open/close tab
 keymap.set('n', 'tl', ':tabs<CR>')
 keymap.set('n', 'te', ':tabedit<CR>')
 keymap.set('n', 'tc', ':tabclose<CR>')
@@ -78,6 +84,7 @@ keymap.set('n', '<Leader>b', '<cmd>Buffers<CR>', { noremap = true, silent = true
 keymap.set('n', '<C-t>', '<cmd>Files<CR>', { noremap = true, silent = true })
 keymap.set('n', '<C-g>', '<cmd>GFiles<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>rg', '<cmd>Rg<CR>', { noremap = true, silent = true })
+keymap.set('n', ',a', '<cmd>Commands<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>/', '<cmd>BLines<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>\'', '<cmd>Marks<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>g', '<cmd>Commits<CR>', { noremap = true, silent = true })
@@ -91,6 +98,13 @@ vim.cmd [[
     \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
 ]]
 keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
+keymap.set('x', '<Leader><Tab>', '<Plug>(fzf-maps-x)')
+keymap.set('i', '<Leader><Tab>', '<Plug>(fzf-maps-i)')
+keymap.set('o', '<Leader><Tab>', '<Plug>(fzf-maps-o)')
+keymap.set('i', '<C-x>w', '<Plug>(fzf-complete-word)')
+keymap.set('i', '<C-x>p', '<Plug>(fzf-complete-path)')
+keymap.set('i', '<C-x>l', '<Plug>(fzf-complete-line)')
 
 -- Plugin: vsnip
 vim.cmd [[
@@ -139,3 +153,13 @@ vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+
+keymap.set('n', '<leader>pj', '<cmd>term op<CR>')
+
+-- DAP Plugin
+keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")
+keymap.set('n', '<Leader>rd', ":RustDebuggables<CR>")
+keymap.set('n', '<Leader>dc', ":DapContinue<CR>")
+keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
+keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
+keymap.set('n', '<Leader>dt', ":lua require('dapui').toggle()<CR>")

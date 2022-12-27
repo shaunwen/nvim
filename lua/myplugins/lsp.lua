@@ -25,15 +25,6 @@ end
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
--- local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'sumneko_lua' }
--- for _, lsp in pairs(servers) do
---   nvim_lsp[lsp].setup{
---     on_attach = on_attach,
---   }
--- end
-
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },

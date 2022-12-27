@@ -22,6 +22,9 @@ local function on_attach(client, bufnr)
   vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
 end
 
+local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
+local codelldb_path = extension_path .. 'adapter/codelldb'
+local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
 -- Configure LSP through rust-tools.nvim plugin.
 -- rust-tools will configure and enable certain LSP features for us.
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
@@ -36,6 +39,11 @@ local opts = {
       -- parameter_hints_prefix = "",
       other_hints_prefix = "",
     },
+    hover_actions = {
+      -- whether the hover action window gets automatically focused
+      -- default: false
+      auto_focus = true,
+    },
   },
 
   -- all the opts to send to nvim-lspconfig
@@ -44,6 +52,7 @@ local opts = {
   server = {
     -- on_attach is a callback called when the language server attachs to the buffer
     on_attach = on_attach,
+    standalone = true,
     settings = {
       -- to enable rust-analyzer settings visit:
       -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -55,6 +64,17 @@ local opts = {
       },
     },
   },
+  dap = {
+    adapter = require('rust-tools.dap').get_codelldb_adapter(
+      codelldb_path, liblldb_path)
+  }
+  -- dap = {
+  --   adapter = {
+  --     type = "executable",
+  --     command = codelldb_path,
+  --     name = "rt_lldb",
+  --   },
+  -- },
 }
 
 rt.setup(opts)

@@ -55,5 +55,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 
+Plug 'tpope/vim-abolish'
 vim.call('plug#end')
