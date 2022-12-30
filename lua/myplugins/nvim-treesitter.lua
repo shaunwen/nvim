@@ -9,21 +9,33 @@ treesitter.setup {
   },
   indent = {
     enable = true,
-    disable = {},
+    disable = {
+      -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
+      "python",
+    },
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "<c-k>",
+      scope_incremental = "<enter>",
+      node_decremental = "<c-j>",
+    },
   },
   ensure_installed = {
     "tsx",
     "toml",
     "go",
-		"rust",
-		"python",
+    "rust",
+    "python",
     "json",
     "yaml",
     "html",
     "css",
     "scss",
     "javascript",
-		"typescript",
+    "typescript",
     "bash",
     "sql",
     "lua",
@@ -33,6 +45,9 @@ treesitter.setup {
     "gitignore",
     "dockerfile",
     "dot",
+    "java",
+    "bibtex",
+    "latex",
   },
   autotag = {
     enable = true,
@@ -41,6 +56,6 @@ treesitter.setup {
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 
--- Treesitter folding 
+-- Treesitter folding
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'

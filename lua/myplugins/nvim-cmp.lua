@@ -49,7 +49,16 @@ cmp.setup({
     { name = 'path' },
     { name = 'nvim_lua' },
   }, {
-    { name = 'buffer' },
+    {
+      name = 'buffer',
+      option = {
+        -- Enables completion from buffer words in all open buffers, not just
+        -- the current buffer.
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+      }
+    },
   })
 })
 
