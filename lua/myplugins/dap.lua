@@ -7,7 +7,6 @@ dap.adapters.codelldb = {
   -- command = '/Users/shaun.wen/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/lldb/bin/lldb', -- adjust as needed, must be absolute path
   name = 'rt_lldb'
 }
-
 dap.configurations.rust = {
   {
     name = "Launch file",
@@ -20,7 +19,18 @@ dap.configurations.rust = {
     stopOnEntry = false,
   },
 }
--- dap.configurations.rust = dap.configurations.cpp
+
+dap.adapters.nlua = function(callback, config)
+  callback({ type = 'server', host = "127.0.0.1", port = 8086 })
+end
+dap.configurations.lua = {
+  {
+    type = 'nlua',
+    request = 'attach',
+    name = "Attach to running Neovim instance",
+  }
+}
+
 
 
 local ok, dapui = pcall(require, "dapui")

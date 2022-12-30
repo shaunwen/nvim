@@ -7,13 +7,24 @@ keymap.set('', ';', ':', { noremap = true })
 keymap.set('n', 'H', '^')
 keymap.set('n', 'L', '$')
 
+-- Align/wrap current paragraph
+vim.keymap.set('n', '<leader>gq', 'vipgq')
+-- make word upper/lower case
+vim.keymap.set('n', '<leader>U', 'viwU')
+vim.keymap.set('n', '<leader>u', 'viwu')
+-- Open any file in the same directory in a vsplit,
+-- but where you can type and auto-complete the filename
+keymap.set('n', '<leader>ev', ':vsplit <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', '<leader>es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', '<leader>ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
+
 keymap.set('n', 'x', '"_x')
 keymap.set('x', '<Leader>p', "\"_dP")
 
 keymap.set('n', '<Leader><Leader>d', "\"_d")
 keymap.set('v', '<Leader><Leader>d', "\"_d")
 
-keymap.set({"n", "v"}, "<leader>y", [["+y]])
+keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 keymap.set("n", "<leader>Y", [["+Y]])
 
 keymap.set('v', 'gj', ":m '>+1<CR>gv=gv")
@@ -100,7 +111,7 @@ vim.cmd [[
 keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
 keymap.set('x', '<Leader><Tab>', '<Plug>(fzf-maps-x)')
-keymap.set('i', '<Leader><Tab>', '<Plug>(fzf-maps-i)')
+keymap.set('i', '<C-x>m', '<Plug>(fzf-maps-i)')
 keymap.set('o', '<Leader><Tab>', '<Plug>(fzf-maps-o)')
 keymap.set('i', '<C-x>w', '<Plug>(fzf-complete-word)')
 keymap.set('i', '<C-x>p', '<Plug>(fzf-complete-path)')
@@ -113,17 +124,25 @@ vim.cmd [[
   let g:vsnip_filetypes.typescriptreact = ['typescript']
 
   " Expand
-  imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-  smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+  " imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+  " smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
   " Expand or jump
-  imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-  smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+  " imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+  " smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
   "Jump forward or backward
-  imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-  smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-  imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-  smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+  " imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+  " smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+  " imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+  " smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 ]]
+-- Jump forward or backward
+vim.keymap.set({'i', 's'}, '<C-j>', function()
+  return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<C-j>'
+end, { expr = true })
+
+vim.keymap.set({'i', 's'}, '<C-k>', function()
+  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<C-k>'
+end, { expr = true })
 
 -- Open file in Obsidian vault
 vim.cmd [[
@@ -159,7 +178,11 @@ keymap.set('n', '<leader>pj', '<cmd>term op<CR>')
 -- DAP Plugin
 keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")
 keymap.set('n', '<Leader>rd', ":RustDebuggables<CR>")
-keymap.set('n', '<Leader>dc', ":DapContinue<CR>")
+keymap.set('n', '<F9>', ":DapContinue<CR>")
 keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
 keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
 keymap.set('n', '<Leader>dt', ":lua require('dapui').toggle()<CR>")
+keymap.set('n', '<F8>', ':lua require"dap".step_over()<CR>')
+keymap.set('n', '<F7>', ':lua require"dap".step_into()<CR>')
+vim.api.nvim_set_keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
+vim.api.nvim_set_keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true })

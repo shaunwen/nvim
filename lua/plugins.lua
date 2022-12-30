@@ -50,8 +50,9 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'klen/nvim-test'
 
 Plug 'aklt/plantuml-syntax'
-
--- rust
+-- Lua
+Plug 'jbyuki/one-small-step-for-vimkind'
+-- Rust
 Plug 'simrat39/rust-tools.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'mfussenegger/nvim-dap'
