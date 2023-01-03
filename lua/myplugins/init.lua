@@ -16,3 +16,4 @@ require('myplugins.dap')
 require('myplugins.rust-tools')
 
 require('myplugins/zk')
+require('myplugins.forgit')

@@ -1,7 +1,7 @@
 vim.cmd("autocmd!")
 
 vim.g.mapleader = " "
-vim.opt.clipboard:append {"unnamedplus"}
+vim.opt.clipboard:append { "unnamedplus" }
 vim.cmd('colorscheme gruvbox')
 
 vim.scriptencoding = 'utf-8'
@@ -28,10 +28,18 @@ vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in 
 vim.opt.breakindent = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.expandtab = true
+vim.opt.expandtab = true -- tabs are spaces
 vim.opt.wrap = false -- No Wrap lines
 
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 vim.opt.wildignore:append { '*/node_modules/*' }
 
 vim.opt.rtp:append('/opt/homebrew/opt/fzf')
+
+-- config for fzf-project
+vim.g['fzfSwitchProjectWorkspaces'] = {
+  '/Users/shaun.wen/workspace/projects/scalapay-repos',
+  '/Users/shaun.wen/workspace/projects/magic-repos'
+}
+vim.g['fzfSwitchProjectProjects'] = { '/Users/shaun.wen/.config/nvim' }
+vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
