@@ -98,7 +98,7 @@ keymap.set('n', '<Leader>rg', '<cmd>Rg<CR>', { noremap = true, silent = true })
 keymap.set('n', ',a', '<cmd>Commands<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>/', '<cmd>BLines<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>\'', '<cmd>Marks<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>g', '<cmd>Commits<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gt', '<cmd>Commits<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>hf', '<cmd>BCommits<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>H', '<cmd>Helptags<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>hh', '<cmd>History<CR>', { noremap = true, silent = true })
@@ -136,12 +136,12 @@ vim.cmd [[
   " smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 ]]
 -- Jump forward or backward
-vim.keymap.set({'i', 's'}, '<C-j>', function()
-  return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<C-j>'
+vim.keymap.set({'i', 's'}, '<Tab>', function()
+  return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
 end, { expr = true })
 
-vim.keymap.set({'i', 's'}, '<C-k>', function()
-  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<C-k>'
+vim.keymap.set({'i', 's'}, '<S-Tab>', function()
+  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
 end, { expr = true })
 
 -- Open file in Obsidian vault
@@ -173,7 +173,7 @@ vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
-keymap.set('n', '<leader>pj', '<cmd>term op<CR>')
+keymap.set('n', '<leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
 keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")

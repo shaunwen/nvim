@@ -20,7 +20,7 @@ dap.configurations.rust = {
   },
 }
 
-dap.adapters.nlua = function(callback, config)
+dap.adapters.nlua = function(callback, _)
   callback({ type = 'server', host = "127.0.0.1", port = 8086 })
 end
 dap.configurations.lua = {
