@@ -13,6 +13,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'numToStr/Comment.nvim'
 Plug 'windwp/nvim-autopairs'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 -- language server protocol
 Plug 'neovim/nvim-lspconfig'
@@ -50,13 +51,17 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'klen/nvim-test'
 
 Plug 'aklt/plantuml-syntax'
+
+-- Debug
+Plug 'nvim-lua/plenary.nvim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 -- Lua
 Plug 'jbyuki/one-small-step-for-vimkind'
 -- Rust
 Plug 'simrat39/rust-tools.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
+-- Node
+Plug 'mxsdev/nvim-dap-vscode-js'
 
 Plug 'tpope/vim-abolish'
 
