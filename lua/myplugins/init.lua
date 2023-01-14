@@ -5,6 +5,7 @@ require('myplugins/lspsaga')
 require('myplugins/devicons')
 require('myplugins/chadtree')
 require('myplugins/lualine')
+require('myplugins/indent-blankline')
 
 require('myplugins/nvim-cmp')
 require('myplugins/comment')
