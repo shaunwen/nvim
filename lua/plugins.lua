@@ -67,5 +67,5 @@ Plug 'tpope/vim-abolish'
 
 Plug 'ray-x/guihua.lua'  --lua GUI lib
 Plug 'ray-x/forgit.nvim'
-Plug 'benwainwright/fzf-project'
+Plug 'shaunwen/fzf-project'
 vim.call('plug#end')

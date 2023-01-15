@@ -1,6 +1,7 @@
 vim.cmd("autocmd!")
 
 vim.g.mapleader = " "
+vim.g.syntax_on = true
 vim.opt.clipboard:append { "unnamedplus" }
 vim.cmd('colorscheme gruvbox')
 
@@ -41,5 +42,9 @@ vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
   '/Users/shaun.wen/workspace/projects/magic-repos'
 }
-vim.g['fzfSwitchProjectProjects'] = { '/Users/shaun.wen/.config/nvim' }
+vim.g['fzfSwitchProjectProjects'] = {
+  '/Users/shaun.wen/.config/nvim',
+  '/Users/shaun.wen/repo/learning/rust/swc'
+}
 vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
+vim.g['fzfSwitchProjectCloseOpenedBuffers'] = 1
