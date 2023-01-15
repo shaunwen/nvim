@@ -68,4 +68,5 @@ Plug 'tpope/vim-abolish'
 Plug 'ray-x/guihua.lua'  --lua GUI lib
 Plug 'ray-x/forgit.nvim'
 Plug 'shaunwen/fzf-project'
+Plug 'akinsho/toggleterm.nvim'
 vim.call('plug#end')
