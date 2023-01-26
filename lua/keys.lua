@@ -106,7 +106,8 @@ keymap.set('n', '<Leader>h:', '<cmd>History:<CR>', { noremap = true, silent = tr
 keymap.set('n', '<Leader>h/', '<cmd>History/<CR>', { noremap = true, silent = true })
 vim.cmd [[
   command! -bang -nargs=* ProjectRg
-    \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
+    \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
+    \ .shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
 ]]
 keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
@@ -136,11 +137,11 @@ vim.cmd [[
   " smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 ]]
 -- Jump forward or backward
-vim.keymap.set({'i', 's'}, '<Tab>', function()
+vim.keymap.set({ 'i', 's' }, '<Tab>', function()
   return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
 end, { expr = true })
 
-vim.keymap.set({'i', 's'}, '<S-Tab>', function()
+vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
   return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
 end, { expr = true })
 
