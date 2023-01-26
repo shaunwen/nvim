@@ -40,7 +40,8 @@ vim.opt.rtp:append('/opt/homebrew/opt/fzf')
 -- config for fzf-project
 vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/work-repos',
-  '/Users/shaun.wen/workspace/projects/work-repos-2'
+  '/Users/shaun.wen/workspace/projects/work-repos-2',
+  '/Users/shaun.wen/repo/learning/rust'
 }
 vim.g['fzfSwitchProjectProjects'] = {
   '/Users/shaun.wen/.config/nvim',
