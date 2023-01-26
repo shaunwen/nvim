@@ -8,6 +8,8 @@ vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
 vim.opt.list = true
 
 require("indent_blankline").setup {
+  use_treesitter_scope = true,
+  show_first_indent_level = true,
   space_char_blankline = " ",
   char_highlight_list = {
     "IndentBlanklineIndent1",
