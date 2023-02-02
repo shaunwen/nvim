@@ -174,3 +174,6 @@ keymap.set('n', '<F8>', ':lua require"dap".step_over()<CR>')
 keymap.set('n', '<F7>', ':lua require"dap".step_into()<CR>')
 vim.api.nvim_set_keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
 vim.api.nvim_set_keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true })
+
+-- formatter
+keymap.set({ 'n', 'v' }, ',f', "<cmd>Format<CR>")
