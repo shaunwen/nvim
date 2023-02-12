@@ -16,6 +16,7 @@ cmp.setup({
         vsnip = "[vsnip]",
         --luasnip = "[LuaSnip]",
         path = "[Path]",
+        spell = "[Spell]",
         nvim_lua = "[Lua]",
         latex_symbols = "[Latex]",
       })
@@ -48,6 +49,7 @@ cmp.setup({
     -- { name = 'luasnip' }, -- For luasnip users.
     { name = 'path' },
     { name = 'nvim_lua' },
+    { name = 'spell' },
   }, {
     {
       name = 'buffer',
