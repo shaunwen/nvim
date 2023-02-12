@@ -8,24 +8,24 @@ keymap.set('n', 'H', '^')
 keymap.set('n', 'L', '$')
 
 -- Align/wrap current paragraph
-vim.keymap.set('n', '<leader>gq', 'vipgq')
+vim.keymap.set('n', '<Leader>gq', 'vipgq')
 -- make word upper/lower case
-vim.keymap.set('n', '<leader>U', 'viwU')
-vim.keymap.set('n', '<leader>u', 'viwu')
+vim.keymap.set('n', '<Leader>U', 'viwU')
+vim.keymap.set('n', '<Leader>u', 'viwu')
 -- Open any file in the same directory in a vsplit,
 -- but where you can type and auto-complete the filename
-keymap.set('n', '<leader>ev', ':vsplit <C-R>=expand("%:p:h") . "/" <CR>')
-keymap.set('n', '<leader>es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
-keymap.set('n', '<leader>ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', '<Leader>ev', ':vsplit <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', '<Leader>es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', '<Leader>ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
 
 keymap.set('n', 'x', '"_x')
-keymap.set('x', '<Leader>p', "\"_dP")
+keymap.set('x', '<Leader>p', [["_dP]])
 
 keymap.set('n', '<Leader><Leader>d', "\"_d")
 keymap.set('v', '<Leader><Leader>d', "\"_d")
 
-keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-keymap.set("n", "<leader>Y", [["+Y]])
+keymap.set({ "n", "v" }, "<Leader>y", [["+y]])
+keymap.set("n", "<Leader>Y", [["+Y]])
 
 keymap.set('v', 'gj', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'gk', ":m '<-2<CR>gv=gv")
@@ -58,7 +58,7 @@ keymap.set('n', 'tc', ':tabclose<CR>')
 keymap.set('n', 'ss', ':split<CR><C-w>w')
 keymap.set('n', 'sv', ':vsplit<CR><C-w>w')
 -- Move window
-keymap.set('n', '<Space>w', '<C-w>w')
+keymap.set('n', ',w', '<C-w>w')
 keymap.set('n', 'sc', '<C-w>q')
 keymap.set('', 'sh', '<C-w>h')
 keymap.set('', 'sk', '<C-w>k')
@@ -161,7 +161,7 @@ vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
-keymap.set('n', '<leader>pj', ':FzfSwitchProject<CR>')
+keymap.set('n', '<Leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
 keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")
@@ -177,3 +177,6 @@ vim.api.nvim_set_keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<C
 
 -- formatter
 keymap.set({ 'n', 'v' }, ',f', "<cmd>Format<CR>")
+
+-- force delete buffer, can be used for deleting neovim builtin terminals
+keymap.set( 'n', '<Leader>tc', "<cmd>bd!<CR>")
