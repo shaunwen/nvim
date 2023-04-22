@@ -36,6 +36,9 @@ keymap.set('v', '>', '>gv')
 keymap.set('n', 'n', 'nzzzv')
 keymap.set('n', 'N', 'Nzzzv')
 
+keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
+keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
+
 keymap.set('n', '<C-f>', "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap.set("n", "gx", "<cmd>!chmod +x %<CR>", { silent = true })
@@ -107,7 +110,10 @@ keymap.set('n', '<Leader>h/', '<cmd>History/<CR>', { noremap = true, silent = tr
 vim.cmd [[
   command! -bang -nargs=* ProjectRg
     \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
-    \ .shellescape(<q-args>), 1, {'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]}, <bang>0)
+    \ .shellescape(<q-args>), 1, {
+    \ 'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2],
+    \ 'options': '--ansi --preview "bat --color=always --style=header,grid,numbers --highlight-line {2} {1} | head -500"'
+    \ }, <bang>0)
 ]]
 keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
@@ -129,7 +135,7 @@ vim.keymap.set({ 'i', 's' }, '<Tab>', function()
   return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
 end, { expr = true })
 vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
-  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
+  return vim.fn['vsnip#jumpable']( -1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
 end, { expr = true })
 
 -- Open file in Obsidian vault
@@ -179,4 +185,4 @@ vim.api.nvim_set_keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<C
 keymap.set({ 'n', 'v' }, ',f', "<cmd>Format<CR>")
 
 -- force delete buffer, can be used for deleting neovim builtin terminals
-keymap.set( 'n', '<Leader>tc', "<cmd>bd!<CR>")
+keymap.set('n', '<Leader>tc', "<cmd>bd!<CR>")
