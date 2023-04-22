@@ -9,7 +9,13 @@ saga.setup({
       purple = '#61AFEF', -- use blue for finder type
       magenta = '#F7BB3B' -- use yellow for loading
     }
-  }
+  },
+  finder = {
+    keys = {
+      jump_to = 'p',
+      expand_or_jump = '<CR>',
+    },
+  },
 })
 
 local opts = { noremap = true, silent = true }
@@ -23,3 +29,5 @@ vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>', opts)
 vim.keymap.set('n', '<leader>o', '<cmd>Lspsaga outline<CR>', opts)
 vim.keymap.set("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
 vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+
+vim.cmd('highlight LspDiagnosticsFloatingError guifg=green')
