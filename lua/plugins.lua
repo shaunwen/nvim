@@ -21,6 +21,8 @@ Plug 'onsails/lspkind-nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = vim.fn['TSUpdate'] })
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 -- git
 Plug 'lewis6991/gitsigns.nvim'
@@ -39,6 +41,8 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
+Plug 'xabikos/vscode-javascript'
+Plug 'rust-lang/vscode-rust'
 -- For luasnip
 -- Plug 'L3MON4D3/LuaSnip'
 -- Plug 'saadparwaiz1/cmp_luasnip'
