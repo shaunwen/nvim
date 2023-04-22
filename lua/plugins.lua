@@ -52,7 +52,6 @@ Plug('iamcco/markdown-preview.nvim', { ['do'] = vim.fn['mkdp#util#install'] })
 Plug 'mickael-menu/zk-nvim'
 
 Plug 'windwp/nvim-ts-autotag'
-Plug 'klen/nvim-test'
 
 Plug 'aklt/plantuml-syntax'
 

@@ -13,7 +13,6 @@ require('myplugins/comment')
 require('myplugins/autopairs')
 require('myplugins/ts-autotag')
 require('myplugins/gitsigns')
-require('myplugins/nvim-test')
 require('myplugins.dap')
 require('myplugins.rust-tools')
 
