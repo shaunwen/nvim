@@ -135,7 +135,7 @@ vim.keymap.set({ 'i', 's' }, '<Tab>', function()
   return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
 end, { expr = true })
 vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
-  return vim.fn['vsnip#jumpable']( -1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
+  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
 end, { expr = true })
 
 -- Open file in Obsidian vault
