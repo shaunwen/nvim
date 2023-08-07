@@ -26,6 +26,9 @@ saga.setup({
     keys = {
       toggle_or_jump = '<CR>'
     }
+  },
+  lightbulb = {
+    enable = false
   }
 })
 
