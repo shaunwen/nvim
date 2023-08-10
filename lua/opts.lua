@@ -10,6 +10,7 @@ vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
 
 vim.opt.termguicolors = true
+vim.o.guifont = "JetBrainsMono Nerd Font:h16" -- text below applies for VimScript
 vim.wo.number = true
 vim.opt.signcolumn = 'yes'
 
