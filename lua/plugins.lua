@@ -42,7 +42,6 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'xabikos/vscode-javascript'
-Plug 'rust-lang/vscode-rust'
 -- For luasnip
 -- Plug 'L3MON4D3/LuaSnip'
 -- Plug 'saadparwaiz1/cmp_luasnip'
