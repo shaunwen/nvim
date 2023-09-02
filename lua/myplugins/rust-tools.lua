@@ -1,6 +1,8 @@
 local status, rt = pcall(require, "rust-tools")
 if (not status) then return end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 local function on_attach(client, bufnr)
   local opts = { noremap = true, silent = true }
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -53,6 +55,7 @@ local opts = {
   server = {
     -- on_attach is a callback called when the language server attachs to the buffer
     on_attach = on_attach,
+    capabilities = capabilities,
     standalone = true,
     settings = {
       -- to enable rust-analyzer settings visit:
