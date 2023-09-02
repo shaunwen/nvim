@@ -3,6 +3,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin', '~/.config/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
+Plug 'navarasu/onedark.nvim'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
@@ -67,8 +68,8 @@ Plug 'mxsdev/nvim-dap-vscode-js'
 
 Plug 'tpope/vim-abolish'
 
-Plug 'ray-x/guihua.lua'  --lua GUI lib
-Plug 'ray-x/forgit.nvim'
+-- Plug 'ray-x/guihua.lua'  --lua GUI lib
+-- Plug 'ray-x/forgit.nvim'
 Plug 'shaunwen/fzf-project'
 Plug 'akinsho/toggleterm.nvim'
 
