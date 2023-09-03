@@ -3,7 +3,8 @@ vim.cmd("autocmd!")
 vim.g.mapleader = " "
 vim.g.syntax_on = true
 vim.opt.clipboard:append { "unnamedplus" }
-vim.cmd('colorscheme gruvbox')
+-- vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme onedark')
 
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
