@@ -1,7 +1,16 @@
 local status, gitsigns = pcall(require, "gitsigns")
 if (not status) then return end
 
+-- See `:help gitsigns.txt`
 gitsigns.setup {
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
+  },
+
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
@@ -16,13 +25,13 @@ gitsigns.setup {
       if vim.wo.diff then return ']c' end
       vim.schedule(function() gs.next_hunk() end)
       return '<Ignore>'
-    end, { expr = true })
+    end, { expr = true, desc = 'Go to Next Hunk' })
 
     map('n', '[c', function()
       if vim.wo.diff then return '[c' end
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
-    end, { expr = true })
+    end, { expr = true, desc = 'Go to Previous Hunk' })
 
     -- Actions
     map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
@@ -30,7 +39,7 @@ gitsigns.setup {
     map('n', '<leader>hS', gs.stage_buffer)
     map('n', '<leader>hu', gs.undo_stage_hunk)
     map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hp', gs.preview_hunk, { desc = '[H]unk [P]review' })
     map('n', '<leader>hb', function() gs.blame_line { full = true } end)
     map('n', '<leader>tb', gs.toggle_current_line_blame)
     map('n', '<leader>hd', gs.diffthis)
