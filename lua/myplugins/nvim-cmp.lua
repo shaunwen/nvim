@@ -1,6 +1,11 @@
 -- Setup nvim-cmp.
 local status, cmp = pcall(require, "cmp")
 if (not status) then return end
+
+local luasnip = require 'luasnip'
+require('luasnip.loaders.from_vscode').lazy_load()
+luasnip.config.setup {}
+
 local lspkind = require 'lspkind'
 
 cmp.setup({
@@ -13,8 +18,8 @@ cmp.setup({
       menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
-        vsnip = "[vsnip]",
-        --luasnip = "[LuaSnip]",
+        -- vsnip = "[vsnip]",
+        luasnip = "[LuaSnip]",
         path = "[Path]",
         spell = "[Spell]",
         nvim_lua = "[Lua]",
@@ -25,8 +30,8 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
   window = {
@@ -45,8 +50,8 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-    -- { name = 'luasnip' }, -- For luasnip users.
+    -- { name = 'vsnip' }, -- For vsnip users.
+    { name = 'luasnip' }, -- For luasnip users.
     { name = 'path' },
     { name = 'nvim_lua' },
     { name = 'spell' },
@@ -91,7 +96,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
-vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.cmd [[highlight! default link CmpItemKind CmpItemMenuDefault]]
 
 -- Auto pairs

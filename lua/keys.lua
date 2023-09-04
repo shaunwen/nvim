@@ -1,5 +1,9 @@
 local keymap = vim.keymap
 
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
 -- Override Ctrl + i to maintain it's function for navigation as there is Tab key override below
 keymap.set('n', '<C-i>', '<C-i>')
 
@@ -39,7 +43,7 @@ keymap.set('n', 'N', 'Nzzzv')
 keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
-keymap.set('n', '<C-f>', "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap.set('n', '<C-S-f>', "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap.set("n", "gx", "<cmd>!chmod +x %<CR>", { silent = true })
 
@@ -79,11 +83,11 @@ keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 
 -- Plugin: easymotion
 -- Turn on case-insensitive feature
-vim.g.EasyMotion_smartcase             = 1
+-- vim.g.EasyMotion_smartcase             = 1
 -- Smartsign (type `3` and match `3`&`#`)
-vim.g.EasyMotion_use_smartsign_us      = 1
-vim.g.multi_cursor_select_all_word_key = '<S-C-a>'
-vim.g.multi_cursor_select_all_key      = 'g<S-C-a>'
+-- vim.g.EasyMotion_use_smartsign_us      = 1
+-- vim.g.multi_cursor_select_all_word_key = '<S-C-a>'
+-- vim.g.multi_cursor_select_all_key      = 'g<S-C-a>'
 
 keymap.set('', '<Leader>', '<Plug>(easymotion-prefix)')
 keymap.set('n', '<Leader>s', '<Plug>(easymotion-s)')
@@ -125,18 +129,18 @@ keymap.set('i', '<C-x>p', '<Plug>(fzf-complete-path)')
 keymap.set('i', '<C-x>l', '<Plug>(fzf-complete-line)')
 
 -- Plugin: vsnip
-vim.cmd [[
-  let g:vsnip_filetypes = {}
-  let g:vsnip_filetypes.javascriptreact = ['javascript']
-  let g:vsnip_filetypes.typescriptreact = ['typescript']
-]]
+-- vim.cmd [[
+--   let g:vsnip_filetypes = {}
+--   let g:vsnip_filetypes.javascriptreact = ['javascript']
+--   let g:vsnip_filetypes.typescriptreact = ['typescript']
+-- ]]
 -- Jump forward or backward
-vim.keymap.set({ 'i', 's' }, '<Tab>', function()
-  return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
-end, { expr = true })
-vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
-  return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
-end, { expr = true })
+-- vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+--   return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
+-- end, { expr = true })
+-- vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
+--   return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
+-- end, { expr = true })
 
 -- Open file in Obsidian vault
 vim.cmd [[
