@@ -43,7 +43,7 @@ keymap.set('n', 'N', 'Nzzzv')
 keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
-keymap.set('n', '<C-S-f>', "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap.set('n', '<C-S-f>', "<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>")
 keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap.set("n", "gx", "<cmd>!chmod +x %<CR>", { silent = true })
 
@@ -72,10 +72,10 @@ keymap.set('', 'sk', '<C-w>k')
 keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sl', '<C-w>l')
 -- Resize window
-keymap.set('n', 's<left>', '5<C-w><')
-keymap.set('n', 's<right>', '5<C-w>>')
-keymap.set('n', 's<up>', '5<C-w>+')
-keymap.set('n', 's<down>', '5<C-w>-')
+keymap.set('n', '<s-left>', '5<C-w><')
+keymap.set('n', '<s-right>', '5<C-w>>')
+keymap.set('n', '<s-up>', '5<C-w>+')
+keymap.set('n', '<s-down>', '5<C-w>-')
 
 -- Esc in neovim terminal
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
@@ -89,9 +89,9 @@ keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 -- vim.g.multi_cursor_select_all_word_key = '<S-C-a>'
 -- vim.g.multi_cursor_select_all_key      = 'g<S-C-a>'
 
-keymap.set('', '<Leader>', '<Plug>(easymotion-prefix)')
-keymap.set('n', '<Leader>s', '<Plug>(easymotion-s)')
-keymap.set('n', ',s', '<Plug>(easymotion-s2)')
+-- keymap.set('', '<Leader>', '<Plug>(easymotion-prefix)')
+-- keymap.set('n', '<Leader>s', '<Plug>(easymotion-s)')
+-- keymap.set('n', ',s', '<Plug>(easymotion-s2)')
 
 -- Plugin chadtree
 keymap.set('n', '<Leader>v', '<cmd>CHADopen<CR>')
@@ -127,6 +127,14 @@ keymap.set('o', '<Leader><Tab>', '<Plug>(fzf-maps-o)')
 keymap.set('i', '<C-x>w', '<Plug>(fzf-complete-word)')
 keymap.set('i', '<C-x>p', '<Plug>(fzf-complete-path)')
 keymap.set('i', '<C-x>l', '<Plug>(fzf-complete-line)')
+
+vim.cmd [[
+  command! -bang -nargs=* CustomBLines
+      \ call fzf#vim#grep(
+      \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
+      \   fzf#vim#with_preview({'options': '--keep-right --delimiter : --nth 4.. --preview "bat -p --color always {}"'}, 'right:60%' ))
+  nnoremap <leader>/ :CustomBLines<Cr>
+]]
 
 -- Plugin: vsnip
 -- vim.cmd [[
