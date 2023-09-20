@@ -15,13 +15,13 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   nmap('<leader>lt', vim.lsp.buf.format, '[L]in[t]')
 
-  nmap(',r', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap(',ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 end
 
 -- Enable the following language servers
@@ -46,7 +46,13 @@ local servers = {
         -- Get the language server to recognize the `vim` global
         globals = { 'vim' },
       },
-      workspace = { checkThirdParty = false },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          [vim.fn.expand('$VIMRUMTIME/lua')] = true,
+          [vim.fn.stdpath('config') .. '/lua'] = true,
+        },
+      },
       telemetry = { enable = false },
     },
   },
