@@ -61,6 +61,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- set highlight for selection
+-- green
+-- vim.cmd[[highlight Visual gui=bold guibg=#0E191F guifg=#60B950]]
+-- orange
+vim.cmd[[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]]
+
 -- config for fzf-project
 vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
