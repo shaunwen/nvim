@@ -2,11 +2,8 @@
 local status, cmp = pcall(require, "cmp")
 if (not status) then return end
 
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
-local lspkind = require 'lspkind'
+local lspkind = require('lspkind')
+local luasnip = require('luasnip')
 
 cmp.setup({
   view = {
@@ -39,6 +36,8 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),

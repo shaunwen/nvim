@@ -35,7 +35,7 @@ vim.opt.breakindent = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true -- tabs are spaces
-vim.opt.wrap = false -- No Wrap lines
+vim.opt.wrap = false     -- No Wrap lines
 vim.o.undofile = true
 
 -- Decrease update time
@@ -65,16 +65,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- green
 -- vim.cmd[[highlight Visual gui=bold guibg=#0E191F guifg=#60B950]]
 -- orange
-vim.cmd[[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]]
+vim.cmd [[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]]
 
 -- config for fzf-project
 vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
-  '/Users/shaun.wen/workspace/projects/magic-repos',
   '/Users/shaun.wen/repo/learning/rust'
 }
 vim.g['fzfSwitchProjectProjects'] = {
   '/Users/shaun.wen/.config/nvim',
+  '/Users/shaun.wen/Documents/myNotes'
 }
 vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
 vim.g['fzfSwitchProjectCloseOpenedBuffers'] = 1
