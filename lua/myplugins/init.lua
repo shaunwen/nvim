@@ -8,6 +8,7 @@ require('myplugins.devicons')
 require('myplugins.lualine')
 require('myplugins.indent-blankline')
 
+require('myplugins.luasnip')
 require('myplugins.nvim-cmp')
 require('myplugins.comment')
 require('myplugins.autopairs')

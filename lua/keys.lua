@@ -23,6 +23,7 @@ keymap.set('n', '<Leader>es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
 keymap.set('n', '<Leader>ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
 
 keymap.set('n', 'x', '"_x')
+keymap.set('v', 'x', '"_x')
 keymap.set('x', '<Leader>p', [["_dP]])
 
 keymap.set('n', '<Leader><Leader>d', "\"_d")
