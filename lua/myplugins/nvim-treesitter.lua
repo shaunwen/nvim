@@ -5,7 +5,10 @@ treesitter.setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = { "markdown" },
-    disable = {},
+    -- disable = {},
+    disable = function()
+      return vim.b.large_buf
+    end,
   },
   indent = {
     enable = true,
@@ -54,7 +57,7 @@ treesitter.setup {
   autotag = {
     enable = true,
   },
-    textobjects = {
+  textobjects = {
     select = {
       enable = true,
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
