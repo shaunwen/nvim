@@ -144,7 +144,7 @@ require('lazy').setup({
       },
     },
   },
-
+  'ThePrimeagen/harpoon',
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -185,7 +185,7 @@ require('lazy').setup({
       "kristijanhusak/vim-dadbod-completion",
     },
   },
-
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
