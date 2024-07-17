@@ -45,8 +45,38 @@ keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
 keymap.set('n', '<C-S-f>', "<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>")
-keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap.set("n", "gx", "<cmd>!chmod +x %<CR>", { silent = true })
+
+local function replace_word()
+  -- Get the current mode
+  local mode = vim.api.nvim_get_mode().mode
+
+  if mode == 'v' or mode == 'V' then
+    -- If in visual mode, use the visual selection range
+    vim.cmd('normal! "zy')
+    local selected_text = vim.fn.getreg('z')
+    local new_text = vim.fn.input("Replace with: ")
+    -- Start replacement from the currently selected text
+    vim.cmd(':s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    -- Extend replacement to the rest of the file starting from the current line
+    vim.cmd(':.,$s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    -- Wrap around and replace from the top of the file to the current line
+    vim.cmd(':1,.-1s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+  else
+    -- If in normal mode, replace the word under the cursor in the entire file
+    local word = vim.fn.expand('<cword>')
+    local new_text = vim.fn.input("Replace with: ")
+    -- Start replacement from the word under the cursor
+    vim.cmd(':s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    -- Extend replacement to the rest of the file starting from the current line
+    vim.cmd(':.,$s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    -- Wrap around and replace from the top of the file to the current line
+    vim.cmd(':1,.-1s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+  end
+end
+
+vim.keymap.set({ "n", "v" }, "gs", replace_word, { noremap = true, silent = true })
 
 -- Increment/decrement
 keymap.set('n', '+', '<C-a>')
