@@ -21,6 +21,7 @@ cmp.setup({
         spell = "[Spell]",
         nvim_lua = "[Lua]",
         latex_symbols = "[Latex]",
+        copilot = "[Copilot]",
       })
     }),
   },
@@ -54,6 +55,8 @@ cmp.setup({
     { name = 'path' },
     { name = 'nvim_lua' },
     { name = 'spell' },
+    -- Copilot Source
+    { name = "copilot" },
   }, {
     {
       name = 'buffer',
