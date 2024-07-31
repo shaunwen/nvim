@@ -54,9 +54,6 @@ treesitter.setup {
     "bibtex",
     "latex",
   },
-  autotag = {
-    enable = true,
-  },
   textobjects = {
     select = {
       enable = true,
