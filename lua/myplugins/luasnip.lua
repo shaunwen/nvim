@@ -30,25 +30,28 @@ ls.config.set_config({
   },
 })
 
--- <c-k> is my expansion key
+-- <c-j> is my expansion key 
+-- (as I am using Karabiner to have mapped Ctrl - h/j/k/l to arrow keys, when the following config is applied, I could only press Ctrl-Shift-j)
 -- this will expand the current item or jump to the next item within the snippet
-vim.keymap.set({ "i", "s" }, "<C-k>", function()
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
 end, { silent = true })
 
--- <C-j> is my jump backwards key.
+-- <C-k> is my jump backwards key
+-- (as I am using Karabiner to have mapped Ctrl - h/j/k/l to arrow keys, when the following config is applied, I could not press Ctrl-Shift-k )
 -- this always moves to the previous item within the snippet
-vim.keymap.set({ "i", "s" }, "<C-j>", function()
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
 end, { silent = true })
 
 -- <c-l> is selecting within a list of options.
+-- due to same reason, somehow, this needs to press Ctrl-Shift-l or Cmd-k
 -- This is useful for choice nodes (introduced in the forthcoming episode 2)
-vim.keymap.set("i", "<c-l>", function()
+vim.keymap.set("i", "<C-l>", function()
   if ls.choice_active() then
     ls.change_choice(1)
   end

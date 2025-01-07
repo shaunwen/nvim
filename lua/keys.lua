@@ -189,6 +189,7 @@ keymap.set('n', '<Leader>io', '<cmd>IO<CR>', { noremap = true })
 
 -- markdown-preview
 keymap.set('n', '<Leader>pv', '<cmd>MarkdownPreview<CR>', { noremap = true })
+keymap.set('n', '<Leader>mv', '<cmd>Vivify<CR>', { noremap = true })
 
 vim.api.nvim_create_user_command(
   'BufOnly',
