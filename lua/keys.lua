@@ -125,8 +125,11 @@ keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 -- keymap.set('n', ',s', '<Plug>(easymotion-s2)')
 
 -- Plugin chadtree
-keymap.set('n', '<Leader>v', '<cmd>CHADopen<CR>')
+keymap.set('n', '<Leader><Leader>v', '<cmd>CHADopen<CR>')
 keymap.set('n', '<Leader>ll', '<cmd>call setqflist([])<CR>')
+
+-- Plugin nvimtree
+vim.keymap.set('n', '<Leader>v', ':NvimTreeFindFileToggle<CR>')
 
 -- Plugin: FZF
 keymap.set('n', '<Leader>b', '<cmd>Buffers<CR>', { noremap = true, silent = true })
@@ -188,7 +191,7 @@ vim.cmd [[
 keymap.set('n', '<Leader>io', '<cmd>IO<CR>', { noremap = true })
 
 -- markdown-preview
-keymap.set('n', '<Leader>pv', '<cmd>MarkdownPreview<CR>', { noremap = true })
+-- keymap.set('n', '<Leader>pv', '<cmd>MarkdownPreview<CR>', { noremap = true })
 keymap.set('n', '<Leader>mv', '<cmd>Vivify<CR>', { noremap = true })
 
 vim.api.nvim_create_user_command(
