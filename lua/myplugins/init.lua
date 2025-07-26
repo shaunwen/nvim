@@ -24,5 +24,6 @@ require('myplugins.nvim-tree')
 require('myplugins.chadtree')
 require('myplugins.telescope')
 require('myplugins.neodev')
+require('myplugins.render-markdown')
 
 require('myplugins.dadbod')

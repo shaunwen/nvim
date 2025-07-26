@@ -56,7 +56,8 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'spell' },
     -- Copilot Source
-    { name = "copilot" },
+    { name = 'copilot' },
+    { name = 'render-markdown' },
   }, {
     {
       name = 'buffer',

@@ -38,6 +38,7 @@ require('lazy').setup({
   'windwp/nvim-ts-autotag',
   'glepnir/lspsaga.nvim',
   'kyazdani42/nvim-web-devicons',
+  { "nvim-tree/nvim-web-devicons", opts = {} },
   'onsails/lspkind-nvim',
 
   -- Git related plugins
@@ -154,11 +155,18 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   -- Markdown
-  {
-    'iamcco/markdown-preview.nvim',
-    build = function() vim.fn["mkdp#util#install"]() end,
-  },
+  -- {
+  --   'iamcco/markdown-preview.nvim',
+  --   build = function() vim.fn["mkdp#util#install"]() end,
+  -- },
   { "jannis-baum/vivify.vim" },
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
   {
     'mickael-menu/zk-nvim',
     lazy = true,
