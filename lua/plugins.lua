@@ -23,7 +23,7 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   'tpope/vim-surround',
   {
-    "phaazon/hop.nvim",
+    'phaazon/hop.nvim',
     lazy = true,
   },
   'terryma/vim-multiple-cursors',
@@ -38,7 +38,7 @@ require('lazy').setup({
   'windwp/nvim-ts-autotag',
   'glepnir/lspsaga.nvim',
   'kyazdani42/nvim-web-devicons',
-  { "nvim-tree/nvim-web-devicons", opts = {} },
+  { 'nvim-tree/nvim-web-devicons', opts = {} },
   'onsails/lspkind-nvim',
 
   -- Git related plugins
@@ -118,11 +118,11 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    main = "ibl",
+    main = 'ibl',
     opts = {},
   },
 
-  -- "gc" to comment visual regions/lines
+  -- 'gc' to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -157,15 +157,29 @@ require('lazy').setup({
   -- Markdown
   -- {
   --   'iamcco/markdown-preview.nvim',
-  --   build = function() vim.fn["mkdp#util#install"]() end,
+  --   build = function() vim.fn['mkdp#util#install']() end,
   -- },
-  { "jannis-baum/vivify.vim" },
+  'bullets-vim/bullets.vim',
+  { 'jannis-baum/vivify.vim' },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {},
+  },
+  --  [markdown markmap]
+  --  https://github.com/Zeioth/markmap.nvim
+  {
+    'Zeioth/markmap.nvim',
+    build = 'yarn global add markmap-cli',
+    cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
+    opts = {
+      html_output = '/tmp/markmap.html', -- (default) Setting a empty string '' here means: [Current buffer path].html
+      hide_toolbar = false, -- (default)
+      grace_period = 3600000 -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+    },
+    config = function(_, opts) require('markmap').setup(opts) end
   },
   {
     'mickael-menu/zk-nvim',
@@ -187,33 +201,32 @@ require('lazy').setup({
   'mhartington/formatter.nvim',
 
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
     config = function()
-      require("copilot").setup({
+      require('copilot').setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
       })
     end,
   },
   {
-    "zbirenbaum/copilot-cmp",
+    'zbirenbaum/copilot-cmp',
     config = function()
-      require("copilot_cmp").setup()
+      require('copilot_cmp').setup()
     end,
   },
   {
-    "tpope/vim-dadbod",
+    'tpope/vim-dadbod',
     opt = true,
     dependencies = {
-      "kristijanhusak/vim-dadbod-ui",
-      "kristijanhusak/vim-dadbod-completion",
+      'kristijanhusak/vim-dadbod-ui',
+      'kristijanhusak/vim-dadbod-completion',
     },
   },
-  { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
+  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional 'plugins' for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
