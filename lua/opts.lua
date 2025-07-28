@@ -79,5 +79,15 @@ vim.g['fzfSwitchProjectProjects'] = {
 vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
 vim.g['fzfSwitchProjectCloseOpenedBuffers'] = 1
 
+-- Auto refresh nvim-tree after directory change
+vim.api.nvim_create_autocmd('DirChanged', {
+  pattern = '*',
+  callback = function()
+    local api = require('nvim-tree.api')
+    api.tree.change_root(vim.fn.getcwd())
+    api.tree.reload()
+  end,
+})
+
 vim.g.fubitive_domain_pattern = 'code\\.example\\.com'
 vim.g.fubitive_domain_context_path = 'bitbucket'
