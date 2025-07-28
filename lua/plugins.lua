@@ -49,6 +49,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   'nvim-tree/nvim-tree.lua',
+  { 'echasnovski/mini.files', version = '*' },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -154,7 +155,7 @@ require('lazy').setup({
   --   'iamcco/markdown-preview.nvim',
   --   build = function() vim.fn['mkdp#util#install']() end,
   -- },
-  'bullets-vim/bullets.vim',
+  { 'bullets-vim/bullets.vim' },
   { 'jannis-baum/vivify.vim' },
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -180,7 +181,7 @@ require('lazy').setup({
     'mickael-menu/zk-nvim',
     lazy = true,
   },
-  'aklt/plantuml-syntax',
+  { 'aklt/plantuml-syntax' },
   -- Debug
   'mfussenegger/nvim-dap',
   'rcarriga/nvim-dap-ui',

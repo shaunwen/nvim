@@ -124,12 +124,10 @@ keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 -- keymap.set('n', '<Leader>s', '<Plug>(easymotion-s)')
 -- keymap.set('n', ',s', '<Plug>(easymotion-s2)')
 
--- Plugin chadtree
-keymap.set('n', '<Leader><Leader>v', '<cmd>CHADopen<CR>')
-keymap.set('n', '<Leader>ll', '<cmd>call setqflist([])<CR>')
-
 -- Plugin nvimtree
 vim.keymap.set('n', '<Leader>v', ':NvimTreeFindFileToggle<CR>')
+-- Plugin mini.files
+keymap.set('n', '<Leader><Leader>e', '<cmd>lua MiniFiles.open()<CR>')
 
 -- Plugin: FZF
 keymap.set('n', '<Leader>b', '<cmd>Buffers<CR>', { noremap = true, silent = true })
@@ -245,6 +243,5 @@ keymap.set({ 'n', 'v' }, ',f', "<cmd>Format<CR>")
 
 -- force delete buffer, can be used for deleting neovim builtin terminals
 keymap.set('n', '<Leader>tc', "<cmd>bd!<CR>")
-
 
 keymap.set('n', '<Leader>m', "<cmd>lua require('harpoon.mark').add_file()<CR>")
