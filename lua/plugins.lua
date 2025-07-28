@@ -49,11 +49,6 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   'nvim-tree/nvim-tree.lua',
-  {
-    'ms-jpq/chadtree',
-    branch = 'chad',
-    build = 'python3 -m chadtree deps',
-  },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
