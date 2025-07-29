@@ -1,7 +1,7 @@
 local status, rt = pcall(require, "rust-tools")
 if (not status) then return end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 local function on_attach(client, bufnr)
   local opts = { noremap = true, silent = true }
@@ -69,7 +69,7 @@ local opts = {
   dap = {
     adapter = require('rust-tools.dap').get_codelldb_adapter(
       codelldb_path, liblldb_path)
-  }
+  },
   -- dap = {
   --   adapter = {
   --     type = "executable",

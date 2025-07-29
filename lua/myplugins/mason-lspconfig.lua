@@ -37,7 +37,9 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
-  ts_ls = {},
+  ts_ls = {
+    filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  },
   html = { filetypes = { 'html', 'twig', 'hbs' } },
 
   lua_ls = {
@@ -58,9 +60,8 @@ local servers = {
   },
 }
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+-- Set up completion using blink.cmp with LSP source
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
