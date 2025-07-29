@@ -9,7 +9,8 @@ require('myplugins.lualine')
 require('myplugins.indent-blankline')
 
 require('myplugins.luasnip')
-require('myplugins.nvim-cmp')
+require('myplugins.blink-cmp')
+-- require('myplugins.nvim-cmp') -- Replaced with blink.cmp
 require('myplugins.comment')
 require('myplugins.autopairs')
 require('myplugins.ts-autotag')

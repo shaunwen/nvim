@@ -49,7 +49,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   'nvim-tree/nvim-tree.lua',
-  { 'echasnovski/mini.files', version = '*' },
+  { 'echasnovski/mini.files',      version = '*' },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -71,23 +71,18 @@ require('lazy').setup({
   },
 
   {
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
+    -- Modern completion engine with better performance
+    'saghen/blink.cmp',
     dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-
-      -- Snippet Engine & its associated nvim-cmp source
+      -- Snippet Engine & its associated source
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      -- Copilot integration for blink.cmp
+      'fang2hou/blink-copilot',
     },
+    version = '1.*',
+    -- Configuration is in myplugins/blink-cmp.lua
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -172,8 +167,8 @@ require('lazy').setup({
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {
       html_output = '/tmp/markmap.html', -- (default) Setting a empty string '' here means: [Current buffer path].html
-      hide_toolbar = false, -- (default)
-      grace_period = 3600000 -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+      hide_toolbar = false,              -- (default)
+      grace_period = 3600000             -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
     },
     config = function(_, opts) require('markmap').setup(opts) end
   },
@@ -205,12 +200,6 @@ require('lazy').setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
       })
-    end,
-  },
-  {
-    'zbirenbaum/copilot-cmp',
-    config = function()
-      require('copilot_cmp').setup()
     end,
   },
   {
