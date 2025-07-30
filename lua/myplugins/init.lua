@@ -24,6 +24,7 @@ require('myplugins.formatter')
 require('myplugins.nvim-tree')
 require('myplugins.mini')
 require('myplugins.telescope')
+require('myplugins.fzf-lua')
 require('myplugins.neodev')
 require('myplugins.render-markdown')
 
