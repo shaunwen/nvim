@@ -34,6 +34,11 @@ require('lazy').setup({
     build = './install --all',
   },
   'junegunn/fzf.vim',
+  {
+    'ibhagwan/fzf-lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {}
+  },
   'windwp/nvim-autopairs',
   'windwp/nvim-ts-autotag',
   'glepnir/lspsaga.nvim',

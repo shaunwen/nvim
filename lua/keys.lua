@@ -134,15 +134,15 @@ keymap.set('n', '<Leader>b', '<cmd>Buffers<CR>', { noremap = true, silent = true
 keymap.set('n', '<C-t>', '<cmd>Files<CR>', { noremap = true, silent = true })
 keymap.set('n', '<C-g>', '<cmd>GFiles<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>rg', '<cmd>Rg<CR>', { noremap = true, silent = true })
-keymap.set('n', ',a', '<cmd>Commands<CR>', { noremap = true, silent = true })
+-- keymap.set('n', ',a', '<cmd>Commands<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>/', '<cmd>BLines<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>\'', '<cmd>Marks<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>gt', '<cmd>Commits<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>hf', '<cmd>BCommits<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>H', '<cmd>Helptags<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>hh', '<cmd>History<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>h:', '<cmd>History:<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>h/', '<cmd>History/<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>\'', '<cmd>Marks<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>gt', '<cmd>Commits<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>hf', '<cmd>BCommits<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>H', '<cmd>Helptags<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>hh', '<cmd>History<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>h:', '<cmd>History:<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>h/', '<cmd>History/<CR>', { noremap = true, silent = true })
 vim.cmd [[
   command! -bang -nargs=* ProjectRg
     \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
@@ -151,7 +151,7 @@ vim.cmd [[
     \ 'options': '--ansi --preview "bat --color=always --style=header,grid,numbers --highlight-line {2} {1} | head -500"'
     \ }, <bang>0)
 ]]
-keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
+-- keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
 keymap.set('x', '<Leader><Tab>', '<Plug>(fzf-maps-x)')
 keymap.set('i', '<C-x>m', '<Plug>(fzf-maps-i)')
@@ -167,6 +167,47 @@ vim.cmd [[
       \   fzf#vim#with_preview({'options': '--keep-right --delimiter : --nth 4.. --preview "bat -p --color always {}"'}, 'right:60%' ))
   nnoremap <leader>/ :CustomBLines<Cr>
 ]]
+
+local function fzf_blines()
+  require('fzf-lua').blines {
+      winopts = {
+          height = 0.6,
+          width = 0.5,
+          preview = { vertical = 'up:70%' },
+          -- Disable Treesitter highlighting for the matches.
+          treesitter = {
+              enabled = false,
+              fzf_colors = { ['fg'] = { 'fg', 'CursorLine' }, ['bg'] = { 'bg', 'Normal' } },
+          },
+      },
+      fzf_opts = {
+          ['--layout'] = 'reverse',
+      },
+  }
+end
+
+-- keymap for fzf-lua
+keymap.set('n', '<leader>f<', '<cmd>FzfLua resume<cr>', { desc = 'Resume last fzf command' })
+keymap.set('n', '<leader>fc', '<cmd>FzfLua highlights<cr>', { desc = 'Highlights', noremap = true, silent = true })
+keymap.set('n', '<leader>fd', '<cmd>FzfLua lsp_document_diagnostics<cr>', { desc = 'Document diagnostics', noremap = true, silent = true })
+keymap.set('n', '<leader>ff', '<cmd>FzfLua files<cr>', { desc = 'Find files', noremap = true, silent = true })
+keymap.set('n', '<leader>fb', '<cmd>FzfLua buffers<cr>', { desc = 'Find files from buffers', noremap = true, silent = true })
+keymap.set({'n', 'x'}, '<leader>f/', fzf_blines, { desc = 'Buffer lines'} )
+keymap.set('n', '<leader>fg', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep', noremap = true, silent = true })
+keymap.set('x', '<leader>fg', '<cmd>FzfLua grep_visual<cr>', { desc = 'Grep', noremap = true, silent = true })
+keymap.set('n', '<leader>fh', '<cmd>FzfLua help_tags<cr>', { desc = 'Help', noremap = true, silent = true })
+keymap.set('n', '<leader>fr', '<cmd>FzfLua oldfiles<cr>', { desc = 'Recently opened files', noremap = true, silent = true })
+keymap.set('n', 'z=', '<cmd>FzfLua spell_suggest<cr>', { desc = 'Spelling suggestions', noremap = true, silent = true })
+-- extra
+keymap.set('n', ',a', '<cmd>FzfLua commands<cr>', { desc = 'Neovim commands', noremap = true, silent = true })
+keymap.set('n', '<leader>h:', '<cmd>FzfLua command_history<cr>', { desc = 'Command history', noremap = true, silent = true })
+keymap.set('n', '<Leader>h/', '<cmd>FzfLua search_history<cr>', { desc = 'Search history', noremap = true, silent = true })
+keymap.set('n', '<Leader>\'', '<cmd>FzfLua marks<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gt', '<cmd>FzfLua git_commits<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gb', '<cmd>FzfLua git_branches<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gd', '<cmd>FzfLua git_diff<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>fk', '<cmd>FzfLua keymaps<CR>', { desc = 'Key mappings', noremap = true, silent = true })
 
 -- Plugin: vsnip
 -- vim.cmd [[
