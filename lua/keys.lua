@@ -18,9 +18,9 @@ vim.keymap.set('n', '<Leader>U', 'viwU')
 vim.keymap.set('n', '<Leader>u', 'viwu')
 -- Open any file in the same directory in a vsplit,
 -- but where you can type and auto-complete the filename
-keymap.set('n', '<Leader>ev', ':vsplit <C-R>=expand("%:p:h") . "/" <CR>')
-keymap.set('n', '<Leader>es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
-keymap.set('n', '<Leader>ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', ',ev', ':vsplit <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', ',es', ':split <C-R>=expand("%:p:h") . "/" <CR>')
+keymap.set('n', ',ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
 
 keymap.set('n', 'x', '"_x')
 keymap.set('v', 'x', '"_x')
@@ -112,61 +112,10 @@ keymap.set('n', '<s-down>', '5<C-w>-')
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 
--- Plugin: easymotion
--- Turn on case-insensitive feature
--- vim.g.EasyMotion_smartcase             = 1
--- Smartsign (type `3` and match `3`&`#`)
--- vim.g.EasyMotion_use_smartsign_us      = 1
--- vim.g.multi_cursor_select_all_word_key = '<S-C-a>'
--- vim.g.multi_cursor_select_all_key      = 'g<S-C-a>'
-
--- keymap.set('', '<Leader>', '<Plug>(easymotion-prefix)')
--- keymap.set('n', '<Leader>s', '<Plug>(easymotion-s)')
--- keymap.set('n', ',s', '<Plug>(easymotion-s2)')
-
 -- Plugin nvimtree
 vim.keymap.set('n', '<Leader>v', ':NvimTreeFindFileToggle<CR>')
 -- Plugin mini.files
-keymap.set('n', '<Leader><Leader>e', '<cmd>lua MiniFiles.open()<CR>')
-
--- Plugin: FZF
-keymap.set('n', '<Leader>b', '<cmd>Buffers<CR>', { noremap = true, silent = true })
-keymap.set('n', '<C-t>', '<cmd>Files<CR>', { noremap = true, silent = true })
-keymap.set('n', '<C-g>', '<cmd>GFiles<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>rg', '<cmd>Rg<CR>', { noremap = true, silent = true })
--- keymap.set('n', ',a', '<cmd>Commands<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>/', '<cmd>BLines<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>\'', '<cmd>Marks<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>gt', '<cmd>Commits<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>hf', '<cmd>BCommits<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>H', '<cmd>Helptags<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>hh', '<cmd>History<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>h:', '<cmd>History:<CR>', { noremap = true, silent = true })
--- keymap.set('n', '<Leader>h/', '<cmd>History/<CR>', { noremap = true, silent = true })
-vim.cmd [[
-  command! -bang -nargs=* ProjectRg
-    \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case "
-    \ .shellescape(<q-args>), 1, {
-    \ 'dir': system('git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2],
-    \ 'options': '--ansi --preview "bat --color=always --style=header,grid,numbers --highlight-line {2} {1} | head -500"'
-    \ }, <bang>0)
-]]
--- keymap.set('n', '<Leader>f', '<cmd>ProjectRg<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader><Tab>', '<Plug>(fzf-maps-n)')
-keymap.set('x', '<Leader><Tab>', '<Plug>(fzf-maps-x)')
-keymap.set('i', '<C-x>m', '<Plug>(fzf-maps-i)')
-keymap.set('o', '<Leader><Tab>', '<Plug>(fzf-maps-o)')
-keymap.set('i', '<C-x>w', '<Plug>(fzf-complete-word)')
-keymap.set('i', '<C-x>p', '<Plug>(fzf-complete-path)')
-keymap.set('i', '<C-x>l', '<Plug>(fzf-complete-line)')
-
-vim.cmd [[
-  command! -bang -nargs=* CustomBLines
-      \ call fzf#vim#grep(
-      \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
-      \   fzf#vim#with_preview({'options': '--keep-right --delimiter : --nth 4.. --preview "bat -p --color always {}"'}, 'right:60%' ))
-  nnoremap <leader>/ :CustomBLines<Cr>
-]]
+keymap.set('n', '<Leader>e', '<cmd>lua MiniFiles.open()<CR>')
 
 local function fzf_blines()
   require('fzf-lua').blines {
@@ -198,30 +147,18 @@ keymap.set('x', '<leader>fg', '<cmd>FzfLua grep_visual<cr>', { desc = 'Grep', no
 keymap.set('n', '<leader>fh', '<cmd>FzfLua help_tags<cr>', { desc = 'Help', noremap = true, silent = true })
 keymap.set('n', '<leader>fr', '<cmd>FzfLua oldfiles<cr>', { desc = 'Recently opened files', noremap = true, silent = true })
 keymap.set('n', 'z=', '<cmd>FzfLua spell_suggest<cr>', { desc = 'Spelling suggestions', noremap = true, silent = true })
+-- git
+keymap.set('n', '<C-g>', '<cmd>FzfLua git_files<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gt', '<cmd>FzfLua git_commits<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gb', '<cmd>FzfLua git_branches<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gd', '<cmd>FzfLua git_diff<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', { noremap = true, silent = true })
 -- extra
 keymap.set('n', ',a', '<cmd>FzfLua commands<cr>', { desc = 'Neovim commands', noremap = true, silent = true })
 keymap.set('n', '<leader>h:', '<cmd>FzfLua command_history<cr>', { desc = 'Command history', noremap = true, silent = true })
 keymap.set('n', '<Leader>h/', '<cmd>FzfLua search_history<cr>', { desc = 'Search history', noremap = true, silent = true })
 keymap.set('n', '<Leader>\'', '<cmd>FzfLua marks<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>gt', '<cmd>FzfLua git_commits<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>gb', '<cmd>FzfLua git_branches<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>gd', '<cmd>FzfLua git_diff<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>fk', '<cmd>FzfLua keymaps<CR>', { desc = 'Key mappings', noremap = true, silent = true })
-
--- Plugin: vsnip
--- vim.cmd [[
---   let g:vsnip_filetypes = {}
---   let g:vsnip_filetypes.javascriptreact = ['javascript']
---   let g:vsnip_filetypes.typescriptreact = ['typescript']
--- ]]
--- Jump forward or backward
--- vim.keymap.set({ 'i', 's' }, '<Tab>', function()
---   return vim.fn['vsnip#jumpable'](1) == 1 and '<Plug>(vsnip-jump-next)' or '<Tab>'
--- end, { expr = true })
--- vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
---   return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>'
--- end, { expr = true })
 
 -- Open file in Obsidian vault
 vim.cmd [[
