@@ -90,7 +90,7 @@ require('lazy').setup({
   'lewis6991/gitsigns.nvim',
 
   -- Themes
-  'morhetz/gruvbox',
+  -- 'morhetz/gruvbox',
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
@@ -145,10 +145,6 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   -- Markdown
-  -- {
-  --   'iamcco/markdown-preview.nvim',
-  --   build = function() vim.fn['mkdp#util#install']() end,
-  -- },
   { 'bullets-vim/bullets.vim' },
   -- markdown preview with clikable links
   { 'jannis-baum/vivify.vim' },
@@ -159,8 +155,7 @@ require('lazy').setup({
     ---@type render.md.UserConfig
     opts = {},
   },
-  --  [markdown markmap]
-  --  https://github.com/Zeioth/markmap.nvim
+  -- mindmap rendering for markdown
   {
     'Zeioth/markmap.nvim',
     build = 'yarn global add markmap-cli',
@@ -172,6 +167,7 @@ require('lazy').setup({
     },
     config = function(_, opts) require('markmap').setup(opts) end
   },
+
   {
     'mickael-menu/zk-nvim',
     lazy = true,
