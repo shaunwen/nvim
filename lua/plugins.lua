@@ -29,12 +29,6 @@ require('lazy').setup({
   'terryma/vim-multiple-cursors',
   'godlygeek/tabular',
   {
-    'junegunn/fzf',
-    dir = '/opt/homebrew/opt/fzf',
-    build = './install --all',
-  },
-  'junegunn/fzf.vim',
-  {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {}
@@ -156,6 +150,7 @@ require('lazy').setup({
   --   build = function() vim.fn['mkdp#util#install']() end,
   -- },
   { 'bullets-vim/bullets.vim' },
+  -- markdown preview with clikable links
   { 'jannis-baum/vivify.vim' },
   {
     'MeanderingProgrammer/render-markdown.nvim',
