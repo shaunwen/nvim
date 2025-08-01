@@ -106,7 +106,7 @@ local function get_port_snip(args)
     end
 end
 
-ls.add_snippets(nil, {
+return {
     all = {
         snip({
             trig = "date",
@@ -258,7 +258,7 @@ ls.add_snippets(nil, {
             dscr = "Yaml metadata format for markdown",
         }, {
             text { "---", "title: " },
-            insert(1, "note_title"),
+            insert(, "note_title"),
             text { "", "author: " },
             insert(2, "author"),
             text { "", "date: " },
@@ -270,6 +270,14 @@ ls.add_snippets(nil, {
             text { "", "tags: [" },
             insert(4),
             text { "]", "comments: true", "---", "" },
+            insert(0),
+        }),
+        snip({
+            trig = "summary",
+            namr = "markdown_summary_callout",
+            dscr = "Create markdown summary callout",
+        }, {
+            text "> [!SUMMARY]",
             insert(0),
         }),
     },
@@ -454,4 +462,4 @@ ls.add_snippets(nil, {
             )
         ),
     },
-})
+}
