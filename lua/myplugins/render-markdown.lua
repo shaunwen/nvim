@@ -1,4 +1,5 @@
 require('render-markdown').setup({
+    heading = { backgrounds = false },
     checkbox = {
         enabled = true,
         render_modes = false,

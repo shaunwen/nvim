@@ -54,5 +54,8 @@ end
 -- Start Refactoring --
 
 -- Start Refactoring --
+cs("summary", {
+	t("> [!SUMMARY]")
+}, {'sj'})
 
 return snippets, autosnippets

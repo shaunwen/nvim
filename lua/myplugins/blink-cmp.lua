@@ -3,7 +3,7 @@ local status, blink = pcall(require, "blink.cmp")
 if (not status) then return end
 
 -- Load friendly snippets for LuaSnip
-require('luasnip.loaders.from_vscode').lazy_load()
+-- require('luasnip.loaders.from_vscode').lazy_load()
 
 blink.setup({
   fuzzy = { implementation = 'rust' },
