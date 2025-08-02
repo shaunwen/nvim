@@ -24,7 +24,7 @@ keymap.set('n', ',ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
 
 keymap.set('n', 'x', '"_x')
 keymap.set('v', 'x', '"_x')
-keymap.set('x', '<Leader>p', [["_dP]])
+keymap.set('x', '<Leader><Leader>p', [["_dP]])
 
 keymap.set('n', '<Leader><Leader>d', "\"_d")
 keymap.set('v', '<Leader><Leader>d', "\"_d")
@@ -89,9 +89,9 @@ keymap.set('n', 'dW', 'vb"_d')
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
 -- List/open/close tab
-keymap.set('n', 'tl', ':tabs<CR>')
-keymap.set('n', 'te', ':tabedit<CR>')
-keymap.set('n', 'tc', ':tabclose<CR>')
+keymap.set('n', '<Leader>tl', ':tabs<CR>')
+keymap.set('n', '<Leader>te', ':tabedit<CR>')
+keymap.set('n', '<Leader>tc', ':tabclose<CR>')
 -- Split window
 keymap.set('n', 'ss', ':split<CR><C-w>w')
 keymap.set('n', 'sv', ':vsplit<CR><C-w>w')
