@@ -51,7 +51,7 @@ local servers = {
       workspace = {
         checkThirdParty = false,
         library = {
-          [vim.fn.expand('$VIMRUMTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
           [vim.fn.stdpath('config') .. '/lua'] = true,
         },
       },
@@ -61,7 +61,8 @@ local servers = {
 }
 
 -- Set up completion using blink.cmp with LSP source
-local capabilities = require('blink.cmp').get_lsp_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
