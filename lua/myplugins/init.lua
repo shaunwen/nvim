@@ -1,6 +1,7 @@
 -- require('myplugins/lsp')
 require('myplugins.nvim-treesitter')
 require('myplugins.hop')
+require('myplugins.flash')
 require('myplugins.lspkind')
 require('myplugins.mason-lspconfig')
 require('myplugins.lspsaga')

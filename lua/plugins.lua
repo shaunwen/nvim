@@ -26,6 +26,10 @@ require('lazy').setup({
     'phaazon/hop.nvim',
     lazy = true,
   },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+  },
   'terryma/vim-multiple-cursors',
   'godlygeek/tabular',
   {
