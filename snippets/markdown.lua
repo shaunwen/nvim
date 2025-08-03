@@ -1,61 +1,67 @@
 local ls = require("luasnip")
-local s = ls.s
-local i = ls.i
-local t = ls.t
+local snip = ls.s  -- Use ls.s directly
+local text = ls.t  -- Use ls.t directly
+local insert = ls.i  -- Use ls.i directly
+local func = ls.function_node
 
-local d = ls.dynamic_node
-local c = ls.choice_node
-local f = ls.function_node
-local sn = ls.snippet_node
-
-local fmt = require("luasnip.extras.fmt").fmt
-local rep = require("luasnip.extras").rep
-
--- --
-
-local snippets = {}
-local autosnippets = {}
-
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true, buffer = true }
-local group = augroup("Markdown Snippets", { clear = true })
-
-local function cs(trigger, nodes, keymap) --> cs stands for create snippet
-	local snippet = s(trigger, nodes)
-	table.insert(snippets, snippet)
-
-	if keymap ~= nil then
-		local pattern = "*.md"
-		if type(keymap) == "table" then
-			pattern = keymap[1]
-			keymap = keymap[2]
-		end
-		autocmd("BufEnter", {
-			pattern = pattern,
-			group = group,
-			callback = function()
-				map({ "i" }, keymap, function()
-					ls.snip_expand(snippet)
-				end, opts)
-			end,
-		})
-	end
+local date = function()
+    return { os.date "%Y-%m-%d" }
 end
 
-local function lp(package_name) -- Load Package Function
-	package.loaded[package_name] = nil
-	return require(package_name)
-end
-
--- Utility Functions --
-
--- Start Refactoring --
-
--- Start Refactoring --
-cs("summary", {
-	t("> [!SUMMARY]")
-}, {'sj'})
-
-return snippets, autosnippets
+-- Return snippets directly for Lua loader
+return {
+    snip({
+        trig = "metalua",
+        namr = "Metadata", 
+        dscr = "Yaml metadata format for markdown",
+    }, {
+        text { "---", "title: " },
+        insert(1, "note_title"),
+        text { "", "author: " },
+        insert(2, "author"),
+        text { "", "date: " },
+        func(date, {}),
+        text { "", "categories: [" },
+        insert(3, ""),
+        text { "]", "lastmod: " },
+        func(date, {}),
+        text { "", "tags: [" },
+        insert(4),
+        text { "]", "comments: true", "---", "" },
+        insert(0),
+    }),
+    snip({
+        trig = "summary",
+        namr = "markdown_summary_callout",
+        dscr = "Create markdown summary callout",
+    }, {
+        text "> [!SUMMARY]",
+        insert(0),
+    }),
+    snip({
+        trig = "link",
+        namr = "markdown_link",
+        dscr = "Create markdown link [txt](url)",
+    }, {
+        text "[",
+        insert(1),
+        text "](",
+        func(function(_, snip)
+            return snip.env.TM_SELECTED_TEXT[1] or {}
+        end, {}),
+        text ")",
+        insert(0),
+    }),
+    snip({
+        trig = "codeempty",
+        namr = "markdown_code_empty",
+        dscr = "Create empty markdown code block",
+    }, {
+        text "``` ",
+        insert(1, "Language"),
+        text { "", "" },
+        insert(2, "Content"),
+        text { "", "```", "" },
+        insert(0),
+    }),
+}

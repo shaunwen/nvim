@@ -12,6 +12,9 @@ blink.setup({
     window = { border = 'rounded' },
   },
   keymap = { preset = 'enter' },
+  snippets = {
+    preset = 'luasnip',
+  },
   completion = {
     documentation = { 
       auto_show = true,
@@ -32,7 +35,7 @@ blink.setup({
                   end
               else
                   icon = require("lspkind").symbolic(ctx.kind, {
-                      mode = "symbol_text",
+                      mode = "symbol",
                   })
               end
 
@@ -52,6 +55,19 @@ blink.setup({
               end
               return hl
             end,
+          },
+          label = {
+            text = function(ctx)
+              local source_labels = {
+                snippets = "[Snippet] ",
+                lsp = "[LSP] ",
+                copilot = "[AI] ",
+                buffer = "[Buffer] ",
+                path = "[Path] ",
+              }
+              local prefix = source_labels[ctx.source_name:lower()] or ""
+              return prefix .. ctx.label
+            end,
           }
         }
       }
@@ -64,6 +80,12 @@ blink.setup({
   sources = {
     default = { 'copilot', 'lsp', 'snippets', 'buffer', 'path' },
     providers = {
+      buffer = {
+        opts = {
+          -- get all buffers, even ones like nvim-tree
+          get_bufnrs = vim.api.nvim_list_bufs
+        },
+      },
       copilot = {
         name = "copilot",
         module = "blink-copilot",

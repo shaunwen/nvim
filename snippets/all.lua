@@ -13,16 +13,6 @@ local func = ls.function_node
 local choice = ls.choice_node
 local dynamicn = ls.dynamic_node
 
-ls.config.set_config {
-    history = true,
-    -- treesitter-hl has 100, use something higher (default is 200).
-    ext_base_prio = 200,
-    -- minimal increase in priority.
-    ext_prio_increase = 1,
-    enable_autosnippets = false,
-    store_selection_keys = "<c-s>",
-}
-
 local function get_line_iter(str)
     if str:sub(-1) ~= "\n" then
         str = str .. "\n"
@@ -258,12 +248,12 @@ return {
             dscr = "Yaml metadata format for markdown",
         }, {
             text { "---", "title: " },
-            insert(, "note_title"),
+            insert(1, "note_title"),
             text { "", "author: " },
             insert(2, "author"),
             text { "", "date: " },
             func(date, {}),
-            text { "", "cathegories: [" },
+            text { "", "categories: [" },
             insert(3, ""),
             text { "]", "lastmod: " },
             func(date, {}),
