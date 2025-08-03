@@ -4,12 +4,7 @@
 
 local ls = require("luasnip")
 
-require('luasnip.loaders.from_vscode').lazy_load()
-require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
-
 ls.config.setup {}
-
-vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]])
 
 local types = require("luasnip.util.types")
 ls.config.set_config({
@@ -29,6 +24,12 @@ ls.config.set_config({
     -- },
   },
 })
+
+-- Load snippets AFTER configuration
+require('luasnip.loaders.from_vscode').lazy_load()
+require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets/" })
+
+vim.cmd([[command! LuaSnipEdit :lua require("luasnip.loaders.from_lua").edit_snippet_files()]])
 
 -- <c-j> is my expansion key 
 -- (as I am using Karabiner to have mapped Ctrl - h/j/k/l to arrow keys, when the following config is applied, I could only press Ctrl-Shift-j)
