@@ -1,5 +1,5 @@
 require('render-markdown').setup({
-    heading = { backgrounds = false },
+    heading = { backgrounds = {} },
     checkbox = {
         enabled = true,
         render_modes = false,
@@ -29,6 +29,9 @@ require('render-markdown').setup({
             },
         },
     },
+    pipe_table = {
+        filler = '',
+    }
 })
 
 -- Optional: Make unchecked box green too, if desired, or keep neutral

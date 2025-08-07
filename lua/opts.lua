@@ -70,7 +70,8 @@ vim.cmd [[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]]
 -- config for fzf-project
 vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
-  '/Users/shaun.wen/repo/learning/rust'
+  '/Users/shaun.wen/repo/learning/rust',
+  '/Users/shaun.wen/workspace/projects/scalapay-repos/rust'
 }
 vim.g['fzfSwitchProjectProjects'] = {
   '/Users/shaun.wen/.config/nvim',
@@ -91,3 +92,11 @@ vim.api.nvim_create_autocmd('DirChanged', {
 
 vim.g.fubitive_domain_pattern = 'code\\.example\\.com'
 vim.g.fubitive_domain_context_path = 'bitbucket'
+
+-- make it easiser to bold the selected text bold along with tpope/vim-surround, e.g. ysiw e
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.b.surround_101 = "**\r**" -- 101 is char2nr('e')
+  end,
+})
