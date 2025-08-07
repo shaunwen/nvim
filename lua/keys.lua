@@ -115,7 +115,17 @@ keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 -- Plugin nvimtree
 vim.keymap.set('n', '<Leader>v', ':NvimTreeFindFileToggle<CR>')
 -- Plugin mini.files
-keymap.set('n', '<Leader>e', '<cmd>lua MiniFiles.open()<CR>')
+local function open_curren_file()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.fnamemodify(bufname, ':p')
+
+  -- Noop if the buffer isn't valid.
+  if path and vim.uv.fs_stat(path) then
+      require('mini.files').open(bufname, false)
+  end
+end
+keymap.set('n', '<Leader>e', open_curren_file, { desc = 'Open Mini Files at current file' })
+-- keymap.set('n', '<Leader>e', '<cmd>lua MiniFiles.open()<CR>')
 
 local function fzf_blines()
   require('fzf-lua').blines {
@@ -207,6 +217,7 @@ keymap.set('n', '<Leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
 keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")
+keymap.set('n', '<Leader>rr', ":RustRunnables<CR>")
 keymap.set('n', '<Leader>rd', ":RustDebuggables<CR>")
 keymap.set('n', '<F9>', ":DapContinue<CR>")
 keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
