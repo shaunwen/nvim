@@ -22,7 +22,7 @@ require('myplugins.rust-tools')
 
 require('myplugins.zk')
 require('myplugins.toggleterm')
-require('myplugins.formatter')
+require('myplugins.conform')
 require('myplugins.nvim-tree')
 require('myplugins.mini')
 require('myplugins.neodev')

@@ -26,11 +26,11 @@ keymap.set('n', 'x', '"_x')
 keymap.set('v', 'x', '"_x')
 keymap.set('x', '<Leader><Leader>p', [["_dP]])
 
-keymap.set('n', '<Leader><Leader>d', "\"_d")
-keymap.set('v', '<Leader><Leader>d', "\"_d")
+keymap.set('n', '<Leader><Leader>d', '"_d')
+keymap.set('v', '<Leader><Leader>d', '"_d')
 
-keymap.set({ "n", "v" }, "<Leader>y", [["+y]])
-keymap.set("n", "<Leader>Y", [["+Y]])
+keymap.set({ 'n', 'v' }, '<Leader>y', [["+y]])
+keymap.set('n', '<Leader>Y', [["+Y]])
 
 keymap.set('v', 'gj', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'gk', ":m '<-2<CR>gv=gv")
@@ -44,9 +44,9 @@ keymap.set('n', 'N', 'Nzzzv')
 keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
-keymap.set('n', '<C-S-f>', "<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>")
+keymap.set('n', '<C-S-f>', '<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>')
 -- keymap.set("n", "gs", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-keymap.set("n", "gx", "<cmd>!chmod +x %<CR>", { silent = true })
+keymap.set('n', 'gx', '<cmd>!chmod +x %<CR>', { silent = true })
 
 local function replace_word()
   -- Get the current mode
@@ -56,27 +56,43 @@ local function replace_word()
     -- If in visual mode, use the visual selection range
     vim.cmd('normal! "zy')
     local selected_text = vim.fn.getreg('z')
-    local new_text = vim.fn.input("Replace with: ")
+    local new_text = vim.fn.input('Replace with: ')
     -- Start replacement from the currently selected text
-    vim.cmd(':s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI'
+    )
     -- Extend replacement to the rest of the file starting from the current line
-    vim.cmd(':.,$s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':.,$s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI'
+    )
     -- Wrap around and replace from the top of the file to the current line
-    vim.cmd(':1,.-1s/' .. vim.fn.escape(selected_text, '/') .. '/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':1,.-1s/'
+        .. vim.fn.escape(selected_text, '/')
+        .. '/'
+        .. vim.fn.escape(new_text, '/')
+        .. '/gcI'
+    )
   else
     -- If in normal mode, replace the word under the cursor in the entire file
     local word = vim.fn.expand('<cword>')
-    local new_text = vim.fn.input("Replace with: ")
+    local new_text = vim.fn.input('Replace with: ')
     -- Start replacement from the word under the cursor
-    vim.cmd(':s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI'
+    )
     -- Extend replacement to the rest of the file starting from the current line
-    vim.cmd(':.,$s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':.,$s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI'
+    )
     -- Wrap around and replace from the top of the file to the current line
-    vim.cmd(':1,.-1s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI')
+    vim.cmd(
+      ':1,.-1s/\\<' .. vim.fn.escape(word, '/') .. '\\>/' .. vim.fn.escape(new_text, '/') .. '/gcI'
+    )
   end
 end
 
-vim.keymap.set({ "n", "v" }, "gs", replace_word, { noremap = true, silent = true })
+vim.keymap.set({ 'n', 'v' }, 'gs', replace_word, { noremap = true, silent = true })
 
 -- Increment/decrement
 keymap.set('n', '+', '<C-a>')
@@ -121,42 +137,87 @@ local function open_curren_file()
 
   -- Noop if the buffer isn't valid.
   if path and vim.uv.fs_stat(path) then
-      require('mini.files').open(bufname, false)
+    require('mini.files').open(bufname, false)
   end
 end
 keymap.set('n', '<Leader>e', open_curren_file, { desc = 'Open Mini Files at current file' })
 -- keymap.set('n', '<Leader>e', '<cmd>lua MiniFiles.open()<CR>')
 
 local function fzf_blines()
-  require('fzf-lua').blines {
-      winopts = {
-          height = 0.6,
-          width = 0.5,
-          preview = { vertical = 'up:70%' },
-          -- Disable Treesitter highlighting for the matches.
-          treesitter = {
-              enabled = false,
-              fzf_colors = { ['fg'] = { 'fg', 'CursorLine' }, ['bg'] = { 'bg', 'Normal' } },
-          },
+  require('fzf-lua').blines({
+    winopts = {
+      height = 0.6,
+      width = 0.5,
+      preview = { vertical = 'up:70%' },
+      -- Disable Treesitter highlighting for the matches.
+      treesitter = {
+        enabled = false,
+        fzf_colors = { ['fg'] = { 'fg', 'CursorLine' }, ['bg'] = { 'bg', 'Normal' } },
       },
-      fzf_opts = {
-          ['--layout'] = 'reverse',
-      },
-  }
+    },
+    fzf_opts = {
+      ['--layout'] = 'reverse',
+    },
+  })
 end
 
 -- keymap for fzf-lua
 keymap.set('n', '<leader>f<', '<cmd>FzfLua resume<cr>', { desc = 'Resume last fzf command' })
-keymap.set('n', '<leader>fc', '<cmd>FzfLua highlights<cr>', { desc = 'Highlights', noremap = true, silent = true })
-keymap.set('n', '<leader>fd', '<cmd>FzfLua lsp_document_diagnostics<cr>', { desc = 'Document diagnostics', noremap = true, silent = true })
-keymap.set('n', '<leader>ff', '<cmd>FzfLua files<cr>', { desc = 'Find files', noremap = true, silent = true })
-keymap.set('n', '<leader>fb', '<cmd>FzfLua buffers<cr>', { desc = 'Find files from buffers', noremap = true, silent = true })
-keymap.set({'n', 'x'}, '<leader>f/', fzf_blines, { desc = 'Buffer lines'} )
-keymap.set('n', '<leader>fg', '<cmd>FzfLua live_grep<cr>', { desc = 'Grep', noremap = true, silent = true })
-keymap.set('x', '<leader>fg', '<cmd>FzfLua grep_visual<cr>', { desc = 'Grep', noremap = true, silent = true })
-keymap.set('n', '<leader>fh', '<cmd>FzfLua help_tags<cr>', { desc = 'Help', noremap = true, silent = true })
-keymap.set('n', '<leader>fr', '<cmd>FzfLua oldfiles<cr>', { desc = 'Recently opened files', noremap = true, silent = true })
-keymap.set('n', 'z=', '<cmd>FzfLua spell_suggest<cr>', { desc = 'Spelling suggestions', noremap = true, silent = true })
+keymap.set(
+  'n',
+  '<leader>fc',
+  '<cmd>FzfLua highlights<cr>',
+  { desc = 'Highlights', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>fd',
+  '<cmd>FzfLua lsp_document_diagnostics<cr>',
+  { desc = 'Document diagnostics', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>ff',
+  '<cmd>FzfLua files<cr>',
+  { desc = 'Find files', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>fb',
+  '<cmd>FzfLua buffers<cr>',
+  { desc = 'Find files from buffers', noremap = true, silent = true }
+)
+keymap.set({ 'n', 'x' }, '<leader>f/', fzf_blines, { desc = 'Buffer lines' })
+keymap.set(
+  'n',
+  '<leader>fg',
+  '<cmd>FzfLua live_grep<cr>',
+  { desc = 'Grep', noremap = true, silent = true }
+)
+keymap.set(
+  'x',
+  '<leader>fg',
+  '<cmd>FzfLua grep_visual<cr>',
+  { desc = 'Grep', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>fh',
+  '<cmd>FzfLua help_tags<cr>',
+  { desc = 'Help', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>fr',
+  '<cmd>FzfLua oldfiles<cr>',
+  { desc = 'Recently opened files', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  'z=',
+  '<cmd>FzfLua spell_suggest<cr>',
+  { desc = 'Spelling suggestions', noremap = true, silent = true }
+)
 -- git
 keymap.set('n', '<C-g>', '<cmd>FzfLua git_files<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>gt', '<cmd>FzfLua git_commits<CR>', { noremap = true, silent = true })
@@ -164,20 +225,40 @@ keymap.set('n', '<Leader>gb', '<cmd>FzfLua git_branches<CR>', { noremap = true, 
 keymap.set('n', '<Leader>gd', '<cmd>FzfLua git_diff<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', { noremap = true, silent = true })
 -- extra
-keymap.set('n', ',a', '<cmd>FzfLua commands<cr>', { desc = 'Neovim commands', noremap = true, silent = true })
-keymap.set('n', '<leader>h:', '<cmd>FzfLua command_history<cr>', { desc = 'Command history', noremap = true, silent = true })
-keymap.set('n', '<Leader>h/', '<cmd>FzfLua search_history<cr>', { desc = 'Search history', noremap = true, silent = true })
-keymap.set('n', '<Leader>\'', '<cmd>FzfLua marks<CR>', { noremap = true, silent = true })
-keymap.set('n', '<Leader>fk', '<cmd>FzfLua keymaps<CR>', { desc = 'Key mappings', noremap = true, silent = true })
+keymap.set(
+  'n',
+  ',a',
+  '<cmd>FzfLua commands<cr>',
+  { desc = 'Neovim commands', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>h:',
+  '<cmd>FzfLua command_history<cr>',
+  { desc = 'Command history', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<Leader>h/',
+  '<cmd>FzfLua search_history<cr>',
+  { desc = 'Search history', noremap = true, silent = true }
+)
+keymap.set('n', "<Leader>'", '<cmd>FzfLua marks<CR>', { noremap = true, silent = true })
+keymap.set(
+  'n',
+  '<Leader>fk',
+  '<cmd>FzfLua keymaps<CR>',
+  { desc = 'Key mappings', noremap = true, silent = true }
+)
 
 -- Open file in Obsidian vault
-vim.cmd [[
+vim.cmd([[
   command! IO execute "silent !open 'obsidian://open?vault=myNotes&file=" . expand('%:r') . "'"
-]]
+]])
 keymap.set('n', '<Leader>io', '<cmd>IO<CR>', { noremap = true })
 
 -- markdown-preview
--- keymap.set('n', '<Leader>pv', '<cmd>MarkdownPreview<CR>', { noremap = true })
+keymap.set('n', '<Leader>pv', '<cmd>MarkdownPreview<CR>', { noremap = true })
 keymap.set('n', '<Leader>mv', '<cmd>Vivify<CR>', { noremap = true })
 keymap.set('n', '<Leader>mp', '<cmd>MarkmapWatch<CR>', { noremap = true })
 
@@ -207,31 +288,44 @@ if vim.g.neovide then
 end
 
 -- Allow clipboard copy paste in neovim
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 keymap.set('n', '<Leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
-keymap.set('n', '<Leader>db', ":DapToggleBreakpoint<CR>")
-keymap.set('n', '<Leader>rr', ":RustRunnables<CR>")
-keymap.set('n', '<Leader>rd', ":RustDebuggables<CR>")
-keymap.set('n', '<F9>', ":DapContinue<CR>")
+keymap.set('n', '<Leader>db', ':DapToggleBreakpoint<CR>')
+keymap.set('n', '<Leader>rr', ':RustRunnables<CR>')
+keymap.set('n', '<Leader>rd', ':RustDebuggables<CR>')
+keymap.set('n', '<F9>', ':DapContinue<CR>')
 keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
 keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
 keymap.set('n', '<Leader>dt', ":lua require('dapui').toggle()<CR>")
 keymap.set('n', '<F8>', ':lua require"dap".step_over()<CR>')
 keymap.set('n', '<F7>', ':lua require"dap".step_into()<CR>')
-vim.api.nvim_set_keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<F12>',
+  [[:lua require"dap.ui.widgets".hover()<CR>]],
+  { noremap = true }
+)
+vim.api.nvim_set_keymap(
+  'n',
+  '<F5>',
+  [[:lua require"osv".launch({port = 8086})<CR>]],
+  { noremap = true }
+)
 
--- formatter
-keymap.set({ 'n', 'v' }, ',f', "<cmd>Format<CR>")
+-- code formatting
+keymap.set({ 'n' }, ',f', function()
+  require('conform').format({
+    lsp_format = 'fallback',
+  })
+end, { desc = 'Format current file' })
 
 -- force delete buffer, can be used for deleting neovim builtin terminals
-keymap.set('n', '<Leader>tc', "<cmd>bd!<CR>")
+keymap.set('n', '<Leader>tc', '<cmd>bd!<CR>')
 
 keymap.set('n', '<Leader>m', "<cmd>lua require('harpoon.mark').add_file()<CR>")

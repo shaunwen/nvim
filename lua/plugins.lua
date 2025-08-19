@@ -1,16 +1,16 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
+  vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
     '--branch=stable', -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -27,15 +27,15 @@ require('lazy').setup({
     lazy = true,
   },
   {
-    "folke/flash.nvim",
-    event = "VeryLazy",
+    'folke/flash.nvim',
+    event = 'VeryLazy',
   },
   'terryma/vim-multiple-cursors',
   'godlygeek/tabular',
   {
     'ibhagwan/fzf-lua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    opts = {}
+    opts = {},
   },
   'windwp/nvim-autopairs',
   'windwp/nvim-ts-autotag',
@@ -52,7 +52,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   'nvim-tree/nvim-tree.lua',
-  { 'echasnovski/mini.files',      version = '*' },
+  { 'echasnovski/mini.files', version = '*' },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -66,13 +66,16 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
-
+  {
+    'stevearc/dressing.nvim',
+    event = 'VeryLazy', -- improves Mason's language filter and UI
+  },
   {
     -- Modern completion engine with better performance
     'saghen/blink.cmp',
@@ -89,7 +92,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   -- Adds git related signs to the gutter, as well as utilities for managing changes
   'lewis6991/gitsigns.nvim',
 
@@ -134,7 +137,7 @@ require('lazy').setup({
         --       refer to the README for telescope-fzf-native for more instructions.
         build = 'make',
         cond = function()
-          return vim.fn.executable 'make' == 1
+          return vim.fn.executable('make') == 1
         end,
       },
     },
@@ -149,6 +152,15 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   -- Markdown
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = 'cd app && npm install',
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
+  },
   { 'bullets-vim/bullets.vim' },
   -- markdown preview with clikable links
   { 'jannis-baum/vivify.vim' },
@@ -166,10 +178,12 @@ require('lazy').setup({
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {
       html_output = '/tmp/markmap.html', -- (default) Setting a empty string '' here means: [Current buffer path].html
-      hide_toolbar = false,              -- (default)
-      grace_period = 3600000             -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+      hide_toolbar = false, -- (default)
+      grace_period = 3600000, -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
     },
-    config = function(_, opts) require('markmap').setup(opts) end
+    config = function(_, opts)
+      require('markmap').setup(opts)
+    end,
   },
 
   {
@@ -191,7 +205,7 @@ require('lazy').setup({
   'junegunn/fzf.vim',
   'shaunwen/fzf-project',
   'akinsho/toggleterm.nvim',
-  'mhartington/formatter.nvim',
+  'stevearc/conform.nvim',
 
   {
     'zbirenbaum/copilot.lua',
