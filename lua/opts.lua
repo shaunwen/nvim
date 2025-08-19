@@ -10,7 +10,7 @@ vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 
 vim.opt.termguicolors = true
-vim.o.guifont = "JetBrainsMono Nerd Font:h16" -- text below applies for VimScript
+vim.o.guifont = 'JetBrainsMono Nerd Font:h16' -- text below applies for VimScript
 vim.o.mouse = 'a'
 vim.o.number = true
 vim.wo.signcolumn = 'yes'
@@ -35,7 +35,7 @@ vim.opt.breakindent = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true -- tabs are spaces
-vim.opt.wrap = false     -- No Wrap lines
+vim.opt.wrap = false -- No Wrap lines
 vim.o.undofile = true
 
 -- Decrease update time
@@ -45,8 +45,8 @@ vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
 
-vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
-vim.opt.wildignore:append { '*/node_modules/*' }
+vim.opt.path:append({ '**' }) -- Finding files - Search down into subfolders
+vim.opt.wildignore:append({ '*/node_modules/*' })
 
 vim.opt.rtp:append('/opt/homebrew/opt/fzf')
 
@@ -65,17 +65,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- green
 -- vim.cmd[[highlight Visual gui=bold guibg=#0E191F guifg=#60B950]]
 -- orange
-vim.cmd [[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]]
+vim.cmd([[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]])
 
 -- config for fzf-project
 vim.g['fzfSwitchProjectWorkspaces'] = {
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
   '/Users/shaun.wen/repo/learning/rust',
-  '/Users/shaun.wen/workspace/projects/scalapay-repos/rust'
+  '/Users/shaun.wen/workspace/projects/scalapay-repos/rust',
 }
 vim.g['fzfSwitchProjectProjects'] = {
   '/Users/shaun.wen/.config/nvim',
-  '/Users/shaun.wen/Documents/myNotes'
+  '/Users/shaun.wen/Documents/myNotes',
 }
 vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
 vim.g['fzfSwitchProjectCloseOpenedBuffers'] = 1
@@ -94,9 +94,9 @@ vim.g.fubitive_domain_pattern = 'code\\.example\\.com'
 vim.g.fubitive_domain_context_path = 'bitbucket'
 
 -- make it easiser to bold the selected text bold along with tpope/vim-surround, e.g. ysiw e
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "markdown",
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
   callback = function()
-    vim.b.surround_101 = "**\r**" -- 101 is char2nr('e')
+    vim.b.surround_101 = '**\r**' -- 101 is char2nr('e')
   end,
 })

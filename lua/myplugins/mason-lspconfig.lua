@@ -17,11 +17,15 @@ local on_attach = function(_, bufnr)
 
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  nmap('<leader>lt', vim.lsp.buf.format, '[L]in[t]')
+  nmap(',,t', vim.lsp.buf.format, '[L]in[t]')
 
   nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap(
+    '<leader>ws',
+    require('telescope.builtin').lsp_dynamic_workspace_symbols,
+    '[W]orkspace [S]ymbols'
+  )
 end
 
 -- Enable the following language servers
@@ -38,7 +42,14 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   ts_ls = {
-    filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    filetypes = {
+      'javascript',
+      'javascriptreact',
+      'javascript.jsx',
+      'typescript',
+      'typescriptreact',
+      'typescript.tsx',
+    },
   },
   html = { filetypes = { 'html', 'twig', 'hbs' } },
 
@@ -61,22 +72,19 @@ local servers = {
 }
 
 -- Set up completion using blink.cmp with LSP source
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('blink.cmp').get_lsp_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 
-mason_lspconfig.setup {
+mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
-}
-
--- Manually set up each server for compatibility
-for server_name, config in pairs(servers) do
-  require('lspconfig')[server_name].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = config,
-    filetypes = config.filetypes,
-  }
-end
+  handlers = {
+    function(server)
+      require('lspconfig')[server].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+    end,
+  },
+})
