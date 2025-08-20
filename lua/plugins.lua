@@ -73,8 +73,18 @@ require('lazy').setup({
     },
   },
   {
+    -- improves Mason's language filter and UI
     'stevearc/dressing.nvim',
-    event = 'VeryLazy', -- improves Mason's language filter and UI
+    event = 'VeryLazy',
+  },
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
   },
   {
     -- Modern completion engine with better performance
@@ -207,17 +217,6 @@ require('lazy').setup({
   'akinsho/toggleterm.nvim',
   'stevearc/conform.nvim',
 
-  {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
-    config = function()
-      require('copilot').setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
   {
     'tpope/vim-dadbod',
     opt = true,
