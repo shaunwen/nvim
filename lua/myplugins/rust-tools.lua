@@ -1,5 +1,7 @@
-local status, rt = pcall(require, "rust-tools")
-if (not status) then return end
+local status, rt = pcall(require, 'rust-tools')
+if not status then
+  return
+end
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
@@ -7,17 +9,22 @@ local function on_attach(client, bufnr)
   local opts = { noremap = true, silent = true }
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>lt', '<cmd>lua vim.lsp.buf.format { async = true } <CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "g0", '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gW", '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(
+    bufnr,
+    'n',
+    '<space>lt',
+    '<cmd>lua vim.lsp.buf.format { async = true } <CR>',
+    opts
+  )
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   -- This callback is called when the LSP is atttached/enabled for this buffer
   -- we could set keymaps related to LSP, etc here.
   -- Hover actions
-  vim.keymap.set("n", "<Leader>ha", rt.hover_actions.hover_actions, { buffer = bufnr })
+  vim.keymap.set('n', '<Leader>ha', rt.hover_actions.hover_actions, { buffer = bufnr })
   -- Code action groups
-  vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+  vim.keymap.set('n', '<Leader>a', rt.code_action_group.code_action_group, { buffer = bufnr })
 end
 
 local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
@@ -35,7 +42,7 @@ local opts = {
       auto = true,
       -- show_parameter_hints = false,
       -- parameter_hints_prefix = "",
-      other_hints_prefix = "",
+      other_hints_prefix = '',
     },
     hover_actions = {
       -- whether the hover action window gets automatically focused
@@ -55,17 +62,16 @@ local opts = {
     settings = {
       -- to enable rust-analyzer settings visit:
       -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
+      ['rust-analyzer'] = {
         -- enable clippy on save
         checkOnSave = {
-          command = "clippy",
+          command = 'clippy',
         },
       },
     },
   },
   dap = {
-    adapter = require('rust-tools.dap').get_codelldb_adapter(
-      codelldb_path, liblldb_path)
+    adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
   },
   -- dap = {
   --   adapter = {
