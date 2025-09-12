@@ -183,7 +183,7 @@ keymap.set(
 )
 keymap.set(
   'n',
-  '<leader>fb',
+  '<leader>b',
   '<cmd>FzfLua buffers<cr>',
   { desc = 'Find files from buffers', noremap = true, silent = true }
 )
@@ -208,7 +208,7 @@ keymap.set(
 )
 keymap.set(
   'n',
-  '<leader>fr',
+  '<leader>fo',
   '<cmd>FzfLua oldfiles<cr>',
   { desc = 'Recently opened files', noremap = true, silent = true }
 )
@@ -224,6 +224,7 @@ keymap.set('n', '<Leader>gt', '<cmd>FzfLua git_commits<CR>', { noremap = true, s
 keymap.set('n', '<Leader>gb', '<cmd>FzfLua git_branches<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>gd', '<cmd>FzfLua git_diff<CR>', { noremap = true, silent = true })
 keymap.set('n', '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', { noremap = true, silent = true })
+keymap.set('n', '<Leader>gs', '<cmd>FzfLua git_status<CR>', { noremap = true, silent = true })
 -- extra
 keymap.set(
   'n',
@@ -250,6 +251,9 @@ keymap.set(
   '<cmd>FzfLua keymaps<CR>',
   { desc = 'Key mappings', noremap = true, silent = true }
 )
+keymap.set('n', '<leader>qo', '<cmd>FzfLua quickfix<cr>', { desc = 'quickfix' })
+keymap.set('n', '<leader>qO', '<cmd>FzfLua lgrep_quickfix<cr>', { desc = 'lgrep_quickfix' })
+keymap.set('n', '<leader>fb', '<cmd>FzfLua builtin<cr>', { desc = 'lgrep_quickfix' })
 
 -- Open file in Obsidian vault
 vim.cmd([[
