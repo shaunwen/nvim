@@ -98,5 +98,12 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
   callback = function()
     vim.b.surround_101 = '**\r**' -- 101 is char2nr('e')
+
+    vim.keymap.set(
+      'x',
+      '<Leader>a',
+      '<cmd>Tabularize /|/l0l1<CR>',
+      { noremap = true, silent = true, desc = 'Align selected Markdown table' }
+    )
   end,
 })
