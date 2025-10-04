@@ -124,6 +124,14 @@ keymap.set('n', '<s-right>', '5<C-w>>')
 keymap.set('n', '<s-up>', '5<C-w>+')
 keymap.set('n', '<s-down>', '5<C-w>-')
 
+-- Create a scratch buffer with <leader>n
+vim.keymap.set('n', '<leader>n', function()
+  vim.cmd('enew')
+  vim.bo.buftype = 'nofile'
+  vim.bo.bufhidden = 'hide'
+  vim.bo.swapfile = false
+end, { desc = 'New scratch buffer' })
+
 -- Esc in neovim terminal
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
@@ -254,6 +262,18 @@ keymap.set(
 keymap.set('n', '<leader>qo', '<cmd>FzfLua quickfix<cr>', { desc = 'quickfix' })
 keymap.set('n', '<leader>qO', '<cmd>FzfLua lgrep_quickfix<cr>', { desc = 'lgrep_quickfix' })
 keymap.set('n', '<leader>fb', '<cmd>FzfLua builtin<cr>', { desc = 'lgrep_quickfix' })
+keymap.set(
+  'n',
+  '<leader>fs',
+  '<cmd>FzfLua lsp_document_symbols<cr>',
+  { desc = 'Document symbols', noremap = true, silent = true }
+)
+keymap.set(
+  'n',
+  '<leader>fS',
+  '<cmd>FzfLua lsp_workspace_symbols<cr>',
+  { desc = 'Workspace symbols', noremap = true, silent = true }
+)
 
 -- Open file in Obsidian vault
 vim.cmd([[
@@ -333,3 +353,23 @@ end, { desc = 'Format current file' })
 keymap.set('n', '<Leader>tc', '<cmd>bd!<CR>')
 
 keymap.set('n', '<Leader>m', "<cmd>lua require('harpoon.mark').add_file()<CR>")
+
+-- copy file path of current buffer
+vim.keymap.set('n', '<leader>yp', function()
+  local path = vim.fn.expand('%:p') -- absolute path of current buffer
+  vim.fn.setreg('+', path) -- copy to system clipboard
+  print('Copied: ' .. path)
+end, { desc = 'Yank file path' })
+
+-- copy file name of current buffer
+vim.keymap.set('n', '<leader>yn', function()
+  local path = vim.fn.expand('%:t') -- file name of current buffer
+  vim.fn.setreg('+', path) -- copy to system clipboard
+  print('Copied: ' .. path)
+end, { desc = 'Yank file name' })
+
+-- open current file in Finder with highlight
+vim.keymap.set('n', '<leader>of', function()
+  local path = vim.fn.expand('%:p:h') -- directory of current file
+  vim.fn.jobstart({ 'open', '-R', vim.fn.expand('%:p') }, { detach = true })
+end, { desc = 'Open in Finder' })
