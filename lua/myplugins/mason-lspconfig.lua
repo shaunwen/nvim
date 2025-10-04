@@ -76,6 +76,8 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require('mason-lspconfig')
+local lspconfig = require('lspconfig')
+local util = require('lspconfig.util')
 
 mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
@@ -84,6 +86,25 @@ mason_lspconfig.setup({
       require('lspconfig')[server].setup({
         capabilities = capabilities,
         on_attach = on_attach,
+      })
+    end,
+
+    -- Custom handler JUST for gopls to avoid duplicate clients
+    gopls = function()
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        single_file_support = false, -- avoid single-file client + workspace client double attach
+        root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
+        settings = {
+          gopls = {
+            -- Optional, but good defaults
+            analyses = { unusedparams = true, shadow = true },
+            staticcheck = true,
+            usePlaceholders = true,
+            gofumpt = true,
+          },
+        },
       })
     end,
   },
