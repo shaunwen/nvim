@@ -345,7 +345,7 @@ vim.api.nvim_set_keymap(
 -- code formatting
 keymap.set({ 'n' }, ',f', function()
   require('conform').format({
-    lsp_format = 'fallback',
+    lsp_format = 'never',
   })
 end, { desc = 'Format current file' })
 
