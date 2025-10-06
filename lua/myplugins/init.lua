@@ -19,6 +19,7 @@ require('myplugins.ts-autotag')
 require('myplugins.gitsigns')
 require('myplugins.dap')
 require('myplugins.rust-tools')
+require('myplugins.refactoring')
 
 require('myplugins.zk')
 require('myplugins.toggleterm')
