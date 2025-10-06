@@ -373,3 +373,34 @@ vim.keymap.set('n', '<leader>of', function()
   local path = vim.fn.expand('%:p:h') -- directory of current file
   vim.fn.jobstart({ 'open', '-R', vim.fn.expand('%:p') }, { detach = true })
 end, { desc = 'Open in Finder' })
+
+-- kemaps for refactoring.nvim
+-- VISUAL: extract function / extract var / inline var
+vim.keymap.set({ 'n', 'x' }, '<leader>re', function()
+  return require('refactoring').refactor('Extract Function')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>rf', function()
+  return require('refactoring').refactor('Extract Function To File')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>rv', function()
+  return require('refactoring').refactor('Extract Variable')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>rI', function()
+  return require('refactoring').refactor('Inline Function')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>ri', function()
+  return require('refactoring').refactor('Inline Variable')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>rbb', function()
+  return require('refactoring').refactor('Extract Block')
+end, { expr = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>rbf', function()
+  return require('refactoring').refactor('Extract Block To File')
+end, { expr = true })
+-- Optional helpers: debug printf / print var (cursor or visual)
+keymap.set(
+  { 'n', 'x' },
+  '<Leader>rp',
+  ":lua require('refactoring').debug.printf({ below = true })<CR>"
+)
+keymap.set('n', '<Leader>rc', ":lua require('refactoring').debug.cleanup({})<CR>")
