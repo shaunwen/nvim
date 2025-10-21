@@ -327,8 +327,8 @@ keymap.set('n', '<F9>', ':DapContinue<CR>')
 keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
 keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
 keymap.set('n', '<Leader>dt', ":lua require('dapui').toggle()<CR>")
-keymap.set('n', '<F8>', ':lua require"dap".step_over()<CR>')
-keymap.set('n', '<F7>', ':lua require"dap".step_into()<CR>')
+keymap.set('n', '<F8>', ":lua require('dap').step_over()<CR>")
+keymap.set('n', '<F7>', ":lua require('dap').step_into()<CR>")
 vim.api.nvim_set_keymap(
   'n',
   '<F12>',

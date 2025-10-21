@@ -18,7 +18,7 @@ require('myplugins.autopairs')
 require('myplugins.ts-autotag')
 require('myplugins.gitsigns')
 require('myplugins.dap')
-require('myplugins.rust-tools')
+require('myplugins.rustaceanvim')
 require('myplugins.refactoring')
 
 require('myplugins.zk')

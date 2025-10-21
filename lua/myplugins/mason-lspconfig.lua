@@ -40,7 +40,6 @@ local servers = {
   -- clangd = {},
   gopls = {},
   pyright = {},
-  rust_analyzer = {},
   ts_ls = {
     filetypes = {
       'javascript',
@@ -83,7 +82,7 @@ mason_lspconfig.setup({
   ensure_installed = vim.tbl_keys(servers),
   handlers = {
     function(server)
-      require('lspconfig')[server].setup({
+      lspconfig[server].setup({
         capabilities = capabilities,
         on_attach = on_attach,
       })
