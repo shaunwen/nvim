@@ -3,25 +3,46 @@ if not status then
   return
 end
 
-dap.adapters.codelldb = {
-  type = 'executable',
-  command = vim.fn.stdpath('data') .. '/mason/packages/codelldb/extension/adapter/codelldb',
-  -- command = '/Users/shaun.wen/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/adapter/codelldb', -- adjust as needed, must be absolute path
-  -- command = '/Users/shaun.wen/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/lldb/bin/lldb', -- adjust as needed, must be absolute path
-  name = 'rt_lldb',
-}
-dap.configurations.rust = {
-  {
-    name = 'Launch file',
-    type = 'codelldb',
-    request = 'launch',
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-  },
-}
+-- NOTE: CodeLLDB adapter for Rust is configured in rustaceanvim.lua
+-- Rustaceanvim handles its own DAP setup with get_codelldb_adapter()
+-- Do not configure dap.adapters.codelldb here to avoid conflicts
+
+-- Simple argument prompting for Rust debugging
+local original_run = dap.run
+dap.run = function(config)
+  if config.type == 'codelldb' and (not config.args or #config.args == 0) then
+    local args_string = vim.fn.input('Program arguments: ')
+    if args_string ~= '' then
+      -- Parse arguments: split by space, but respect quotes
+      local args = {}
+      local current_arg = ''
+      local in_quotes = false
+
+      for i = 1, #args_string do
+        local char = args_string:sub(i, i)
+        if char == '"' then
+          in_quotes = not in_quotes
+        elseif char == ' ' and not in_quotes then
+          if current_arg ~= '' then
+            table.insert(args, current_arg)
+            current_arg = ''
+          end
+        else
+          current_arg = current_arg .. char
+        end
+      end
+
+      if current_arg ~= '' then
+        table.insert(args, current_arg)
+      end
+
+      config.args = args
+    else
+      config.args = {}
+    end
+  end
+  original_run(config)
+end
 
 dap.adapters.nlua = function(callback, _)
   callback({ type = 'server', host = '127.0.0.1', port = 8086 })

@@ -321,8 +321,8 @@ keymap.set('n', '<Leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
 keymap.set('n', '<Leader>db', ':DapToggleBreakpoint<CR>')
-keymap.set('n', '<Leader>rr', ':RustRunnables<CR>')
-keymap.set('n', '<Leader>rd', ':RustDebuggables<CR>')
+keymap.set('n', '<Leader>rr', ':RustLsp runnables<CR>')
+keymap.set('n', '<Leader>rd', ':RustLsp debuggables<CR>')
 keymap.set('n', '<F9>', ':DapContinue<CR>')
 keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
 keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
