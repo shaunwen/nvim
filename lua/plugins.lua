@@ -212,11 +212,21 @@ require('lazy').setup({
   { 'aklt/plantuml-syntax' },
   -- Debug
   'mfussenegger/nvim-dap',
-  'rcarriga/nvim-dap-ui',
+  {
+    'rcarriga/nvim-dap-ui',
+    dependencies = {
+      'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio',
+    },
+  },
   -- Lua
   'jbyuki/one-small-step-for-vimkind',
   -- Rust
-  'simrat39/rust-tools.nvim',
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
   -- Node
   'mxsdev/nvim-dap-vscode-js',
   'tpope/vim-abolish',
