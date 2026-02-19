@@ -15,7 +15,7 @@ blink.setup({
   },
   keymap = {
     preset = 'enter',
-    ['<C-p>'] = { 'show', 'accept' }, -- manually trigger completion
+    ['<C-y>'] = { 'accept' },
   },
   snippets = {
     preset = 'luasnip',
