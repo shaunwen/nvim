@@ -292,13 +292,6 @@ vim.api.nvim_create_user_command(
   { desc = 'close all buffers except current one' }
 )
 
--- vim-test
-keymap.set('n', ',tt', '<cmd>TestNearest<CR>', { silent = true })
-keymap.set('n', ',tf', '<cmd>TestFile<CR>', { silent = true })
-keymap.set('n', ',ta', '<cmd>TestSuite<CR>', { silent = true })
-keymap.set('n', ',tl', '<cmd>TestLast<CR>', { silent = true })
-keymap.set('n', ',tg', '<cmd>TestVisit<CR>', { silent = true })
-
 -- Allow clipboard copy paste in neovide
 if vim.g.neovide then
   vim.g.neovide_input_use_logo = 1
@@ -370,7 +363,7 @@ end, { desc = 'Yank file name' })
 
 -- open current file in Finder with highlight
 vim.keymap.set('n', '<leader>of', function()
-  local path = vim.fn.expand('%:p:h') -- directory of current file
+  -- local path = vim.fn.expand('%:p:h') -- directory of current file
   vim.fn.jobstart({ 'open', '-R', vim.fn.expand('%:p') }, { detach = true })
 end, { desc = 'Open in Finder' })
 

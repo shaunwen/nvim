@@ -72,6 +72,12 @@ vim.keymap.set(
   require('telescope.builtin').diagnostics,
   { desc = '[S]earch [D]iagnostics' }
 )
+vim.keymap.set(
+  'n',
+  '<Leader>sr',
+  require('telescope.builtin').lsp_references,
+  { desc = '[S]earch [R]eferences' }
+)
 vim.keymap.set('n', '<leader>sS', require('telescope.builtin').git_status, { desc = '' })
 vim.keymap.set(
   'n',
