@@ -10,6 +10,7 @@ require('myplugins.lualine')
 require('myplugins.indent-blankline')
 require('myplugins.telescope')
 require('myplugins.fzf-lua')
+require('myplugins.snacks')
 
 require('myplugins.luasnip')
 require('myplugins.blink-cmp')
