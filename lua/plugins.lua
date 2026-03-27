@@ -37,6 +37,7 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {},
   },
+  'folke/snacks.nvim',
   'windwp/nvim-autopairs',
   'windwp/nvim-ts-autotag',
   'glepnir/lspsaga.nvim',

@@ -6,14 +6,11 @@ require('fzf-lua').setup {
   },
   previewers = {
     builtin = {
-      -- use chafa for real image files
-      extensions = {
-        ['png'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
-        ['jpg'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
-        ['jpeg'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
-        ['gif'] = { 'chafa', '--size=80x40', '--animate=false', '{file}' },
-        ['webp'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
-        ['svg'] = { 'chafa', '--size=80x40', '{file}' },
+      -- Let snacks.image render sharp previews via Ghostty's kitty graphics support.
+      -- External image commands run before snacks.image and would force blurry text output.
+      snacks_image = {
+        enabled = true,
+        render_inline = true,
       },
     },
   },
