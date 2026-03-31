@@ -75,13 +75,25 @@ dap.listeners.before.event_exited.dapui_config = function()
   dapui.close()
 end
 
-require('dap-vscode-js').setup({
-  -- debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
-  debugger_path = '/Users/shaun.wen/repo/github/vscode-js-debug',
-  -- debugger_cmd = { 'js-debug-adapter' },
-  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-  -- node_path = os.getenv('HOME') .. '/.nvm/versions/node/v16.14.2/bin/node',
-})
+local js_debug_paths = {
+  '/Users/shaun.wen/repo/github/vscode-js-debug',
+  vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
+}
+
+local debugger_path
+for _, path in ipairs(js_debug_paths) do
+  if vim.uv.fs_stat(path) then
+    debugger_path = path
+    break
+  end
+end
+
+if debugger_path then
+  require('dap-vscode-js').setup({
+    adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+    debugger_path = debugger_path,
+  })
+end
 
 for _, language in ipairs({ 'typescript', 'javascript' }) do
   dap.configurations[language] = {

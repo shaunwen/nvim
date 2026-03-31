@@ -23,10 +23,6 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   'tpope/vim-surround',
   {
-    'phaazon/hop.nvim',
-    lazy = true,
-  },
-  {
     'folke/flash.nvim',
     event = 'VeryLazy',
   },
@@ -41,7 +37,6 @@ require('lazy').setup({
   'windwp/nvim-autopairs',
   'windwp/nvim-ts-autotag',
   'glepnir/lspsaga.nvim',
-  'kyazdani42/nvim-web-devicons',
   { 'nvim-tree/nvim-web-devicons', opts = {} },
   'onsails/lspkind-nvim',
 
@@ -68,9 +63,15 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
+    },
+  },
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
     },
   },
   {

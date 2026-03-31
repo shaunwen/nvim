@@ -343,7 +343,7 @@ keymap.set({ 'n' }, ',f', function()
 end, { desc = 'Format current file' })
 
 -- force delete buffer, can be used for deleting neovim builtin terminals
-keymap.set('n', '<Leader>tc', '<cmd>bd!<CR>')
+keymap.set('n', '<Leader>bd', '<cmd>bd!<CR>')
 
 keymap.set('n', '<Leader>m', "<cmd>lua require('harpoon.mark').add_file()<CR>")
 
