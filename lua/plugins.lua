@@ -34,9 +34,21 @@ require('lazy').setup({
     opts = {},
   },
   'folke/snacks.nvim',
-  'windwp/nvim-autopairs',
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('myplugins.autopairs')
+    end,
+  },
   'windwp/nvim-ts-autotag',
-  'glepnir/lspsaga.nvim',
+  {
+    'glepnir/lspsaga.nvim',
+    event = 'LspAttach',
+    config = function()
+      require('myplugins.lspsaga')
+    end,
+  },
   { 'nvim-tree/nvim-web-devicons', opts = {} },
   'onsails/lspkind-nvim',
 
@@ -106,7 +118,13 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   -- Adds git related signs to the gutter, as well as utilities for managing changes
-  'lewis6991/gitsigns.nvim',
+  {
+    'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('myplugins.gitsigns')
+    end,
+  },
 
   -- Themes
   -- 'morhetz/gruvbox',
@@ -132,7 +150,13 @@ require('lazy').setup({
   },
 
   -- 'gc' to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'numToStr/Comment.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('myplugins.comment')
+    end,
+  },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
