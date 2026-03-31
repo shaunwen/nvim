@@ -26,6 +26,3 @@ require('myplugins.toggleterm')
 require('myplugins.conform')
 require('myplugins.nvim-tree')
 require('myplugins.mini')
-require('myplugins.render-markdown')
-
-require('myplugins.dadbod')
