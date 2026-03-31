@@ -23,7 +23,6 @@ vim.opt.backup = false
 vim.opt.cmdheight = 1
 vim.opt.laststatus = 2
 vim.opt.scrolloff = 10
-vim.opt.shell = 'zsh'
 vim.opt.backupskip = { '/tmp/*', '/private/tmp/*' }
 vim.opt.inccommand = 'split'
 -- Case-insensitive searching UNLESS \C or capital in search
@@ -48,7 +47,16 @@ vim.o.completeopt = 'menuone,noselect,noinsert'
 vim.opt.path:append({ '**' }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ '*/node_modules/*' })
 
-vim.opt.rtp:append('/opt/homebrew/opt/fzf')
+local function existing_dirs(paths)
+  return vim.tbl_filter(function(path)
+    return vim.fn.isdirectory(vim.fn.expand(path)) == 1
+  end, paths)
+end
+
+local homebrew_fzf = '/opt/homebrew/opt/fzf'
+if vim.fn.isdirectory(homebrew_fzf) == 1 then
+  vim.opt.rtp:append(homebrew_fzf)
+end
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -68,27 +76,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim.cmd([[highlight Visual gui=bold guibg=#3E4452 guifg=#FFAB00]])
 
 -- config for fzf-project
-vim.g['fzfSwitchProjectWorkspaces'] = {
+vim.g['fzfSwitchProjectWorkspaces'] = existing_dirs({
   '/Users/shaun.wen/workspace/projects/scalapay-repos',
   '/Users/shaun.wen/repo/learning/rust',
   '/Users/shaun.wen/workspace/projects/scalapay-repos/rust',
-}
-vim.g['fzfSwitchProjectProjects'] = {
+})
+vim.g['fzfSwitchProjectProjects'] = existing_dirs({
   '/Users/shaun.wen/.config/nvim',
   '/Users/shaun.wen/Documents/myNotes',
-}
+})
 vim.g['fzfSwitchProjectAlwaysChooseFile'] = 0
 vim.g['fzfSwitchProjectCloseOpenedBuffers'] = 1
-
--- Auto refresh nvim-tree after directory change
-vim.api.nvim_create_autocmd('DirChanged', {
-  pattern = '*',
-  callback = function()
-    local api = require('nvim-tree.api')
-    api.tree.change_root(vim.fn.getcwd())
-    api.tree.reload()
-  end,
-})
 
 vim.g.fubitive_domain_pattern = 'code\\.example\\.com'
 vim.g.fubitive_domain_context_path = 'bitbucket'

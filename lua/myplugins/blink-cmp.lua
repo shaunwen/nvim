@@ -83,13 +83,18 @@ blink.setup({
     nerd_font_variant = 'mono',
   },
   sources = {
-    default = { 'copilot', 'lsp', 'snippets', 'buffer', 'path' },
+    default = { 'lazydev', 'copilot', 'lsp', 'snippets', 'buffer', 'path' },
     providers = {
       buffer = {
         opts = {
           -- get all buffers, even ones like nvim-tree
           get_bufnrs = vim.api.nvim_list_bufs,
         },
+      },
+      lazydev = {
+        name = 'LazyDev',
+        module = 'lazydev.integrations.blink',
+        score_offset = 100,
       },
       copilot = {
         name = 'copilot',
