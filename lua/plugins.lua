@@ -237,17 +237,88 @@ require('lazy').setup({
     lazy = true,
   },
   { 'aklt/plantuml-syntax' },
-  -- Debug
-  'mfussenegger/nvim-dap',
   {
-    'rcarriga/nvim-dap-ui',
-    dependencies = {
-      'mfussenegger/nvim-dap',
-      'nvim-neotest/nvim-nio',
+    'mfussenegger/nvim-dap',
+    keys = {
+      {
+        '<Leader>db',
+        function()
+          require('dap').toggle_breakpoint()
+        end,
+        desc = 'DAP toggle breakpoint',
+      },
+      {
+        '<F9>',
+        function()
+          require('dap').continue()
+        end,
+        desc = 'DAP continue',
+      },
+      {
+        '<Leader>do',
+        function()
+          require('dapui').open()
+        end,
+        desc = 'DAP UI open',
+      },
+      {
+        '<Leader>dO',
+        function()
+          require('dapui').close()
+        end,
+        desc = 'DAP UI close',
+      },
+      {
+        '<Leader>dt',
+        function()
+          require('dapui').toggle()
+        end,
+        desc = 'DAP UI toggle',
+      },
+      {
+        '<F8>',
+        function()
+          require('dap').step_over()
+        end,
+        desc = 'DAP step over',
+      },
+      {
+        '<F7>',
+        function()
+          require('dap').step_into()
+        end,
+        desc = 'DAP step into',
+      },
+      {
+        '<F12>',
+        function()
+          require('dap.ui.widgets').hover()
+        end,
+        desc = 'DAP hover',
+      },
+      {
+        '<F5>',
+        function()
+          require('osv').launch({ port = 8086 })
+        end,
+        desc = 'Launch OSV',
+      },
     },
+    dependencies = {
+      {
+        'rcarriga/nvim-dap-ui',
+        dependencies = {
+          'nvim-neotest/nvim-nio',
+        },
+      },
+      'mxsdev/nvim-dap-vscode-js',
+      'jbyuki/one-small-step-for-vimkind',
+    },
+    config = function()
+      require('myplugins.dap').setup()
+    end,
   },
   -- Lua
-  'jbyuki/one-small-step-for-vimkind',
   -- Rust
   {
     'mrcjkb/rustaceanvim',
@@ -255,12 +326,54 @@ require('lazy').setup({
     lazy = false, -- This plugin is already lazy
   },
   -- Node
-  'mxsdev/nvim-dap-vscode-js',
   'tpope/vim-abolish',
   'junegunn/fzf',
   'junegunn/fzf.vim',
   'shaunwen/fzf-project',
-  'akinsho/toggleterm.nvim',
+  {
+    'akinsho/toggleterm.nvim',
+    keys = {
+      {
+        '<leader>tt',
+        function()
+          require('myplugins.toggleterm').toggle_float()
+        end,
+        desc = 'Toggle floating terminal',
+      },
+      {
+        '<leader>ui',
+        function()
+          require('myplugins.toggleterm').toggle_gitui()
+        end,
+        desc = 'Toggle gitui terminal',
+      },
+      {
+        '<leader>py',
+        function()
+          require('myplugins.toggleterm').toggle_python()
+        end,
+        desc = 'Toggle python terminal',
+      },
+      {
+        '<leader>ts',
+        function()
+          require('myplugins.toggleterm').toggle_horizontal()
+        end,
+        desc = 'Toggle horizontal terminal',
+      },
+      {
+        '<leader>tv',
+        function()
+          require('myplugins.toggleterm').toggle_vertical()
+        end,
+        desc = 'Toggle vertical terminal',
+      },
+    },
+    cmd = { 'ToggleTerm', 'TermExec' },
+    config = function()
+      require('myplugins.toggleterm').setup()
+    end,
+  },
   'stevearc/conform.nvim',
 
   {
@@ -275,7 +388,6 @@ require('lazy').setup({
       require('myplugins.dadbod').setup()
     end,
   },
-
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
   --    up-to-date with whatever is in the kickstart repo.
