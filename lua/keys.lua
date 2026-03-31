@@ -313,27 +313,8 @@ vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true 
 keymap.set('n', '<Leader>pj', ':FzfSwitchProject<CR>')
 
 -- DAP Plugin
-keymap.set('n', '<Leader>db', ':DapToggleBreakpoint<CR>')
 keymap.set('n', '<Leader>rr', ':RustLsp runnables<CR>')
 keymap.set('n', '<Leader>rd', ':RustLsp debuggables<CR>')
-keymap.set('n', '<F9>', ':DapContinue<CR>')
-keymap.set('n', '<Leader>do', ":lua require('dapui').open()<CR>")
-keymap.set('n', '<Leader>dO', ":lua require('dapui').close()<CR>")
-keymap.set('n', '<Leader>dt', ":lua require('dapui').toggle()<CR>")
-keymap.set('n', '<F8>', ":lua require('dap').step_over()<CR>")
-keymap.set('n', '<F7>', ":lua require('dap').step_into()<CR>")
-vim.api.nvim_set_keymap(
-  'n',
-  '<F12>',
-  [[:lua require"dap.ui.widgets".hover()<CR>]],
-  { noremap = true }
-)
-vim.api.nvim_set_keymap(
-  'n',
-  '<F5>',
-  [[:lua require"osv".launch({port = 8086})<CR>]],
-  { noremap = true }
-)
 
 -- code formatting
 keymap.set({ 'n' }, ',f', function()
