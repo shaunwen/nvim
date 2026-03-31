@@ -187,10 +187,11 @@ require('lazy').setup({
   { 'jannis-baum/vivify.vim' },
   {
     'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown' },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {},
+    config = function()
+      require('myplugins.render-markdown')
+    end,
   },
   -- mindmap rendering for markdown
   {
@@ -240,11 +241,15 @@ require('lazy').setup({
 
   {
     'tpope/vim-dadbod',
-    opt = true,
+    ft = { 'sql', 'mysql', 'plsql' },
+    cmd = { 'DB', 'DBUI', 'DBUIToggle', 'DBUIAddConnection', 'DBUIFindBuffer', 'DBUIRenameBuffer' },
     dependencies = {
       'kristijanhusak/vim-dadbod-ui',
       'kristijanhusak/vim-dadbod-completion',
     },
+    config = function()
+      require('myplugins.dadbod').setup()
+    end,
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
