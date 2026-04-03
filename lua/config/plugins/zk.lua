@@ -20,6 +20,21 @@ require('zk').setup({
   },
 })
 
+local zk_lsp_group = vim.api.nvim_create_augroup('ZkLspKeymaps', { clear = true })
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = zk_lsp_group,
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client or client.name ~= 'zk' then
+      return
+    end
+
+    local opts = { buffer = args.buf, noremap = true, silent = true, desc = 'Follow note link' }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', '<CR>', vim.lsp.buf.definition, opts)
+  end,
+})
+
 local opts = { noremap = true }
 
 -- =============================================
