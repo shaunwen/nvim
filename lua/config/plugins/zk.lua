@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local function follow_note_link()
       local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
 
-      vim.lsp.buf_request(args.buf, 'textDocument/definition', params, function(err, result, ctx)
+      vim.lsp.buf_request(args.buf, 'textDocument/definition', params, function(err, result)
         if err then
           vim.notify('zk: failed to resolve link', vim.log.levels.ERROR)
           return
@@ -43,15 +43,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
           return
         end
 
-        local items = vim.lsp.util.locations_to_items(result, ctx.client_id and client.offset_encoding or 'utf-8')
-        local item = items[1]
-        if not item then
+        local locations = vim.islist(result) and result or { result }
+        local location = locations[1]
+        if not location then
           vim.notify('zk: no note target found', vim.log.levels.INFO)
           return
         end
 
-        vim.cmd('edit ' .. vim.fn.fnameescape(item.filename))
-        vim.api.nvim_win_set_cursor(0, { item.lnum, math.max(item.col - 1, 0) })
+        vim.lsp.util.show_document(location, client.offset_encoding, { focus = true, reuse_win = true })
       end)
     end
 
