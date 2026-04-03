@@ -29,9 +29,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
+    local function follow_note_link()
+      local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+
+      vim.lsp.buf_request(args.buf, 'textDocument/definition', params, function(err, result, ctx)
+        if err then
+          vim.notify('zk: failed to resolve link', vim.log.levels.ERROR)
+          return
+        end
+
+        if not result or vim.tbl_isempty(result) then
+          vim.notify('zk: no note link found under cursor', vim.log.levels.INFO)
+          return
+        end
+
+        local items = vim.lsp.util.locations_to_items(result, ctx.client_id and client.offset_encoding or 'utf-8')
+        local item = items[1]
+        if not item then
+          vim.notify('zk: no note target found', vim.log.levels.INFO)
+          return
+        end
+
+        vim.cmd('edit ' .. vim.fn.fnameescape(item.filename))
+        vim.api.nvim_win_set_cursor(0, { item.lnum, math.max(item.col - 1, 0) })
+      end)
+    end
+
     local opts = { buffer = args.buf, noremap = true, silent = true, desc = 'Follow note link' }
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', '<CR>', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gd', follow_note_link, opts)
+    vim.keymap.set('n', '<leader>gd', follow_note_link, opts)
+    vim.keymap.set('n', '<CR>', follow_note_link, opts)
   end,
 })
 
