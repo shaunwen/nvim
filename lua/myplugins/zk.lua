@@ -113,6 +113,37 @@ vim.api.nvim_set_keymap(
 )
 -- Search notes matching visual selection
 vim.api.nvim_set_keymap('v', '<leader>zf', ":'<,'>ZkMatch<CR>", opts)
+-- Multi-word AND search — find notes containing ALL given words (space-separated)
+vim.keymap.set('n', '<leader>zF', function()
+  local input = vim.fn.input('AND search (space-separated): ')
+  if input == '' then return end
+  local words = vim.split(input, '%s+', { trimempty = true })
+  local lookaheads = {}
+  for _, w in ipairs(words) do
+    table.insert(lookaheads, '(?=.*' .. w .. ')')
+  end
+  local pattern = '(?s)' .. table.concat(lookaheads)
+  local rg_cmd = 'rg -lP --multiline ' .. vim.fn.shellescape(pattern)
+  local highlight_pattern = table.concat(words, '|')
+  require('fzf-lua').fzf_exec(rg_cmd, {
+    prompt = 'AND> ',
+    previewer = false,
+    preview = 'rg --color=always -in ' .. vim.fn.shellescape(highlight_pattern) .. ' {1}',
+    actions = {
+      ['default'] = function(selected)
+        if not selected or #selected == 0 then return end
+        local file = selected[1]
+        vim.cmd('edit ' .. vim.fn.fnameescape(file))
+        -- Use \v (very magic) so | means OR in Vim regex
+        local vim_pattern = [[\v]] .. highlight_pattern
+        vim.schedule(function()
+          vim.fn.cursor(1, 1)
+          vim.fn.search(vim_pattern, 'cW')
+        end)
+      end,
+    },
+  })
+end, { desc = 'Grep notes containing ALL words' })
 -- Backlinks — who links to this note?
 vim.api.nvim_set_keymap('n', '<leader>zb', '<Cmd>ZkBacklinks<CR>', opts)
 -- Outgoing links from this note
