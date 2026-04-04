@@ -50,7 +50,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
           return
         end
 
-        vim.lsp.util.show_document(location, client.offset_encoding, { focus = true, reuse_win = true })
+        vim.lsp.util.show_document(
+          location,
+          client.offset_encoding,
+          { focus = true, reuse_win = true }
+        )
       end)
     end
 
@@ -70,7 +74,7 @@ local opts = { noremap = true }
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zn',
-  "<Cmd>ZkNew { title = vim.fn.input('Title: '), dir = 'zettelkasten', template = 'default.md' }<CR>",
+  "<Cmd>lua local t = vim.fn.input('Title: '); if t ~= '' then require('zk.commands').get('ZkNew')({ title = t, dir = 'zettelkasten', group = 'zettelkasten', template = 'default.md' }) end<CR>",
   opts
 )
 -- Create a daily note
@@ -139,12 +143,7 @@ vim.api.nvim_set_keymap('n', '<leader>zo', "<Cmd>ZkNotes { sort = { 'modified' }
 -- Open notes by tag
 vim.api.nvim_set_keymap('n', '<leader>zt', '<Cmd>ZkTags<CR>', opts)
 -- Insert wiki-link to an existing note
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>zi',
-  "<Cmd>ZkInsertLink<CR>",
-  opts
-)
+vim.api.nvim_set_keymap('n', '<leader>zi', '<Cmd>ZkInsertLink<CR>', opts)
 -- Search notes by content
 vim.api.nvim_set_keymap(
   'n',
@@ -157,7 +156,9 @@ vim.api.nvim_set_keymap('v', '<leader>zf', ":'<,'>ZkMatch<CR>", opts)
 -- Multi-word AND search — find notes containing ALL given words (space-separated)
 vim.keymap.set('n', '<leader>zF', function()
   local input = vim.fn.input('AND search (space-separated): ')
-  if input == '' then return end
+  if input == '' then
+    return
+  end
   local words = vim.split(input, '%s+', { trimempty = true })
   local lookaheads = {}
   for _, w in ipairs(words) do
@@ -172,7 +173,9 @@ vim.keymap.set('n', '<leader>zF', function()
     preview = 'rg --color=always -in ' .. vim.fn.shellescape(highlight_pattern) .. ' {1}',
     actions = {
       ['default'] = function(selected)
-        if not selected or #selected == 0 then return end
+        if not selected or #selected == 0 then
+          return
+        end
         local file = selected[1]
         vim.cmd('edit ' .. vim.fn.fnameescape(file))
         -- Use \v (very magic) so | means OR in Vim regex
