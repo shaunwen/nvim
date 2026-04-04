@@ -38,5 +38,11 @@ vim.o.timeoutlen = 300
 
 vim.o.completeopt = 'menuone,noselect,noinsert'
 
+-- Treesitter folding — set early so folds stay open when treesitter loads later
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevelstart = 99
+vim.opt.foldlevel = 99
+
 vim.opt.path:append({ '**' })
 vim.opt.wildignore:append({ '*/node_modules/*' })
