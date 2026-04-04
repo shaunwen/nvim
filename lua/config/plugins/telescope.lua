@@ -15,8 +15,4 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'harpoon')
 
--- fix folding https://github.com/nvim-telescope/telescope.nvim/issues/699#issuecomment-1364538472
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  pattern = { '*' },
-  command = 'normal zx',
-})
+
