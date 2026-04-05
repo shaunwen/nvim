@@ -103,7 +103,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
   'n',
   '<leader>ze',
-  "<Cmd>ZkNew { title = vim.fn.input('Evergreen: '), dir = 'zettelkasten', template = 'evergreen.md' }<CR>",
+  "<Cmd>ZkNew { title = vim.fn.input('Evergreen: '), dir = 'zettelkasten', group = 'evergreen', template = 'evergreen.md' }<CR>",
   opts
 )
 -- Design note — architecture decisions and tradeoffs
@@ -138,6 +138,8 @@ vim.api.nvim_set_keymap(
 -- =============================================
 -- Navigation & search
 -- =============================================
+-- Outline — navigate markdown headings
+vim.api.nvim_set_keymap('n', '<leader>zO', "<Cmd>FzfLua blines query=^#<CR>", opts)
 -- Open notes
 vim.api.nvim_set_keymap('n', '<leader>zo', "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes by tag
