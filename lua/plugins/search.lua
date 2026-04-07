@@ -125,12 +125,9 @@ return {
     end,
   },
   {
-    'junegunn/fzf',
-    lazy = false,
-  },
-  {
     'junegunn/fzf.vim',
     lazy = false,
+    dependencies = { 'junegunn/fzf' },
   },
   {
     'shaunwen/fzf-project',
