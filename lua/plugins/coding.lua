@@ -22,10 +22,19 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPost', 'BufNewFile' },
-    build = ':TSUpdate',
+    branch = 'main',
+    lazy = false,
+    build = function()
+      local ok, ts = pcall(require, 'nvim-treesitter')
+      if ok then
+        ts.update(nil, { max_jobs = 2, summary = true }):wait(300000)
+      end
+    end,
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = 'main',
+      },
     },
     config = function()
       require('config.plugins.nvim-treesitter')
