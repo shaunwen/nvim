@@ -67,6 +67,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 local opts = { noremap = true }
 
+zk_new_with_prompt = function(prompt, zk_opts)
+  local title = vim.fn.input(prompt)
+  if title == '' then
+    return
+  end
+
+  local payload = vim.tbl_extend('force', { title = title }, zk_opts or {})
+  require('zk.commands').get('ZkNew')(payload)
+end
+
 -- =============================================
 -- Note creation
 -- =============================================
@@ -74,7 +84,7 @@ local opts = { noremap = true }
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zn',
-  "<Cmd>lua local t = vim.fn.input('Title: '); if t ~= '' then require('zk.commands').get('ZkNew')({ title = t, dir = 'zettelkasten', group = 'zettelkasten', template = 'default.md' }) end<CR>",
+  "<Cmd>lua zk_new_with_prompt('Title: ', { dir = 'zettelkasten', group = 'zettelkasten', template = 'default.md' })<CR>",
   opts
 )
 -- Create a daily note
@@ -89,49 +99,49 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zw',
-  "<Cmd>ZkNew { title = vim.fn.input('Work log: '), dir = 'work', template = 'work_log.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Work log: ', { dir = 'work', template = 'work_log.md' })<CR>",
   opts
 )
 -- Problem/solution — distilled after solving a real problem
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zp',
-  "<Cmd>ZkNew { title = vim.fn.input('Problem: '), dir = 'work', template = 'problem_solution.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Problem: ', { dir = 'work', template = 'problem_solution.md' })<CR>",
   opts
 )
 -- Evergreen — generalized reusable principle
 vim.api.nvim_set_keymap(
   'n',
   '<leader>ze',
-  "<Cmd>ZkNew { title = vim.fn.input('Evergreen: '), dir = 'zettelkasten', group = 'evergreen', template = 'evergreen.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Evergreen: ', { dir = 'zettelkasten', group = 'evergreen', template = 'evergreen.md' })<CR>",
   opts
 )
 -- Design note — architecture decisions and tradeoffs
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zD',
-  "<Cmd>ZkNew { title = vim.fn.input('Design: '), dir = 'design', template = 'design_note.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Design: ', { dir = 'design', template = 'design_note.md' })<CR>",
   opts
 )
 -- Weekly review
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zr',
-  "<Cmd>ZkNew { dir = 'reviews', template = 'weekly_review.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Review: ', { dir = 'reviews', template = 'weekly_review.md' })<CR>",
   opts
 )
 -- Question note — explicit question to drive investigation
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zq',
-  "<Cmd>ZkNew { title = vim.fn.input('Question: '), dir = 'questions', template = 'question_note.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('Question: ', { dir = 'questions', template = 'question_note.md' })<CR>",
   opts
 )
 -- Map of Content — hub note linking a topic cluster
 vim.api.nvim_set_keymap(
   'n',
   '<leader>zm',
-  "<Cmd>ZkNew { title = vim.fn.input('MOC: '), dir = 'zettelkasten', template = 'moc.md' }<CR>",
+  "<Cmd>lua zk_new_with_prompt('MOC: ', { dir = 'zettelkasten', template = 'moc.md' })<CR>",
   opts
 )
 
@@ -190,6 +200,7 @@ vim.keymap.set('n', '<leader>zF', function()
     },
   })
 end, { desc = 'Grep notes containing ALL words' })
+
 -- Backlinks — who links to this note?
 vim.api.nvim_set_keymap('n', '<leader>zb', '<Cmd>ZkBacklinks<CR>', opts)
 -- Outgoing links from this note
