@@ -156,3 +156,68 @@ end, { desc = 'Yank file name' })
 vim.keymap.set('n', '<leader>of', function()
   vim.fn.jobstart({ 'open', '-R', vim.fn.expand('%:p') }, { detach = true })
 end, { desc = 'Open in Finder' })
+
+-- Custom function to search notes by a specific tag prefix using fzf-lua
+local function search_zk_tag(tag_prefix)
+  local fzf = require('fzf-lua')
+  local result = vim.system({ 'zk', 'list', '--format', 'json' }, { text = true }):wait()
+  if result.code ~= 0 then
+    vim.notify(
+      'zk search failed: ' .. (result.stderr or 'unknown error'),
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  local ok, notes = pcall(vim.json.decode, result.stdout)
+  if not ok or type(notes) ~= 'table' then
+    vim.notify('zk search failed: invalid JSON output', vim.log.levels.ERROR)
+    return
+  end
+
+  local matches = {}
+  for _, note in ipairs(notes) do
+    for _, tag in ipairs(note.tags or {}) do
+      if string.find(tag, tag_prefix, 1, true) then
+        table.insert(matches, note.absPath or note.path)
+        break
+      end
+    end
+  end
+
+  if vim.tbl_isempty(matches) then
+    vim.notify('No notes found for tag fragment: ' .. tag_prefix, vim.log.levels.INFO)
+    return
+  end
+
+  fzf.fzf_exec(matches, {
+    actions = {
+      ['default'] = fzf.actions.file_edit,
+      ['ctrl-q'] = {
+        fn = fzf.actions.file_sel_to_qf,
+        prefix = 'select-all',
+      }
+    },
+    previewer = 'builtin',
+    fzf_opts = {
+      ['--multi'] = true,
+    },
+    winopts = { title = ' ZK PARA tag search: ' .. tag_prefix },
+  })
+end
+
+local function prompt_search_zk_tag()
+  local tag_fragment = vim.fn.input('Tag fragment: ')
+  if tag_fragment == '' then
+    return
+  end
+  search_zk_tag(tag_fragment)
+end
+
+-- Keymap for PARA layer search
+vim.keymap.set("n", "<leader>zP", function() search_zk_tag("p/") end, { desc = "Search projects" })
+vim.keymap.set("n", "<leader>za", function() search_zk_tag("a/") end, { desc = "Search areas" })
+vim.keymap.set("n", "<leader>zR", function() search_zk_tag("r/") end, { desc = "Search resources" })
+vim.keymap.set("n", "<leader>zx", function() search_zk_tag("x/") end, { desc = "Search archives" })
+vim.keymap.set('n', '<leader>zk', prompt_search_zk_tag, { desc = 'Search zk tags' })
+
