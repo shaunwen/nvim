@@ -13,7 +13,7 @@
   "fzf": { "branch": "master", "commit": "0eb2ae9f8bd57fed6242d76d2273df4a1be31cc8" },
   "fzf-lua": { "branch": "main", "commit": "eee072d89ccdc0a4627bf67d0757d2e4981c7292" },
   "fzf-project": { "branch": "master", "commit": "2aa38a8071518ac8ce024a9d8db6fe8770faa38f" },
-  "fzf.vim": { "branch": "master", "commit": "34a564c81f36047f50e593c1656f4580ff75ccca" },
+  "fzf.vim": { "branch": "master", "commit": "b9624aa012ddcbae9e79964bfd30cc1fbe3cf263" },
   "gitsigns.nvim": { "branch": "main", "commit": "8d82c240f190fc33723d48c308ccc1ed8baad69d" },
   "harpoon": { "branch": "master", "commit": "1bc17e3e42ea3c46b33c0bbad6a880792692a1b3" },
   "indent-blankline.nvim": { "branch": "master", "commit": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03" },
