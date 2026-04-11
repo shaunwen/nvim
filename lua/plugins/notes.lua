@@ -69,12 +69,12 @@ return {
         pattern = 'markdown',
         callback = function(event)
           vim.b.surround_101 = '**\r**'
-          vim.keymap.set(
-            'x',
-            '<Leader>a',
-            '<cmd>Tabularize /|/l0l1<CR>',
-            { buffer = event.buf, noremap = true, silent = true, desc = 'Align selected Markdown table' }
-          )
+          vim.keymap.set('x', '<Leader>a', '<cmd>Tabularize /|/l0l1<CR>', {
+            buffer = event.buf,
+            noremap = true,
+            silent = true,
+            desc = 'Align selected Markdown table',
+          })
         end,
       })
     end,
