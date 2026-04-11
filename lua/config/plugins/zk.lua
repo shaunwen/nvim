@@ -1,7 +1,7 @@
 require('zk').setup({
   -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
   -- it's recommended to use "telescope" or "fzf"
-  picker = 'fzf',
+  picker = 'fzf_lua',
 
   lsp = {
     -- `config` is passed to `vim.lsp.start_client(config)`
@@ -149,7 +149,7 @@ vim.api.nvim_set_keymap(
 -- Navigation & search
 -- =============================================
 -- Outline — navigate markdown headings
-vim.api.nvim_set_keymap('n', '<leader>zO', "<Cmd>FzfLua blines query=^#<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>zO', '<Cmd>FzfLua blines query=^#<CR>', opts)
 -- Open notes
 vim.api.nvim_set_keymap('n', '<leader>zo', "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
 -- Open notes by tag
