@@ -22,6 +22,9 @@ if not ghostty then
 end
 
 require('fzf-lua').setup {
+  files = {
+    hidden = false,
+  },
   keymap = {
     fzf = {
       ['ctrl-q'] = 'select-all+accept',
