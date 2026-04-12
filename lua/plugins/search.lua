@@ -122,30 +122,116 @@ return {
     version = '*',
     cmd = 'Telescope',
     keys = {
-      { '<leader>?', function() require('telescope.builtin').oldfiles() end, desc = 'Recent files' },
-      { ',b', function() require('telescope.builtin').buffers() end, desc = 'Existing buffers' },
+      {
+        '<leader>?',
+        function()
+          require('telescope.builtin').oldfiles()
+        end,
+        desc = 'Recent files',
+      },
+      {
+        ',b',
+        function()
+          require('telescope.builtin').buffers()
+        end,
+        desc = 'Existing buffers',
+      },
       {
         ',/',
         function()
-          require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
-            winblend = 10,
-            previewer = false,
-          }))
+          require('telescope.builtin').current_buffer_fuzzy_find(
+            require('telescope.themes').get_dropdown({
+              winblend = 10,
+              previewer = false,
+            })
+          )
         end,
         desc = 'Search current buffer',
       },
-      { '<Leader>gf', function() require('telescope.builtin').git_files() end, desc = 'Search git files' },
-      { '<Leader>sf', function() require('telescope.builtin').find_files() end, desc = 'Search files' },
-      { '<Leader>sh', function() require('telescope.builtin').help_tags() end, desc = 'Search help' },
-      { '<Leader>sw', function() require('telescope.builtin').grep_string() end, desc = 'Search word' },
-      { '<Leader>sg', function() require('telescope.builtin').live_grep() end, desc = 'Search grep' },
-      { '<Leader>sd', function() require('telescope.builtin').diagnostics() end, desc = 'Search diagnostics' },
-      { '<Leader>sr', function() require('telescope.builtin').lsp_references() end, desc = 'Search references' },
-      { '<leader>sS', function() require('telescope.builtin').git_status() end, desc = 'Search git status' },
-      { '<Leader>sc', function() require('telescope.builtin').commands() end, desc = 'Search commands' },
-      { '<Leader>sb', function() require('telescope.builtin').buffers() end, desc = 'Search buffers' },
-      { '<Leader>s/', function() require('telescope.builtin').current_buffer_fuzzy_find() end, desc = 'Current buffer fuzzy search' },
-      { '<Leader>si', function() require('telescope.builtin').builtin() end, desc = 'Search builtins' },
+      {
+        '<Leader>gf',
+        function()
+          require('telescope.builtin').git_files()
+        end,
+        desc = 'Search git files',
+      },
+      {
+        '<Leader>sf',
+        function()
+          require('telescope.builtin').find_files()
+        end,
+        desc = 'Search files',
+      },
+      {
+        '<Leader>sh',
+        function()
+          require('telescope.builtin').help_tags()
+        end,
+        desc = 'Search help',
+      },
+      {
+        '<Leader>sw',
+        function()
+          require('telescope.builtin').grep_string()
+        end,
+        desc = 'Search word',
+      },
+      {
+        '<Leader>sg',
+        function()
+          require('telescope.builtin').live_grep()
+        end,
+        desc = 'Search grep',
+      },
+      {
+        '<Leader>sd',
+        function()
+          require('telescope.builtin').diagnostics()
+        end,
+        desc = 'Search diagnostics',
+      },
+      {
+        '<Leader>sr',
+        function()
+          require('telescope.builtin').lsp_references()
+        end,
+        desc = 'Search references',
+      },
+      {
+        '<leader>sS',
+        function()
+          require('telescope.builtin').git_status()
+        end,
+        desc = 'Search git status',
+      },
+      {
+        '<Leader>sc',
+        function()
+          require('telescope.builtin').commands()
+        end,
+        desc = 'Search commands',
+      },
+      {
+        '<Leader>sb',
+        function()
+          require('telescope.builtin').buffers()
+        end,
+        desc = 'Search buffers',
+      },
+      {
+        '<Leader>s/',
+        function()
+          require('telescope.builtin').current_buffer_fuzzy_find()
+        end,
+        desc = 'Current buffer fuzzy search',
+      },
+      {
+        '<Leader>si',
+        function()
+          require('telescope.builtin').builtin()
+        end,
+        desc = 'Search builtins',
+      },
       { '<leader>sm', '<cmd>Telescope harpoon marks<CR>', desc = 'Harpoon marks' },
     },
     dependencies = {
