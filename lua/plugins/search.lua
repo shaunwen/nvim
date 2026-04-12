@@ -21,6 +21,59 @@ local function fzf_blines()
   })
 end
 
+local function fzf_files_by_modified_time_desc()
+  local fzf = require('fzf-lua')
+  local config = require('fzf-lua.config')
+  local make_entry = require('fzf-lua.make_entry')
+  local result = vim
+    .system({
+      'fd',
+      '-0',
+      '-t',
+      'f',
+      '--absolute-path',
+      '--exclude',
+      '.git',
+      '--exclude',
+      '.jj',
+      '.',
+    }, { text = false })
+    :wait()
+
+  if result.code ~= 0 then
+    vim.notify('fd failed: ' .. (result.stderr or 'unknown error'), vim.log.levels.ERROR)
+    return
+  end
+
+  local files = {}
+  for _, path in ipairs(vim.split(result.stdout or '', '\0', { plain = true, trimempty = true })) do
+    local stat = vim.uv.fs_stat(path)
+    if stat and stat.type == 'file' then
+      table.insert(files, {
+        path = path,
+        mtime = stat.mtime.sec,
+      })
+    end
+  end
+
+  table.sort(files, function(a, b)
+    if a.mtime == b.mtime then
+      return a.path < b.path
+    end
+    return a.mtime > b.mtime
+  end)
+
+  local opts = config.normalize_opts({
+    prompt = 'RecentFiles> ',
+  }, 'files')
+
+  local entries = vim.tbl_map(function(entry)
+    return make_entry.file(entry.path, opts)
+  end, files)
+
+  fzf.fzf_exec(entries, opts)
+end
+
 return {
   {
     'ibhagwan/fzf-lua',
@@ -31,6 +84,11 @@ return {
       { '<leader>fc', '<cmd>FzfLua highlights<cr>', desc = 'Highlights' },
       { '<leader>fd', '<cmd>FzfLua lsp_document_diagnostics<cr>', desc = 'Document diagnostics' },
       { '<leader>ff', '<cmd>FzfLua files<cr>', desc = 'Find files' },
+      {
+        '<leader>fm',
+        fzf_files_by_modified_time_desc,
+        desc = 'Find most recent files by modified time',
+      },
       { '<leader>b', '<cmd>FzfLua buffers<cr>', desc = 'Find files from buffers' },
       { '<leader>f/', fzf_blines, desc = 'Buffer lines', mode = { 'n', 'x' } },
       { '<leader>fg', '<cmd>FzfLua live_grep<cr>', desc = 'Grep', mode = 'n' },
