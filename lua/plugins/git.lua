@@ -4,11 +4,24 @@ return {
     'tommcdo/vim-fubitive',
     lazy = false,
     init = function()
-      vim.g.fubitive_domain_pattern = 'code\\.example\\.com'
-      vim.g.fubitive_domain_context_path = 'bitbucket'
+      vim.g.fugitive_bitbucket_domains = { 'https://bitbucket.org' }
     end,
   },
   { 'tpope/vim-rhubarb', lazy = false },
+  {
+    'sindrets/diffview.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = {
+      'DiffviewOpen',
+      'DiffviewClose',
+      'DiffviewToggleFiles',
+      'DiffviewFileHistory',
+    },
+    keys = {
+      { '<Leader>gD', '<cmd>DiffviewOpen<CR>', desc = 'Open Diffview' },
+      { '<Leader>gC', '<cmd>DiffviewClose<CR>', desc = 'Close Diffview' },
+    },
+  },
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
