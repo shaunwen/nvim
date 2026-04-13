@@ -60,7 +60,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local opts = { buffer = args.buf, noremap = true, silent = true, desc = 'Follow note link' }
     vim.keymap.set('n', 'gd', follow_note_link, opts)
-    vim.keymap.set('n', '<leader>gd', follow_note_link, opts)
     vim.keymap.set('n', '<CR>', follow_note_link, opts)
   end,
 })
