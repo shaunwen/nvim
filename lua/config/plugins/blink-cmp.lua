@@ -17,6 +17,9 @@ blink.setup({
     preset = 'enter',
     ['<C-y>'] = { 'accept' },
   },
+  cmdline = {
+    keymap = { preset = 'cmdline' },
+  },
   snippets = {
     preset = 'luasnip',
   },
