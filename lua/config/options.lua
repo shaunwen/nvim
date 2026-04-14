@@ -46,3 +46,12 @@ vim.opt.foldlevel = 99
 
 vim.opt.path:append({ '**' })
 vim.opt.wildignore:append({ '*/node_modules/*' })
+
+vim.filetype.add({
+  filename = {
+    ['go.work'] = 'gowork',
+  },
+  extension = {
+    gotmpl = 'gotmpl',
+  },
+})
