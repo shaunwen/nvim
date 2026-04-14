@@ -29,9 +29,6 @@ keymap.set('n', '<Leader>Y', [["+Y]])
 keymap.set('v', 'gj', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'gk', ":m '<-2<CR>gv=gv")
 
-keymap.set('v', '<', '<gv')
-keymap.set('v', '>', '>gv')
-
 keymap.set('n', 'n', 'nzzzv')
 keymap.set('n', 'N', 'Nzzzv')
 
@@ -39,7 +36,7 @@ keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 
 keymap.set('n', '<C-S-f>', '<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>')
-keymap.set('n', 'gx', '<cmd>!chmod +x %<CR>', { silent = true })
+keymap.set('n', 'gX', '<cmd>!chmod +x %<CR>', { silent = true })
 
 local function replace_word()
   local mode = vim.api.nvim_get_mode().mode
@@ -162,10 +159,7 @@ local function search_zk_tag(tag_prefix)
   local fzf = require('fzf-lua')
   local result = vim.system({ 'zk', 'list', '--format', 'json' }, { text = true }):wait()
   if result.code ~= 0 then
-    vim.notify(
-      'zk search failed: ' .. (result.stderr or 'unknown error'),
-      vim.log.levels.ERROR
-    )
+    vim.notify('zk search failed: ' .. (result.stderr or 'unknown error'), vim.log.levels.ERROR)
     return
   end
 
@@ -196,7 +190,7 @@ local function search_zk_tag(tag_prefix)
       ['ctrl-q'] = {
         fn = fzf.actions.file_sel_to_qf,
         prefix = 'select-all',
-      }
+      },
     },
     previewer = 'builtin',
     fzf_opts = {
@@ -215,9 +209,16 @@ local function prompt_search_zk_tag()
 end
 
 -- Keymap for PARA layer search
-vim.keymap.set("n", "<leader>zP", function() search_zk_tag("p/") end, { desc = "Search projects" })
-vim.keymap.set("n", "<leader>za", function() search_zk_tag("a/") end, { desc = "Search areas" })
-vim.keymap.set("n", "<leader>zR", function() search_zk_tag("r/") end, { desc = "Search resources" })
-vim.keymap.set("n", "<leader>zx", function() search_zk_tag("x/") end, { desc = "Search archives" })
+vim.keymap.set('n', '<leader>zP', function()
+  search_zk_tag('p/')
+end, { desc = 'Search projects' })
+vim.keymap.set('n', '<leader>za', function()
+  search_zk_tag('a/')
+end, { desc = 'Search areas' })
+vim.keymap.set('n', '<leader>zR', function()
+  search_zk_tag('r/')
+end, { desc = 'Search resources' })
+vim.keymap.set('n', '<leader>zx', function()
+  search_zk_tag('x/')
+end, { desc = 'Search archives' })
 vim.keymap.set('n', '<leader>zk', prompt_search_zk_tag, { desc = 'Search zk tags' })
-
