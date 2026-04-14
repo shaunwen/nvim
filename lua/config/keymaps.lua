@@ -23,6 +23,8 @@ keymap.set('x', '<Leader><Leader>p', [["_dP]])
 keymap.set('n', '<Leader><Leader>d', '"_d')
 keymap.set('v', '<Leader><Leader>d', '"_d')
 
+keymap.set('n', '<Leader><Leader>u', '<cmd>packadd nvim.undotree | Undotree<CR>')
+
 keymap.set({ 'n', 'v' }, '<Leader>y', [["+y]])
 keymap.set('n', '<Leader>Y', [["+Y]])
 
