@@ -26,9 +26,23 @@ require('fzf-lua').setup {
     hidden = false,
   },
   keymap = {
+    builtin = {
+      ['<C-d>'] = 'preview-page-down',
+      ['<C-u>'] = 'preview-page-up',
+    },
     fzf = {
       ['ctrl-q'] = 'select-all+accept',
     },
+  },
+  hls = {
+    cursorline = 'Visual',
+    search = 'IncSearch',
+  },
+  fzf_colors = {
+    ['hl'] = { 'bg', 'Search' },
+    ['hl+'] = { 'bg', 'Search', 'bold' },
+    ['fg+'] = { 'fg', 'Normal' },
+    ['bg+'] = { 'bg', 'Visual' },
   },
   previewers = {
     builtin = {
