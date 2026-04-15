@@ -110,6 +110,7 @@ return {
       { '<leader>qo', '<cmd>FzfLua quickfix<cr>', desc = 'Quickfix' },
       { '<leader>qO', '<cmd>FzfLua lgrep_quickfix<cr>', desc = 'Lgrep quickfix' },
       { '<leader>fb', '<cmd>FzfLua builtin<cr>', desc = 'Builtins' },
+      { '<leader>fr', '<cmd>FzfLua lsp_references<cr>', desc = 'Search references' },
       { '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Document symbols' },
       { '<leader>fS', '<cmd>FzfLua lsp_workspace_symbols<cr>', desc = 'Workspace symbols' },
     },
@@ -282,6 +283,7 @@ return {
     init = function()
       vim.g.fzfSwitchProjectWorkspaces = existing_dirs({
         '/Users/shaun.wen/workspace/projects/scalapay-repos',
+        '/Users/shaun.wen/workspace/projects/scalapay-repos/worktrees',
         '/Users/shaun.wen/repo/learning/rust',
         '/Users/shaun.wen/workspace/projects/scalapay-repos/rust',
       })
@@ -290,7 +292,7 @@ return {
         '/Users/shaun.wen/Documents/myNotes',
       })
       vim.g.fzfSwitchProjectAlwaysChooseFile = 0
-      vim.g.fzfSwitchProjectCloseOpenedBuffers = 1
+      vim.g.fzfSwitchProjectCloseOpenedBuffers = 0
     end,
   },
 }
