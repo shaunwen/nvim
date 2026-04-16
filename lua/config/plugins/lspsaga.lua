@@ -25,6 +25,7 @@ saga.setup({
   },
   outline = {
     auto_preview = false,
+    auto_close = false,
     keys = {
       toggle_or_jump = '<CR>',
     },
