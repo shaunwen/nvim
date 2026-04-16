@@ -74,6 +74,59 @@ local function fzf_files_by_modified_time_desc()
   fzf.fzf_exec(entries, opts)
 end
 
+local function switch_git_worktree()
+  require('fzf-lua').git_worktrees({
+    actions = {
+      ['enter'] = function(selected)
+        local cwd = selected[1] and selected[1]:match('^[^%s]+')
+        if not cwd then
+          return
+        end
+
+        vim.schedule(function()
+          local current_buf = vim.api.nvim_get_current_buf()
+          local modified = {}
+
+          for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.api.nvim_buf_is_valid(bufnr) and vim.api.nvim_buf_is_loaded(bufnr) then
+              local name = vim.api.nvim_buf_get_name(bufnr)
+              if vim.bo[bufnr].buftype == '' and name ~= '' and vim.bo[bufnr].modified then
+                table.insert(modified, vim.fn.fnamemodify(name, ':~:.'))
+              end
+            end
+          end
+
+          if #modified > 0 then
+            vim.notify(
+              'Save or close modified buffers before switching worktrees:\n' .. table.concat(modified, '\n'),
+              vim.log.levels.WARN
+            )
+            return
+          end
+
+          vim.cmd('cd ' .. vim.fn.fnameescape(cwd))
+
+          for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+            if bufnr ~= current_buf and vim.api.nvim_buf_is_valid(bufnr) then
+              local name = vim.api.nvim_buf_get_name(bufnr)
+              if vim.bo[bufnr].buftype == '' and name ~= '' then
+                pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+              end
+            end
+          end
+
+          local ok, lualine = pcall(require, 'lualine')
+          if ok then
+            lualine.refresh()
+          end
+
+          fzf_files_by_modified_time_desc()
+        end)
+      end,
+    },
+  })
+end
+
 return {
   {
     'ibhagwan/fzf-lua',
@@ -104,7 +157,7 @@ return {
       { '<Leader>gd', '<cmd>FzfLua git_diff<CR>', desc = 'Git diff' },
       { '<Leader>hf', '<cmd>FzfLua git_bcommits<CR>', desc = 'Buffer commits' },
       { '<Leader>gs', '<cmd>FzfLua git_status<CR>', desc = 'Git status' },
-      { '<Leader>wt', '<cmd>FzfLua git_worktrees<CR>', desc = 'Git worktrees' },
+      { '<Leader>wt', switch_git_worktree, desc = 'Git worktrees' },
       { '<Leader>fu', '<cmd>FzfLua undotree<CR>', desc = 'Git undotree' },
       { ',a', '<cmd>FzfLua commands<cr>', desc = 'Neovim commands' },
       { '<leader>h:', '<cmd>FzfLua command_history<cr>', desc = 'Command history' },
