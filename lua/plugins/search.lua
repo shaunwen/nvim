@@ -40,7 +40,11 @@ return {
       { '<leader>qo', '<cmd>FzfLua quickfix<cr>', desc = 'Quickfix' },
       { '<leader>qO', '<cmd>FzfLua lgrep_quickfix<cr>', desc = 'Lgrep quickfix' },
       { '<leader>fb', '<cmd>FzfLua builtin<cr>', desc = 'Builtins' },
-      { '<leader>fr', '<cmd>FzfLua lsp_references<cr>', desc = 'Search references' },
+      {
+        '<leader>fr',
+        '<cmd>FzfLua lsp_references includeDeclaration=false<cr>',
+        desc = 'Search references',
+      },
       { '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Document symbols' },
       { '<leader>fS', '<cmd>FzfLua lsp_workspace_symbols<cr>', desc = 'Workspace symbols' },
     },
