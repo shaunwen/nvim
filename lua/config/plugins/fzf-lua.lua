@@ -25,6 +25,12 @@ require('fzf-lua').setup {
   files = {
     hidden = false,
   },
+  blines = {
+    fzf_colors = {
+      ['hl'] = '-1:reverse',
+      ['hl+'] = '-1:reverse',
+    },
+  },
   keymap = {
     builtin = {
       ['<C-d>'] = 'preview-page-down',

@@ -16,7 +16,7 @@ return {
         desc = 'Find most recent files by modified time',
       },
       { '<leader>b', '<cmd>FzfLua buffers<cr>', desc = 'Find files from buffers' },
-      { '<leader>f/', helpers.fzf_blines, desc = 'Buffer lines', mode = { 'n', 'x' } },
+      { '<leader>f/', '<cmd>FzfLua blines<cr>', desc = 'Buffer lines', mode = { 'n', 'x' } },
       { '<leader>fg', '<cmd>FzfLua live_grep<cr>', desc = 'Grep', mode = 'n' },
       { '<leader>fg', '<cmd>FzfLua grep_visual<cr>', desc = 'Grep', mode = 'x' },
       { '<leader>fw', '<cmd>FzfLua grep_cword<cr>', desc = 'Grep word', mode = 'n' },
