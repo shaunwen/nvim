@@ -42,7 +42,7 @@ return {
       { '<leader>fb', '<cmd>FzfLua builtin<cr>', desc = 'Builtins' },
       {
         '<leader>fr',
-        '<cmd>FzfLua lsp_references includeDeclaration=false<cr>',
+        '<cmd>FzfLua lsp_references ignore_current_line=true<cr>',
         desc = 'Search references',
       },
       { '<leader>fs', '<cmd>FzfLua lsp_document_symbols<cr>', desc = 'Document symbols' },
