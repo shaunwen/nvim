@@ -76,6 +76,30 @@ function M.fzf_files_by_modified_time_desc()
   fzf.fzf_exec(entries, opts)
 end
 
+function M.lspmark_create_or_edit_comment()
+  local bookmarks = require('lspmark.bookmarks')
+  local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), { group = 'lspmark' })
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+  local has_bookmark = false
+
+  for _, placed in ipairs(signs) do
+    for _, sign in ipairs(placed.signs) do
+      if sign.lnum == line then
+        has_bookmark = true
+        break
+      end
+    end
+    if has_bookmark then
+      break
+    end
+  end
+
+  if not has_bookmark then
+    bookmarks.toggle_bookmark()
+  end
+  bookmarks.modify_comment()
+end
+
 function M.switch_git_worktree()
   local fzf = require('fzf-lua')
   local result = vim.system({ 'git', 'worktree', 'list', '--porcelain' }, { text = true }):wait()
