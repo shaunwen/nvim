@@ -1,5 +1,5 @@
 vim.api.nvim_set_hl(0, 'LspMark', { link = 'DiagnosticWarn' })
-vim.api.nvim_set_hl(0, 'LspMarkComment', { link = 'Comment' })
+vim.api.nvim_set_hl(0, 'LspMarkComment', { link = 'DiagnosticWarn' })
 
 require('lspmark').setup()
 
