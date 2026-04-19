@@ -40,6 +40,32 @@ require('fzf-lua').setup {
       ['ctrl-q'] = 'select-all+accept',
     },
   },
+  git = {
+    status = {
+      keymap = {
+        fzf = {
+          ['ctrl-f'] = 'preview-page-down',
+          ['ctrl-b'] = 'preview-page-up',
+        },
+      },
+    },
+    diff = {
+      keymap = {
+        fzf = {
+          ['ctrl-f'] = 'preview-page-down',
+          ['ctrl-b'] = 'preview-page-up',
+        },
+      },
+    },
+    commits = {
+      keymap = {
+        fzf = {
+          ['ctrl-f'] = 'preview-page-down',
+          ['ctrl-b'] = 'preview-page-up',
+        },
+      },
+    },
+  },
   hls = {
     cursorline = 'Visual',
     search = 'IncSearch',
