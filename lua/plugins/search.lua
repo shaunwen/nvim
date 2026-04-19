@@ -185,6 +185,40 @@ return {
     end,
   },
   {
+    'tristone13th/lspmark.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    keys = {
+      {
+        '<leader>mm',
+        function()
+          require('lspmark.bookmarks').toggle_bookmark()
+        end,
+        desc = 'Toggle bookmark',
+      },
+      {
+        '<leader>mc',
+        helpers.lspmark_create_or_edit_comment,
+        desc = 'Create or edit bookmark comment',
+      },
+      {
+        '<leader>ms',
+        function()
+          require('lspmark.bookmarks').show_comment()
+        end,
+        desc = 'Show bookmark comment',
+      },
+      {
+        '<leader>ml',
+        '<cmd>Telescope lspmark<CR>',
+        desc = 'List bookmarks',
+      },
+    },
+    config = function()
+      require('config.plugins.lspmark')
+    end,
+  },
+  {
     'ThePrimeagen/harpoon',
     keys = {
       {
