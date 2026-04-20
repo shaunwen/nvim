@@ -167,11 +167,9 @@ return {
         end,
         desc = 'Search builtins',
       },
-      { '<leader>sm', '<cmd>Telescope harpoon marks<CR>', desc = 'Harpoon marks' },
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'ThePrimeagen/harpoon',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
@@ -217,18 +215,6 @@ return {
     config = function()
       require('config.plugins.lspmark')
     end,
-  },
-  {
-    'ThePrimeagen/harpoon',
-    keys = {
-      {
-        '<Leader>m',
-        function()
-          require('harpoon.mark').add_file()
-        end,
-        desc = 'Harpoon mark file',
-      },
-    },
   },
   {
     'folke/flash.nvim',
