@@ -93,7 +93,10 @@ end, { desc = 'Install missing configured treesitter parsers' })
 create_user_command('TSInstallCurrent', function()
   local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
   if not lang then
-    vim.notify(('No treesitter language mapped for filetype: %s'):format(vim.bo.filetype), vim.log.levels.WARN)
+    vim.notify(
+      ('No treesitter language mapped for filetype: %s'):format(vim.bo.filetype),
+      vim.log.levels.WARN
+    )
     return
   end
 
@@ -212,6 +215,8 @@ map_select('ii', '@conditional.inner')
 map_select('al', '@loop.outer')
 map_select('il', '@loop.inner')
 map_select('at', '@comment.outer')
+map_select('am', '@block.outer')
+map_select('im', '@block.inner')
 
 map_move(']m', 'goto_next_start', '@function.outer')
 map_move(']]', 'goto_next_start', '@class.outer')
