@@ -103,10 +103,23 @@ keymap.set('n', '<s-down>', '5<C-w>-')
 
 vim.keymap.set('n', '<leader>n', function()
   vim.cmd('enew')
-  vim.bo.buftype = 'nofile'
   vim.bo.bufhidden = 'hide'
   vim.bo.swapfile = false
+  require('fzf-lua').filetypes()
 end, { desc = 'New scratch buffer' })
+
+local jq_datadog_json_log_cmd =
+  [[jq -Rs 'gsub("\n";"") | try (fromjson | walk(if type=="string" then (. as $s | try fromjson catch $s) else . end)) catch .']]
+
+vim.keymap.set('n', '<leader>jq', function()
+  vim.cmd('%!' .. jq_datadog_json_log_cmd)
+  vim.bo.filetype = 'json'
+end, { desc = 'Format Datadog JSON log' })
+
+vim.keymap.set('v', '<leader>jq', function()
+  vim.cmd("'<,'>!" .. jq_datadog_json_log_cmd)
+  vim.bo.filetype = 'json'
+end, { desc = 'Format Datadog JSON log' })
 
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
