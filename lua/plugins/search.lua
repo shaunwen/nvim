@@ -246,7 +246,7 @@ return {
         '/Users/shaun.wen/Documents/myNotes',
       })
       vim.g.fzfSwitchProjectAlwaysChooseFile = 0
-      vim.g.fzfSwitchProjectCloseOpenedBuffers = 0
+      vim.g.fzfSwitchProjectCloseOpenedBuffers = 1
     end,
   },
 }
