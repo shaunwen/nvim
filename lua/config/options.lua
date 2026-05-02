@@ -41,8 +41,20 @@ vim.o.completeopt = 'menuone,noselect,noinsert'
 -- Treesitter folding — set early so folds stay open when treesitter loads later
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldtext = 'v:lua.custom_foldtext()'
+vim.opt.fillchars:append({ fold = ' ' })
 vim.opt.foldlevelstart = 99
 vim.opt.foldlevel = 99
+
+function _G.custom_foldtext()
+  local raw_line = vim.fn.getline(vim.v.foldstart)
+  local heading_prefix = raw_line:match('^%s*#+%s*') or ''
+  local line = raw_line:gsub('^%s*#+%s*', '')
+  local folded_lines = vim.v.foldend - vim.v.foldstart
+  local suffix = folded_lines == 1 and 'line' or 'lines'
+
+  return ('%s%s [%d %s]'):format((' '):rep(#heading_prefix), line, folded_lines, suffix)
+end
 
 vim.opt.path:append({ '**' })
 vim.opt.wildignore:append({ '*/node_modules/*' })
