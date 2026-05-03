@@ -42,7 +42,7 @@ vim.o.completeopt = 'menuone,noselect,noinsert'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldtext = 'v:lua.custom_foldtext()'
-vim.opt.fillchars:append({ fold = ' ' })
+-- vim.opt.fillchars:append({ fold = ' ' })
 vim.opt.foldlevelstart = 99
 vim.opt.foldlevel = 99
 
