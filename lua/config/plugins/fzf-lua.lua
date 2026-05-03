@@ -71,8 +71,8 @@ require('fzf-lua').setup {
     search = 'IncSearch',
   },
   fzf_colors = {
-    ['hl'] = { 'bg', 'Search' },
-    ['hl+'] = { 'bg', 'Search', 'bold' },
+    ['hl'] = { 'fg', 'FzfLuaFzfMatch' },
+    ['hl+'] = { 'fg', 'FzfLuaFzfMatchCurrent', 'bold' },
     ['fg+'] = { 'fg', 'Normal' },
     ['bg+'] = { 'bg', 'Visual' },
   },

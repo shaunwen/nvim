@@ -32,6 +32,7 @@ blink.setup({
     menu = {
       border = 'rounded',
       draw = {
+        columns = { { 'kind_icon' }, { 'source_name', 'label', 'label_description', gap = 1 } },
         components = {
           kind_icon = {
             text = function(ctx)
@@ -64,17 +65,16 @@ blink.setup({
               return hl
             end,
           },
-          label = {
+          source_name = {
             text = function(ctx)
               local source_labels = {
-                snippets = '[Snippet] ',
-                lsp = '[LSP] ',
-                copilot = '[AI] ',
-                buffer = '[Buffer] ',
-                path = '[Path] ',
+                snippets = '[Snippet]',
+                lsp = '[LSP]',
+                copilot = '[AI]',
+                buffer = '[Buffer]',
+                path = '[Path]',
               }
-              local prefix = source_labels[ctx.source_name:lower()] or ''
-              return prefix .. ctx.label
+              return source_labels[ctx.source_name:lower()] or ctx.source_name
             end,
           },
         },
