@@ -19,7 +19,7 @@ require('lazy').setup({
     lazy = true,
   },
   install = {
-    colorscheme = { 'onedark' },
+    colorscheme = { 'catppuccin' },
   },
   change_detection = {
     notify = false,
