@@ -94,6 +94,11 @@ blink.setup({
           get_bufnrs = vim.api.nvim_list_bufs,
         },
       },
+      path = {
+        opts = {
+          show_hidden_files_by_default = true,
+        },
+      },
       lazydev = {
         name = 'LazyDev',
         module = 'lazydev.integrations.blink',
