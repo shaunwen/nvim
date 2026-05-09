@@ -185,10 +185,13 @@ local function search_zk_tag(tag_prefix)
   end
 
   local matches = {}
+  local match_tags_by_path = {}
   for _, note in ipairs(notes) do
     for _, tag in ipairs(note.tags or {}) do
       if string.find(tag, tag_prefix, 1, true) then
-        table.insert(matches, note.absPath or note.path)
+        local path = note.absPath or note.path
+        table.insert(matches, path)
+        match_tags_by_path[path] = tag
         break
       end
     end
@@ -201,7 +204,24 @@ local function search_zk_tag(tag_prefix)
 
   fzf.fzf_exec(matches, {
     actions = {
-      ['default'] = fzf.actions.file_edit,
+      ['default'] = function(selected, opts)
+        if not selected or #selected == 0 then
+          return
+        end
+
+        fzf.actions.file_edit(selected, opts)
+
+        local selected_path = selected[#selected]
+        local tag = match_tags_by_path[selected_path]
+        if not tag then
+          return
+        end
+
+        vim.schedule(function()
+          vim.fn.cursor(1, 1)
+          vim.fn.search([[\V]] .. vim.fn.escape(tag, [[\]]), 'cW')
+        end)
+      end,
       ['ctrl-q'] = {
         fn = fzf.actions.file_sel_to_qf,
         prefix = 'select-all',
