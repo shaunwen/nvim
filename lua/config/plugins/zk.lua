@@ -104,7 +104,7 @@ vim.api.nvim_set_keymap(
 -- Problem/solution — distilled after solving a real problem
 vim.api.nvim_set_keymap(
   'n',
-  '<leader>zp',
+  '<leader>zP',
   "<Cmd>lua zk_new_with_prompt('Problem: ', { dir = 'work', template = 'problem_solution.md' })<CR>",
   opts
 )
@@ -125,7 +125,7 @@ vim.api.nvim_set_keymap(
 -- Weekly review
 vim.api.nvim_set_keymap(
   'n',
-  '<leader>zr',
+  '<leader>zR',
   "<Cmd>lua zk_new_with_prompt('Review: ', { dir = 'reviews', template = 'weekly_review.md' })<CR>",
   opts
 )

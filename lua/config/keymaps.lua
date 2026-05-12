@@ -244,13 +244,13 @@ local function prompt_search_zk_tag()
 end
 
 -- Keymap for PARA layer search
-vim.keymap.set('n', '<leader>zP', function()
+vim.keymap.set('n', '<leader>zp', function()
   search_zk_tag('p/')
 end, { desc = 'Search projects' })
 vim.keymap.set('n', '<leader>za', function()
   search_zk_tag('a/')
 end, { desc = 'Search areas' })
-vim.keymap.set('n', '<leader>zR', function()
+vim.keymap.set('n', '<leader>zr', function()
   search_zk_tag('r/')
 end, { desc = 'Search resources' })
 vim.keymap.set('n', '<leader>zx', function()
