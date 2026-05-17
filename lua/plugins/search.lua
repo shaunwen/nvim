@@ -224,29 +224,14 @@ return {
     end,
   },
   {
-    'junegunn/fzf.vim',
-    lazy = false,
-    dependencies = { 'junegunn/fzf' },
-  },
-  {
-    'shaunwen/fzf-project',
-    cmd = 'FzfSwitchProject',
+    'shaunwen/myprojects.nvim',
+    dependencies = { 'ibhagwan/fzf-lua' },
+    cmd = 'MyProjects',
     keys = {
-      { '<Leader>pj', '<cmd>FzfSwitchProject<CR>', desc = 'Switch project' },
+      { '<leader>pj', '<cmd>MyProjects<CR>', desc = 'Switch project' },
     },
-    init = function()
-      vim.g.fzfSwitchProjectWorkspaces = helpers.existing_dirs({
-        '/Users/shaun.wen/workspace/projects/scalapay-repos',
-        '/Users/shaun.wen/workspace/projects/scalapay-repos/worktrees',
-        '/Users/shaun.wen/repo/learning/rust',
-        '/Users/shaun.wen/workspace/projects/scalapay-repos/rust',
-      })
-      vim.g.fzfSwitchProjectProjects = helpers.existing_dirs({
-        '/Users/shaun.wen/.config/nvim',
-        '/Users/shaun.wen/Documents/myNotes',
-      })
-      vim.g.fzfSwitchProjectAlwaysChooseFile = 0
-      vim.g.fzfSwitchProjectCloseOpenedBuffers = 1
+    config = function()
+      require('config.plugins.myprojects')
     end,
   },
 }
