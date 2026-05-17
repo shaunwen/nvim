@@ -77,7 +77,7 @@ function M.setup()
   end
 
   local js_debug_paths = {
-    '/Users/shaun.wen/repo/github/vscode-js-debug',
+    '~/repo/github/vscode-js-debug',
     vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
   }
 
