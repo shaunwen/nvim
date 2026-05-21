@@ -65,6 +65,14 @@ require('fzf-lua').setup {
         },
       },
     },
+    bcommits = {
+      keymap = {
+        fzf = {
+          ['ctrl-f'] = 'preview-page-down',
+          ['ctrl-b'] = 'preview-page-up',
+        },
+      },
+    },
   },
   hls = {
     cursorline = 'Visual',
