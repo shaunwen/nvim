@@ -19,6 +19,8 @@ keymap.set('n', ',ee', ':edit <C-R>=expand("%:p:h") . "/" <CR>')
 keymap.set('n', 'x', '"_x')
 keymap.set('v', 'x', '"_x')
 keymap.set('x', '<Leader><Leader>p', [["_dP]])
+-- pasting over a selection no longer clobbers your clipboard
+vim.cmd([[ xnoremap <expr> p 'pgv"'.v:register.'y' ]])
 
 keymap.set('n', '<Leader><Leader>d', '"_d')
 keymap.set('v', '<Leader><Leader>d', '"_d')
