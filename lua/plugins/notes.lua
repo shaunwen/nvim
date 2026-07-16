@@ -68,6 +68,7 @@ return {
         group = markdown_group,
         pattern = 'markdown',
         callback = function(event)
+          -- bold via surround char 'e' (ASCII 101): visual Se, normal ysiwe
           vim.b.surround_101 = '**\r**'
           vim.keymap.set('x', '<Leader>a', '<cmd>Tabularize /|/l0l1<CR>', {
             buffer = event.buf,
