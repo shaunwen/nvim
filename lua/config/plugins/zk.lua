@@ -94,12 +94,45 @@ vim.api.nvim_set_keymap(
   opts
 )
 
--- Work log — messy live capture during debugging/investigation
-vim.api.nvim_set_keymap(
+-- Work log — pick the shape that fits, then create the note accordingly
+local work_log_templates = {
+  { label = 'Investigation / bug fix', template = 'investigation.md', prompt = 'Investigation: ' },
+  { label = 'General work log', template = 'work_log.md', prompt = 'Work log: ' },
+  { label = 'Meeting notes', template = 'meeting_note.md', prompt = 'Meeting: ' },
+  { label = 'PR review', template = 'pr_review.md', prompt = 'PR review: ' },
+  { label = 'Follow-up', template = 'followup.md', prompt = 'Follow-up: ' },
+}
+
+local function zk_new_work_log()
+  local labels = {}
+  local by_label = {}
+  for _, entry in ipairs(work_log_templates) do
+    table.insert(labels, entry.label)
+    by_label[entry.label] = entry
+  end
+
+  require('fzf-lua').fzf_exec(labels, {
+    prompt = 'Work log type> ',
+    actions = {
+      ['default'] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+        local entry = by_label[selected[1]]
+        if not entry then
+          return
+        end
+        zk_new_with_prompt(entry.prompt, { dir = 'work', template = entry.template })
+      end,
+    },
+  })
+end
+
+vim.keymap.set(
   'n',
   '<leader>zw',
-  "<Cmd>lua zk_new_with_prompt('Work log: ', { dir = 'work', template = 'work_log.md' })<CR>",
-  opts
+  zk_new_work_log,
+  { noremap = true, silent = true, desc = 'New work log (pick type)' }
 )
 -- Problem/solution — distilled after solving a real problem
 vim.api.nvim_set_keymap(
