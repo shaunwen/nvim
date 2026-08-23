@@ -1,16 +1,9 @@
-local function is_ghostty()
-  if vim.env.TMUX ~= nil then
-    local out = vim.fn.system { 'tmux', 'display-message', '-p', '#{client_termname}' }
-    return vim.v.shell_error == 0 and out:lower():match 'ghostty' ~= nil
-  end
-
-  return vim.env.TERM_PROGRAM == 'ghostty'
-end
-
-local ghostty = is_ghostty()
+local kitty = vim.env.TERM_PROGRAM == 'ghostty'
+  or vim.env.TERM_PROGRAM == 'WezTerm'
+  or vim.env.TERM_PROGRAM == 'Kitty'
 
 local image_extensions = nil
-if not ghostty then
+if not kitty then
   image_extensions = {
     ['png'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
     ['jpg'] = { 'chafa', '--size=80x40', '--format=symbols', '{file}' },
@@ -86,11 +79,11 @@ require('fzf-lua').setup {
   },
   previewers = {
     builtin = {
-      -- External image commands run before snacks.image, so only enable them outside Ghostty.
+      -- External image commands run before snacks.image, so only enable them outside Kitty-compatible terminals.
       extensions = image_extensions,
       snacks_image = {
-        enabled = ghostty,
-        render_inline = ghostty,
+        enabled = kitty,
+        render_inline = kitty,
       },
     },
   },
