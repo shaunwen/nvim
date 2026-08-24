@@ -88,10 +88,33 @@ blink.setup({
   sources = {
     default = { 'lazydev', 'copilot', 'lsp', 'snippets', 'buffer', 'path' },
     providers = {
+      snippets = {
+        opts = {
+          use_label_description = true,
+        },
+        -- snippets that name themselves (e.g. repo snippets, whose trigger
+        -- carries a project prefix) show the name, but still match on the trigger
+        transform_items = function(_, items)
+          local luasnip = require('luasnip')
+          for _, item in ipairs(items) do
+            local snip = item.data.snip_id and luasnip.get_id_snippet(item.data.snip_id)
+            if snip and snip.name and snip.name ~= item.label then
+              item.filterText = item.filterText or item.insertText or item.label
+              item.label = snip.name
+            end
+          end
+          return items
+        end,
+      },
       buffer = {
         opts = {
-          -- get all buffers, even ones like nvim-tree
-          get_bufnrs = vim.api.nvim_list_bufs,
+          -- only real file buffers: scratch buffers (blink's own menu and
+          -- documentation windows included) would otherwise be indexed as words
+          get_bufnrs = function()
+            return vim.tbl_filter(function(bufnr)
+              return vim.bo[bufnr].buftype == '' and vim.api.nvim_buf_is_loaded(bufnr)
+            end, vim.api.nvim_list_bufs())
+          end,
         },
       },
       path = {
