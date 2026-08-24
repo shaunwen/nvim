@@ -200,4 +200,33 @@ local {} = {}
 
 -- End Refactoring --
 
+table.insert(
+	snippets,
+	s("shebang", {
+		t({ "#!/usr/bin/lua", "", "" }),
+		i(0),
+	})
+)
+
+table.insert(
+	snippets,
+	s("func", {
+		t("function("),
+		i(1, "Arguments"),
+		t({ ")", "\t" }),
+		i(2),
+		t({ "", "end", "" }),
+		i(0),
+	})
+)
+
+table.insert(
+	snippets,
+	s("M", {
+		t({ "local M = {}", "", "" }),
+		i(0),
+		t({ "", "", "return M" }),
+	})
+)
+
 return snippets, autosnippets
