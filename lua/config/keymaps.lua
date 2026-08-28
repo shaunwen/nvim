@@ -259,3 +259,7 @@ vim.keymap.set('n', '<leader>zx', function()
   search_zk_tag('x/')
 end, { desc = 'Search archives' })
 vim.keymap.set('n', '<leader>zk', prompt_search_zk_tag, { desc = 'Search zk tags' })
+
+vim.keymap.set('n', '<leader>ob', function()
+  vim.ui.open(vim.fn.expand('%:p'))
+end, { desc = 'Open current file in default browser' })
