@@ -1,6 +1,9 @@
-local kitty = vim.env.TERM_PROGRAM == 'ghostty'
-  or vim.env.TERM_PROGRAM == 'WezTerm'
-  or vim.env.TERM_PROGRAM == 'Kitty'
+-- TERM_PROGRAM names the launching app, which is not the terminal on the other
+-- end of the pty under a multiplexer. Snacks queries the terminal itself.
+local ok, supported = pcall(function()
+  return Snacks.image.supports_terminal()
+end)
+local kitty = ok and supported
 
 local image_extensions = nil
 if not kitty then
