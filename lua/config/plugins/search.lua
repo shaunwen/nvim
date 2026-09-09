@@ -58,11 +58,80 @@ function M.fzf_files_by_modified_time_desc()
     end
   end
 
+  -- A dominant mtime second means the tree was bulk-copied without
+  -- timestamps; mtime is then useless for recency. Never triggers on healthy
+  -- trees (e.g. macOS), where mtimes are real edit times.
+  local counts = {}
+  local stamp, stamp_count = nil, 0
+  for _, f in ipairs(files) do
+    counts[f.mtime] = (counts[f.mtime] or 0) + 1
+  end
+  for mtime, count in pairs(counts) do
+    if count > stamp_count then
+      stamp, stamp_count = mtime, count
+    end
+  end
+  local copied = stamp_count >= 8 and stamp_count >= #files * 0.8
+
+  -- Last commit date per path, newest commits first. Bounded to 2000
+  -- commits; older files fall back to mtime.
+  local git_dates = {}
+  if copied then
+    local git_root = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, { text = true }):wait()
+    if git_root.code == 0 and git_root.stdout and git_root.stdout ~= '' then
+      local root = vim.fs.normalize(vim.trim(git_root.stdout))
+      local log = vim.system(
+        { 'git', 'log', '-n', '2000', '--pretty=format:%ct', '--name-only', '-z' },
+        { text = false }
+      ):wait()
+      if log.code == 0 then
+        local date
+        -- git emits "<ct>\n<name>\0...": split NUL tokens, then the "\n"
+        -- between each date and its first filename.
+        for _, token in ipairs(vim.split(log.stdout or '', '\0', { plain = true })) do
+          for _, line in ipairs(vim.split(token, '\n', { plain = true })) do
+            if line:match('^%d+$') then
+              date = tonumber(line)
+            elseif date and line ~= '' and not git_dates[line] then
+              git_dates[line] = date
+            end
+          end
+        end
+      end
+      -- fd paths are absolute; git names are repo-relative.
+      local function git_mtime_for(path)
+        local direct = git_dates[path]
+        if direct then
+          return direct
+        end
+        if vim.startswith(path, root .. '/') then
+          return git_dates[path:sub(#root + 2)]
+        end
+        return nil
+      end
+      for _, f in ipairs(files) do
+        f.git_mtime = git_mtime_for(f.path)
+      end
+    end
+  end
+
   table.sort(files, function(a, b)
-    if a.mtime == b.mtime then
+    local function recency(f)
+      if not copied then
+        return f.mtime
+      end
+      -- Post-copy edits use real mtime; the rest use last commit date.
+      if f.mtime > stamp + 3600 then
+        return f.mtime
+      end
+      return f.git_mtime or f.mtime
+    end
+    local ra = recency(a)
+    local rb = recency(b)
+    if ra == rb then
       return a.path < b.path
     end
-    return a.mtime > b.mtime
+    return ra > rb
   end)
 
   local opts = config.normalize_opts({

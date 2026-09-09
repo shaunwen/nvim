@@ -13,7 +13,7 @@ return {
       {
         '<leader>fm',
         helpers.fzf_files_by_modified_time_desc,
-        desc = 'Find most recent files by modified time',
+        desc = 'Find most recent files (last commit/modified time)',
       },
       { '<leader>b', '<cmd>FzfLua buffers<cr>', desc = 'Find files from buffers' },
       { '<leader>f/', '<cmd>FzfLua blines<cr>', desc = 'Buffer lines', mode = { 'n', 'x' } },
