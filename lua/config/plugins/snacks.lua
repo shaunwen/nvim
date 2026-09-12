@@ -19,15 +19,18 @@ local image_formats = {
 }
 
 -- Snacks only knows kitty, ghostty, wezterm, tmux and zellij, so Rio is treated
--- as image-incapable and previews fall back to chafa. Rio reports itself as
--- "Rio 0.5.26". Its docs claim unicode placeholder support, but placeholders
--- render blank, so use direct placement as WezTerm does.
+-- as image-incapable and previews fall back to chafa.
+--
+-- Placeholders, not direct placement: a direct placement stays painted at the
+-- grid position it was made at until an explicit delete, so images from
+-- previously viewed files pile up. Placeholder cells die with Neovim's redraw.
+-- Needs Rio >= 0.5.27 (rio#1891).
 table.insert(require('snacks.image.terminal').envs(), 1, {
   name = 'rio',
   terminal = 'rio',
   env = { TERM_PROGRAM = 'rio', TERM = 'rio' },
   supported = true,
-  placeholders = false,
+  placeholders = true,
 })
 
 require('snacks').setup({
