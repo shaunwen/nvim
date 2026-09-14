@@ -50,6 +50,25 @@ return {
     'mickael-menu/zk-nvim',
     ft = { 'markdown' },
     cmd = { 'ZkNew', 'ZkNotes', 'ZkTags', 'ZkInsertLink', 'ZkMatch', 'ZkBacklinks', 'ZkLinks' },
+    -- Note creation and search must work from any buffer, but the keymaps are
+    -- defined in config, which ft/cmd only run once a markdown buffer exists.
+    -- Without these stubs <leader>zd falls through to the builtin zd (E351).
+    keys = {
+      { '<leader>zd', desc = 'New daily note' },
+      { '<leader>zn', desc = 'New zettel' },
+      { '<leader>zw', desc = 'New work log (pick type)' },
+      { '<leader>zP', desc = 'New problem/solution note' },
+      { '<leader>ze', desc = 'New evergreen note' },
+      { '<leader>zD', desc = 'New design note' },
+      { '<leader>zR', desc = 'New weekly review' },
+      { '<leader>zq', desc = 'New question note' },
+      { '<leader>zm', desc = 'New MOC' },
+      { '<leader>zo', desc = 'Open notes by modified' },
+      { '<leader>zt', desc = 'Browse tags' },
+      { '<leader>zf', desc = 'Search notes' },
+      { '<leader>zf', mode = 'v', desc = 'Search notes (selection)' },
+      { '<leader>zF', desc = 'Search notes (filtered)' },
+    },
     config = function()
       require('config.plugins.zk')
     end,
