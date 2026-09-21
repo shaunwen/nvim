@@ -139,6 +139,11 @@ vim.api.nvim_create_user_command(
 
 if vim.g.neovide then
   vim.g.neovide_input_use_logo = 1
+  vim.g.neovide_cursor_animation_length = 0.0
+  vim.g.neovide_cursor_trail_size = 0.0
+  vim.g.neovide_scroll_animation_length = 0.0
+  vim.g.neovide_position_animation_length = 0.0
+  vim.g.neovide_cursor_vfx_mode = ''
 
   vim.keymap.set('n', '<D-s>', ':w<CR>')
   vim.keymap.set('v', '<D-c>', '"+y')
@@ -146,12 +151,10 @@ if vim.g.neovide then
   vim.keymap.set('v', '<D-v>', '"+P')
   vim.keymap.set('c', '<D-v>', '<C-R>+')
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli')
+  vim.keymap.set('t', '<D-v>', function()
+    vim.fn.chansend(vim.b.terminal_job_id, vim.fn.getreg('+'))
+  end)
 end
-
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 keymap.set('n', '<Leader>bd', '<cmd>bd!<CR>')
 
