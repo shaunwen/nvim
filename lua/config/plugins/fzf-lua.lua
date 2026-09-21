@@ -18,6 +18,11 @@ if not kitty then
 end
 
 require('fzf-lua').setup {
+  winopts = {
+    preview = {
+      delay = 100,
+    },
+  },
   files = {
     hidden = false,
   },
