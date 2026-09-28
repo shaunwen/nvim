@@ -183,6 +183,25 @@ spawning a login, non-interactive shell, which reads `.zshenv` and `.zprofile` b
 | `.zshrc` | works | **not set** |
 | `.zshenv` | works | works |
 
+## PlantUML preview
+
+Open a saved `.puml` file and press `<Leader>pp` (Space, p, p) to save changes and
+open the dedicated SVG viewer in your browser. Scroll to zoom, drag to pan, and
+double-click to fit the diagram. Saving the file refreshes the preview.
+`<Leader>ps` stops automatic updates without closing the browser tab.
+
+The viewer requires Java and Graphviz. It uses the Homebrew PlantUML JAR at
+`/opt/homebrew/opt/plantuml/libexec/plantuml.jar` when available, otherwise the
+plugin's bundled JAR. Rendering is local. Only one selected buffer is previewed
+at a time; press `<Leader>pp` in another file to switch.
+
+`scripts/plantuml-java` forwards the plugin's Java arguments and adds
+`--ignore-startuml-filename`, so named `@startuml ...` lines work without editing
+the diagram. This requires a PlantUML version supporting that option (the local
+Homebrew version does). Keep the launcher executable.
+
+The existing Markdown preview remains available with `<Leader>pv`.
+
 ## Profiling
 
 Useful commands:
