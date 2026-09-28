@@ -227,20 +227,6 @@ return {
     insert(0),
   }),
   snip({
-    trig = 'link',
-    namr = 'markdown_link',
-    dscr = 'Create markdown link [txt](url)',
-  }, {
-    text '[',
-    insert(1),
-    text '](',
-    func(function(_, snip)
-      return snip.env.TM_SELECTED_TEXT[1] or {}
-    end, {}),
-    text ')',
-    insert(0),
-  }),
-  snip({
     trig = 'codeempty',
     namr = 'markdown_code_empty',
     dscr = 'Create empty markdown code block',
