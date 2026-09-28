@@ -78,6 +78,22 @@ return {
     ft = { 'plantuml', 'puml' },
   },
   {
+    'weirongxu/plantuml-previewer.vim',
+    dependencies = { 'tyru/open-browser.vim', 'aklt/plantuml-syntax' },
+    cmd = { 'PlantumlOpen', 'PlantumlStart', 'PlantumlStop', 'PlantumlSave', 'PlantumlToggle' },
+    init = function()
+      vim.g['plantuml_previewer#java_path'] = vim.fn.stdpath('config') .. '/scripts/plantuml-java'
+      local jar = '/opt/homebrew/opt/plantuml/libexec/plantuml.jar'
+      if vim.fn.filereadable(jar) == 1 then
+        vim.g['plantuml_previewer#plantuml_jar_path'] = jar
+      end
+    end,
+    keys = {
+      { '<Leader>pp', '<cmd>update<CR><cmd>PlantumlOpen<CR>', desc = 'PlantUML preview' },
+      { '<Leader>ps', '<cmd>PlantumlStop<CR>', desc = 'Stop PlantUML preview updates' },
+    },
+  },
+  {
     'godlygeek/tabular',
     ft = { 'markdown' },
     cmd = { 'Tabularize' },
