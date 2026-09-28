@@ -21,6 +21,7 @@ require('fzf-lua').setup {
   winopts = {
     preview = {
       delay = 100,
+      wrap = true,
     },
   },
   files = {
@@ -34,10 +35,12 @@ require('fzf-lua').setup {
   },
   keymap = {
     builtin = {
+      true,
       ['<C-f>'] = 'preview-page-down',
       ['<C-b>'] = 'preview-page-up',
     },
     fzf = {
+      true,
       ['ctrl-q'] = 'select-all+accept',
     },
   },
@@ -45,6 +48,7 @@ require('fzf-lua').setup {
     status = {
       keymap = {
         fzf = {
+          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -53,6 +57,7 @@ require('fzf-lua').setup {
     diff = {
       keymap = {
         fzf = {
+          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -61,6 +66,7 @@ require('fzf-lua').setup {
     commits = {
       keymap = {
         fzf = {
+          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -69,6 +75,7 @@ require('fzf-lua').setup {
     bcommits = {
       keymap = {
         fzf = {
+          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
