@@ -48,7 +48,6 @@ require('fzf-lua').setup {
     status = {
       keymap = {
         fzf = {
-          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -57,7 +56,6 @@ require('fzf-lua').setup {
     diff = {
       keymap = {
         fzf = {
-          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -66,7 +64,6 @@ require('fzf-lua').setup {
     commits = {
       keymap = {
         fzf = {
-          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
@@ -75,7 +72,6 @@ require('fzf-lua').setup {
     bcommits = {
       keymap = {
         fzf = {
-          true,
           ['ctrl-f'] = 'preview-page-down',
           ['ctrl-b'] = 'preview-page-up',
         },
