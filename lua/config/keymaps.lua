@@ -42,6 +42,20 @@ keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
 keymap.set('n', '<C-S-f>', '<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>')
 keymap.set('n', 'gX', '<cmd>!chmod +x %<CR>', { silent = true })
 
+keymap.set('n', 'gx', function()
+  local note_dir = vim.fn.expand('%:p:h')
+  for _, target in ipairs(require('vim.ui')._get_urls()) do
+    if not target:match('^%a[%w+.-]*://') and not vim.startswith(target, '/') then
+      local from_note = vim.fn.fnamemodify(note_dir .. '/' .. target, ':p')
+      target = vim.uv.fs_stat(from_note) and from_note or vim.fn.fnamemodify(target, ':p')
+    end
+    local _, err = vim.ui.open(target)
+    if err then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end, { desc = 'Open link relative to current file' })
+
 local function replace_word()
   local mode = vim.api.nvim_get_mode().mode
 
