@@ -195,6 +195,13 @@ The viewer requires Java and Graphviz. It uses the Homebrew PlantUML JAR at
 plugin's bundled JAR. Rendering is local. Only one selected buffer is previewed
 at a time; press `<Leader>pp` in another file to switch.
 
+In a Markdown note, put the cursor inside a ` ```plantuml ` (or ` ```puml `) block and
+press `<Leader>pp` to preview that diagram. Saving the note re-renders the block under
+the cursor, so moving into another block and saving switches the preview to it. The
+block is copied to `stdpath('cache')/plantuml-block/<note>.puml` and rendered from
+there, with relative `!include` paths resolved against the note's folder. The logic
+lives in `lua/config/plugins/plantuml-previewer.lua`.
+
 `scripts/plantuml-java` forwards the plugin's Java arguments and adds
 `--ignore-startuml-filename`, so named `@startuml ...` lines work without editing
 the diagram. This requires a PlantUML version supporting that option (the local

@@ -89,8 +89,20 @@ return {
       end
     end,
     keys = {
-      { '<Leader>pp', '<cmd>update<CR><cmd>PlantumlOpen<CR>', desc = 'PlantUML preview' },
-      { '<Leader>ps', '<cmd>PlantumlStop<CR>', desc = 'Stop PlantUML preview updates' },
+      {
+        '<Leader>pp',
+        function()
+          require('config.plugins.plantuml-previewer').preview()
+        end,
+        desc = 'PlantUML preview (block under cursor in Markdown)',
+      },
+      {
+        '<Leader>ps',
+        function()
+          require('config.plugins.plantuml-previewer').stop()
+        end,
+        desc = 'Stop PlantUML preview updates',
+      },
     },
   },
   {
