@@ -14,13 +14,6 @@ return {
     end,
   },
   {
-    'numToStr/Comment.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('config.plugins.comment')
-    end,
-  },
-  {
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
     lazy = false,
