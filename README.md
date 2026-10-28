@@ -153,7 +153,7 @@ the `PROJECT_ROOTS` environment variable. It is a PATH-like list whose entries o
 carry the trigger prefix for the repos in that root:
 
 ```sh
-export PROJECT_ROOTS="sp=$HOME/workspace/projects/work-repos:rs=$HOME/repo/learning/rust"
+export PROJECT_ROOTS="wk=$HOME/workspace/projects/work-repos:rs=$HOME/repos/rust"
 ```
 
 Both `~` and `$VAR` forms are expanded. An entry with no `prefix=` falls back to `pj`.
@@ -163,7 +163,7 @@ than a startup error.
 This yields:
 
 - `<prefix><repo-name>` for every repository, inserting the bare repo name. Blink fuzzy-matches
-  the trigger, so `spapi` reaches `myorg-api`, and the `sp` prefix is stripped on
+  the trigger, so `wkapi` reaches `myorg-api`, and the `wk` prefix is stripped on
   accept.
 - `pjp` for the root paths themselves. With several roots it expands to the first and `<C-l>`
   cycles through the rest.

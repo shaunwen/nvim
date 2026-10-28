@@ -10,7 +10,7 @@ local default_prefix = 'pj'
 
 -- PROJECT_ROOTS is a PATH-like list of project directories, each optionally
 -- carrying the trigger prefix for the repos it holds:
---   PROJECT_ROOTS="sp=~/workspace/projects/work-repos:rs=~/repo/learning/rust"
+--   PROJECT_ROOTS="wk=~/workspace/projects/work-repos:rs=~/repos/rust"
 local function project_roots()
   local roots = {}
 
