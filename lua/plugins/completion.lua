@@ -1,14 +1,5 @@
 return {
   {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = { 'BufReadPost', 'BufNewFile' },
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
-  },
-  {
     'onsails/lspkind-nvim',
     config = function()
       require('config.plugins.lspkind')
@@ -31,8 +22,6 @@ return {
     dependencies = {
       'L3MON4D3/LuaSnip',
       'rafamadriz/friendly-snippets',
-      'fang2hou/blink-copilot',
-      'zbirenbaum/copilot.lua',
       'onsails/lspkind-nvim',
       'nvim-tree/nvim-web-devicons',
     },

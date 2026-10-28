@@ -74,7 +74,7 @@ Grouped files currently include:
 - `ui.lua`: colorscheme, statusline, indent guides, icons, UI helpers
 - `search.lua`: Telescope, `fzf-lua`, Harpoon, Flash, project switching
 - `lsp.lua`: LSP, Mason, LazyDev, Lspsaga
-- `completion.lua`: Blink, LuaSnip, Copilot, Lspkind
+- `completion.lua`: Blink, LuaSnip, Lspkind
 - `coding.lua`: Treesitter, Comment, Autopairs, Refactoring, Conform, Dadbod
 - `debug.lua`: `nvim-dap` and related debug UI
 - `terminal.lua`: Toggleterm

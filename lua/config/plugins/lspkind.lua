@@ -49,7 +49,6 @@ lspkind.init({
     Operator = '󰪚',
     TypeParameter = '󰬛',
 
-    Copilot = "",
     Buffer = "﬘",
     Path = " ",
     LSP = "",

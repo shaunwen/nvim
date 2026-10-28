@@ -70,7 +70,6 @@ blink.setup({
               local source_labels = {
                 snippets = '[Snippet]',
                 lsp = '[LSP]',
-                copilot = '[AI]',
                 buffer = '[Buffer]',
                 path = '[Path]',
               }
@@ -86,7 +85,7 @@ blink.setup({
     nerd_font_variant = 'mono',
   },
   sources = {
-    default = { 'lazydev', 'copilot', 'lsp', 'snippets', 'buffer', 'path' },
+    default = { 'lazydev', 'lsp', 'snippets', 'buffer', 'path' },
     providers = {
       snippets = {
         opts = {
@@ -126,17 +125,6 @@ blink.setup({
         name = 'LazyDev',
         module = 'lazydev.integrations.blink',
         score_offset = 100,
-      },
-      copilot = {
-        name = 'copilot',
-        module = 'blink-copilot',
-        score_offset = 100,
-        async = true,
-        opts = {
-          max_completions = 3,
-          kind_icon = '',
-          auto_refresh = { backward = true, forward = true },
-        },
       },
     },
   },
