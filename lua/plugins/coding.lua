@@ -19,8 +19,20 @@ return {
     lazy = false,
     build = function()
       local ok, ts = pcall(require, 'nvim-treesitter')
-      if ok then
+      if not ok then
+        return
+      end
+
+      local updated, err = pcall(function()
         ts.update(nil, { max_jobs = 2, summary = true }):wait(300000)
+      end)
+
+      if not updated then
+        vim.notify(
+          ('nvim-treesitter: parser update failed (%s). Check the `tree-sitter` CLI '
+            .. 'and run :checkhealth nvim-treesitter'):format(tostring(err)),
+          vim.log.levels.WARN
+        )
       end
     end,
     dependencies = {
