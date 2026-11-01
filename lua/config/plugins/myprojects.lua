@@ -11,7 +11,10 @@ require('myprojects').setup({
   workspaces = workspace_dirs(),
   projects = helpers.existing_dirs({
     '~/.config/nvim',
-    '~/Documents/myNotes',
+    -- Notes vault location is machine-specific; zk's notebook variable is the
+    -- single source of truth, with the old path kept as a fallback for
+    -- machines that have not set it.
+    vim.env.ZK_NOTEBOOK_DIR or '~/Documents/myNotes',
   }),
   close_open_buffers = true,
 })
