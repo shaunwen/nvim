@@ -25,7 +25,13 @@ require('fzf-lua').setup {
     },
   },
   files = {
-    hidden = false,
+    -- .env files are usually gitignored, so a second fd re-adds them past the
+    -- ignore rules; awk drops the duplicates when a .env* file is not ignored.
+    cmd = table.concat({
+      '{ fd --type f --hidden --exclude .git;',
+      "fd --type f --hidden --no-ignore --glob '.env*' --exclude .git --exclude node_modules --exclude dist; }",
+      "| awk '!seen[$0]++'",
+    }, ' '),
   },
   blines = {
     fzf_colors = {
