@@ -25,11 +25,16 @@ require('fzf-lua').setup {
     },
   },
   files = {
+    hidden = false,
     -- .env files are usually gitignored, so a second fd re-adds them past the
     -- ignore rules; awk drops the duplicates when a .env* file is not ignored.
+    -- fzf-lua's alt-h/alt-i toggles insert a flag after the first word, so the
+    -- command must start with `fd`, and strip every occurrence of it. Both
+    -- passes carry --hidden so alt-h drives the .env pass too; with it
+    -- stripped, fd rejects the dot-only glob, so that error is discarded.
     cmd = table.concat({
-      '{ fd --type f --hidden --exclude .git;',
-      "fd --type f --hidden --no-ignore --glob '.env*' --exclude .git --exclude node_modules --exclude dist; }",
+      'fd --type f --hidden --exclude .git',
+      "| { cat; fd --type f --hidden -I --glob '.env*' --exclude .git --exclude node_modules --exclude dist 2>/dev/null; }",
       "| awk '!seen[$0]++'",
     }, ' '),
   },
