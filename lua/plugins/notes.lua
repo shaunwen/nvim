@@ -55,7 +55,7 @@ return {
     -- Without these stubs <leader>zd falls through to the builtin zd (E351).
     keys = {
       { '<leader>zd', desc = 'New daily note' },
-      { '<leader>zn', desc = 'New zettel' },
+      { '<leader>zn', desc = 'New zettel (pick type)' },
       { '<leader>zw', desc = 'New work log (pick type)' },
       { '<leader>zP', desc = 'New problem/solution note' },
       { '<leader>ze', desc = 'New evergreen note' },
@@ -68,6 +68,8 @@ return {
       { '<leader>zf', desc = 'Search notes' },
       { '<leader>zf', mode = 'v', desc = 'Search notes (selection)' },
       { '<leader>zF', desc = 'Search notes (filtered)' },
+      { '<leader>zs', desc = 'Notes by status' },
+      { '<leader>zu', desc = 'Promote note status' },
     },
     config = function()
       require('config.plugins.zk')

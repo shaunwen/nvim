@@ -79,13 +79,49 @@ end
 -- =============================================
 -- Note creation
 -- =============================================
--- Create a new zettelkasten note (seedling, inbox)
-vim.api.nvim_set_keymap(
-  'n',
-  '<leader>zn',
-  "<Cmd>lua zk_new_with_prompt('Title: ', { dir = 'zettelkasten', group = 'zettelkasten', template = 'default.md' })<CR>",
-  opts
-)
+-- Pick a note shape from a list, then prompt for the title and create it.
+local function zk_new_from_picker(picker_prompt, entries)
+  local labels = {}
+  local by_label = {}
+  for _, entry in ipairs(entries) do
+    table.insert(labels, entry.label)
+    by_label[entry.label] = entry
+  end
+
+  require('fzf-lua').fzf_exec(labels, {
+    prompt = picker_prompt,
+    actions = {
+      ['default'] = function(selected)
+        local entry = selected and by_label[selected[1]]
+        if entry then
+          zk_new_with_prompt(entry.prompt, entry.zk_opts)
+        end
+      end,
+    },
+  })
+end
+
+local zettel_templates = {
+  {
+    label = 'Quick capture',
+    prompt = 'Title: ',
+    zk_opts = { dir = 'zettelkasten', group = 'zettelkasten', template = 'default.md' },
+  },
+  {
+    label = 'How-to (steps, commands, cheat sheet)',
+    prompt = 'How-to: ',
+    zk_opts = { dir = 'zettelkasten', group = 'zettelkasten', template = 'how_to.md' },
+  },
+  {
+    label = 'Reference (from a video, article or book)',
+    prompt = 'Reference: ',
+    zk_opts = { dir = 'zettelkasten', group = 'zettelkasten', template = 'reference.md' },
+  },
+}
+
+vim.keymap.set('n', '<leader>zn', function()
+  zk_new_from_picker('Zettel type> ', zettel_templates)
+end, { noremap = true, silent = true, desc = 'New zettel (pick type)' })
 -- Create a daily note
 vim.api.nvim_set_keymap(
   'n',
@@ -94,46 +130,22 @@ vim.api.nvim_set_keymap(
   opts
 )
 
--- Work log — pick the shape that fits, then create the note accordingly
-local work_log_templates = {
-  { label = 'Investigation / bug fix', template = 'investigation.md', prompt = 'Investigation: ' },
-  { label = 'General work log', template = 'work_log.md', prompt = 'Work log: ' },
-  { label = 'Meeting notes', template = 'meeting_note.md', prompt = 'Meeting: ' },
-  { label = 'PR review', template = 'pr_review.md', prompt = 'PR review: ' },
-  { label = 'Follow-up', template = 'followup.md', prompt = 'Follow-up: ' },
-}
-
-local function zk_new_work_log()
-  local labels = {}
-  local by_label = {}
-  for _, entry in ipairs(work_log_templates) do
-    table.insert(labels, entry.label)
-    by_label[entry.label] = entry
-  end
-
-  require('fzf-lua').fzf_exec(labels, {
-    prompt = 'Work log type> ',
-    actions = {
-      ['default'] = function(selected)
-        if not selected or #selected == 0 then
-          return
-        end
-        local entry = by_label[selected[1]]
-        if not entry then
-          return
-        end
-        zk_new_with_prompt(entry.prompt, { dir = 'work', template = entry.template })
-      end,
-    },
-  })
+-- Work log - pick the shape that fits, then create the note accordingly
+local function work_entry(label, template, prompt)
+  return { label = label, prompt = prompt, zk_opts = { dir = 'work', template = template } }
 end
 
-vim.keymap.set(
-  'n',
-  '<leader>zw',
-  zk_new_work_log,
-  { noremap = true, silent = true, desc = 'New work log (pick type)' }
-)
+local work_log_templates = {
+  work_entry('Investigation / bug fix', 'investigation.md', 'Investigation: '),
+  work_entry('General work log', 'work_log.md', 'Work log: '),
+  work_entry('Meeting notes', 'meeting_note.md', 'Meeting: '),
+  work_entry('PR review', 'pr_review.md', 'PR review: '),
+  work_entry('Follow-up', 'followup.md', 'Follow-up: '),
+}
+
+vim.keymap.set('n', '<leader>zw', function()
+  zk_new_from_picker('Work log type> ', work_log_templates)
+end, { noremap = true, silent = true, desc = 'New work log (pick type)' })
 -- Problem/solution — distilled after solving a real problem
 vim.api.nvim_set_keymap(
   'n',
@@ -237,3 +249,57 @@ end, { desc = 'Grep notes containing ALL words' })
 vim.api.nvim_set_keymap('n', '<leader>zb', '<Cmd>ZkBacklinks<CR>', opts)
 -- Outgoing links from this note
 vim.api.nvim_set_keymap('n', '<leader>zl', '<Cmd>ZkLinks<CR>', opts)
+
+-- =============================================
+-- Maturity (status)
+-- =============================================
+local status_order = { 'seedling', 'budding', 'evergreen' }
+
+-- zk cannot filter on frontmatter fields, so list notes by status with ripgrep.
+local function zk_notes_by_status()
+  require('fzf-lua').fzf_exec({ 'seedling', 'budding' }, {
+    prompt = 'Status> ',
+    actions = {
+      ['default'] = function(selected)
+        if not selected or #selected == 0 then
+          return
+        end
+        require('fzf-lua').files({
+          prompt = selected[1] .. '> ',
+          cmd = 'rg -l --sortr modified -g "*.md" ' .. vim.fn.shellescape('^status: ' .. selected[1] .. '\\s*$'),
+        })
+      end,
+    },
+  })
+end
+
+local function zk_promote_status()
+  local last = math.min(vim.api.nvim_buf_line_count(0), 20)
+  local lines = vim.api.nvim_buf_get_lines(0, 0, last, false)
+  if lines[1] ~= '---' then
+    vim.notify('zk: no frontmatter in this note', vim.log.levels.WARN)
+    return
+  end
+
+  for index = 2, #lines do
+    if lines[index] == '---' then
+      break
+    end
+    local current = lines[index]:match('^status:%s*(%S+)')
+    if current then
+      local position = vim.fn.index(status_order, current) + 1
+      local promoted = status_order[position + 1]
+      if position == 0 or not promoted then
+        vim.notify('zk: status is ' .. current .. ', nothing to promote', vim.log.levels.INFO)
+        return
+      end
+      vim.api.nvim_buf_set_lines(0, index - 1, index, false, { 'status: ' .. promoted })
+      vim.notify('zk: ' .. current .. ' -> ' .. promoted, vim.log.levels.INFO)
+      return
+    end
+  end
+  vim.notify('zk: no status field in this note', vim.log.levels.WARN)
+end
+
+vim.keymap.set('n', '<leader>zs', zk_notes_by_status, { noremap = true, silent = true, desc = 'Notes by status' })
+vim.keymap.set('n', '<leader>zu', zk_promote_status, { noremap = true, silent = true, desc = 'Promote note status' })

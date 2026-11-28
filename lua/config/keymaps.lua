@@ -140,9 +140,19 @@ end, { desc = 'Format Datadog JSON log' })
 keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>:q<CR>', { noremap = true })
 
-vim.cmd([[
-  command! IO execute "silent !open 'obsidian://open?vault=myNotes&file=" . expand('%:r') . "'"
-]])
+vim.api.nvim_create_user_command('IO', function()
+  local vault = vim.fs.root(0, '.obsidian')
+  if not vault then
+    vim.notify('IO: this file is not inside an Obsidian vault', vim.log.levels.WARN)
+    return
+  end
+  local file = vim.fn.expand('%:p:r'):sub(#vault + 2)
+  local uri = 'obsidian://open?vault='
+    .. vim.uri_encode(vim.fs.basename(vault))
+    .. '&file='
+    .. vim.uri_encode(file)
+  vim.fn.jobstart({ 'open', uri }, { detach = true })
+end, { desc = 'Open the current note in Obsidian' })
 keymap.set('n', '<Leader>io', '<cmd>IO<CR>', { noremap = true })
 
 vim.api.nvim_create_user_command(
